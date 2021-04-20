@@ -1,6 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
-\\prova
+
 #ifdef __cplusplus
 extern "C" {
 #endif
