@@ -26,6 +26,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>ST</name>
+			<type>2</type>
+			<location>C:/Users/sjacq/Desktop/EpuckProject/ST</location>
+		</link>
+		<link>
 			<name>e-puck2_main-processor</name>
 			<type>2</type>
 			<locationURI>copy_PARENT1/lib/e-puck2_main-processor</locationURI>

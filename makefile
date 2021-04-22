@@ -3,10 +3,12 @@
 #Simply adapt the lines below to be able to compile
 
 # Define project name here
-PROJECT = CamReg
+PROJECT = PlotterMultiAxis
 
 #Define path to the e-puck2_main-processor folder
-GLOBAL_PATH = ../../lib/e-puck2_main-processor
+#GLOBAL_PATH = ../../lib/e-puck2_main-processor
+GLOBAL_PATH = C:\Users\sjacq\Desktop\EpuckProject\lib\e-puck2_main-processor
+
 
 #Source files to include
 CSRC += ./main.c \
