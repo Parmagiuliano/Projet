@@ -26,14 +26,14 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>ST</name>
+			<name>ChibiOS</name>
 			<type>2</type>
-			<location>C:/Users/sjacq/Desktop/EpuckProject/ST</location>
+			<location>C:/Users/sjacq/Desktop/EpuckProject/lib/e-puck2_main-processor/ChibiOS</location>
 		</link>
 		<link>
 			<name>e-puck2_main-processor</name>
 			<type>2</type>
-			<locationURI>copy_PARENT1/lib/e-puck2_main-processor</locationURI>
+			<locationURI>$%7BPARENT-2-PROJECT_LOC%7D/lib/e-puck2_main-processor</locationURI>
 		</link>
 	</linkedResources>
 	<variableList>

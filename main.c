@@ -8,15 +8,14 @@
  *  Authors: Parma Giuliano & Jacquart Sylvain
  *  Created : 14 april 2021
  */
+#include <ch.h>
+#include <hal.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 
-#include "ch.h"
-#include "hal.h"
-#include "memory_protection.h"
 #include <usbcfg.h>
 #include <main.h>
 #include <camera/po8030.h>
@@ -49,6 +48,15 @@ void SendUint8ToComputer(uint8_t* data, uint16_t size)
 }
 
 static void serial_start(void)
+
+/*
+ * Start of the new code
+ */
+
+//Unit conversion: 1 step motor = 0.14 mm
+//On a square of 82.5 x 82.5 mm, we have approx 600 x 600 step of motor
+
+
 {
 	static SerialConfig ser_cfg = {
 	    115200,
