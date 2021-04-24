@@ -8,16 +8,17 @@
  *  Authors: Parma Giuliano & Jacquart Sylvain
  *  Created : 14 april 2021
  */
-#include <ch.h>
-#include <hal.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 
+#include <ch.h>
+#include <hal.h>
+#include "memory_protection.h"
 #include <usbcfg.h>
 #include <main.h>
+#include <motors.h>
 #include <camera/po8030.h>
 #include <chprintf.h>
 
@@ -48,15 +49,6 @@ void SendUint8ToComputer(uint8_t* data, uint16_t size)
 }
 
 static void serial_start(void)
-
-/*
- * Start of the new code
- */
-
-//Unit conversion: 1 step motor = 0.14 mm
-//On a square of 82.5 x 82.5 mm, we have approx 600 x 600 step of motor
-
-
 {
 	static SerialConfig ser_cfg = {
 	    115200,
@@ -68,14 +60,22 @@ static void serial_start(void)
 	sdStart(&SD3, &ser_cfg); // UART3.
 }
 
+/*
+ * Start of the new code
+ */
+
+//Unit conversion: 1 step motor = 0.1382 mm with GearRadius R = 22mm.
+//On a square of 80 x 80 mm, we have approx 570 x 570 step of motor.
+//We'll move on a square of 76 x 76 mm, so 550 x 550 p (more secure).
+
 int main(void)
 {
-
+    //start the system
     halInit();
     chSysInit();
     mpu_init();
 
-    //starts the serial communication
+    //start the serial communication
     serial_start();
     //start the USB communication
     usb_start();
@@ -93,7 +93,64 @@ int main(void)
 	 * Start of the new code
 	 */
 
+	//Finding the origin function
+	    /*
+	     * 	<-X AXIS	76mm/550px square
+	     * 	-----------------------------------
+	     * 	-                        Origin  0-
+	     * 	-                                 -
+	     * 	-                                 -
+	     * 	-                                 -
+	     * 	-                                 -
+	     * 	-                                 -
+	     * 	-                                 -
+	     * 	-                                 -	Y AXIS
+	     * 	-                                 -	  ¦
+	     * 	-----------------------------------   v
+	     *
+	     * 	BY CONVENTION FOR THIS PROJECT, LEFT_MOTOR = X_MOTOR & RIGHT_MOTOR = Y_MOTOR
+	     *
+	     * Rotate the X motor CW to push the wooden stage to the X origin.
+	     * Stop the rotation when the IR sensor (IR3, close to the selector) detect the stopping plate at a distance of x mm.
+	     *
+	     * Then rotate the Y motor to pull the printed stage to the Y origin
+	     * Stop the rotation when the IR sensors (IR1 & IR8, close to the camera) detect the stopping plate at a distance of y mm.
+	     *
+	     * Define this position as the origin
+	     */
+	void find_the_origin(){
+		//Starts the proximity measurement module
+		proximity_start();
+		//Runs the IR sensor calibration process
+		calibrate_ir();
+
+		//Infinite loop
+		while(1)
+		 {
+			//Returns the last value measured by the X sensor, U106
+			int get_prox(unsigned int sensor_number = 6)
+/*
+ * Regulator PI style;
+ * If the sensor identifies the target closer than the value set, then move a certain way
+ * If not close enough, then move the other way
+ * set an offset where the motor d'ont have to move anymore, get out of the infinite loop
+ */
+
+			 //waits 0.25 second
+		 chThdSleepMilliseconds(250);
+		 break;
+		 }
+
+		//Returns the last value measured by the Y sensor, U101/U108
+		int get_prox(unsigned int sensor_number)
+
+	}
+
+	void left_motor_set_pos();
+	void right_motor_set_pos();
+
 	//Selector choice reading
+	//int selector; -> Which type?
     init_selector();
     selector = get_selector();
 
