@@ -8,6 +8,17 @@
  *  Authors: Parma Giuliano & Jacquart Sylvain
  *  Created : 14 april 2021
  */
+
+/*
+ * TO DO LIST:
+ *
+ * -Linear displacement of the target in front of the IR sensor -> graph of the response, influence of the luminosity.
+ * -Trying the system in test mode, to see if the mechanic is working properly.
+ * -Finding the minimal speed required to the motor to turn, threshold of the mechanical resistance (stuck).
+ * -Define 3 speeds (minimum, common and maximum) for the IMU displacements, and the IMU values associated (thresholds).
+ * -Set the distance required in X and Y for the find_the_origin function.
+ *
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -108,51 +119,83 @@ int main(void)
 	     * 	-                                 -	  ¦
 	     * 	-----------------------------------   v
 	     *
-	     * 	BY CONVENTION FOR THIS PROJECT, LEFT_MOTOR = X_MOTOR & RIGHT_MOTOR = Y_MOTOR
+	     * BY CONVENTION FOR THIS PROJECT, LEFT_MOTOR = X_MOTOR & RIGHT_MOTOR = Y_MOTOR
 	     *
 	     * Rotate the X motor CW to push the wooden stage to the X origin.
-	     * Stop the rotation when the IR sensor (IR3, close to the selector) detect the stopping plate at a distance of x mm.
+	     * Stop the rotation when the IR sensor (IR3, close to the selector) detect the stopping plate at a distance of 4 mm.
 	     *
 	     * Then rotate the Y motor to pull the printed stage to the Y origin
-	     * Stop the rotation when the IR sensors (IR1 & IR8, close to the camera) detect the stopping plate at a distance of y mm.
+	     * Stop the rotation when the IR sensors (IR1 & IR8, close to the camera) detect the stopping plate at a distance of 4 mm.
 	     *
 	     * Define this position as the origin
 	     */
-	void find_the_origin(){
+	void find_the_origin(unsigned int xTarget = 4, xThreshold = 0.2, yTarget = 4, yThreshold = 0.2){//dimensions in mm, conversion?
 		//Starts the proximity measurement module
 		proximity_start();
 		//Runs the IR sensor calibration process
 		calibrate_ir();
+		//Returns the calibration value for the chosen sensors
+		int get_calibrated_prox(unsigned int sensor_number=6);
+		int get_calibrated_prox(unsigned int sensor_number=8);
 
-		//Infinite loop
-		while(1)
-		 {
-			//Returns the last value measured by the X sensor, U106
-			int get_prox(unsigned int sensor_number = 6)
-/*
- * Regulator PI style;
- * If the sensor identifies the target closer than the value set, then move a certain way
- * If not close enough, then move the other way
- * set an offset where the motor d'ont have to move anymore, get out of the infinite loop
- */
+		//Infinite loop, X axis
+			while(1)
+				{
+					//Returns the last value measured by the X sensor, U106
+					//MUST CHECK IF THE SENSORS NUMBERS ARE CORRECTS
+					int get_prox(unsigned int sensor_number = 6);
+					if(get_prox < (xTarget - xThreshold)){
+						void left_motor_set_speed(int speed=400); //CW rotation
+					}else if(get_prox > (xTarget + xThreshold)){
+						void left_motor_set_speed(int speed=-400); //CCW rotation
+					}else if(get_prox > (xTarget - xThreshold) && get_prox < (xTarget + xThreshold)){
+						void left_motor_set_speed(int speed=0); //Stop the rotation
+						break;
+					}
+				}
 
-			 //waits 0.25 second
-		 chThdSleepMilliseconds(250);
-		 break;
-		 }
+		//waits 0.25 second
+		chThdSleepMilliseconds(250);
 
-		//Returns the last value measured by the Y sensor, U101/U108
-		int get_prox(unsigned int sensor_number)
+		//Return the Xstage to the other limit for the Yoffset
+		//Move Xmotor CCW, distance 76mm
+		int32_t left_motor_get_pos(void);
+		void left_motor_set_pos(int32_t counter_value=-550); //(Normally, 550 step == 76mm)
+
+		//waits 0.25 second
+		chThdSleepMilliseconds(250);
+
+		//Infinite loop, Y axis
+			while(1)
+				{
+				//Returns the last value measured by the Y sensor, (U101) ->U108
+					//MUST CHECK IF THE SENSORS NUMBERS ARE CORRECTS
+					int get_prox(unsigned int sensor_number = 8);
+					if(get_prox < (yTarget - yThreshold)){
+						void right_motor_set_speed(int speed=-400); //CCW rotation
+					}else if(get_prox > (yTarget + yThreshold)){
+						void right_motor_set_speed(int speed=400); //CW rotation
+					}else if(get_prox > (yTarget - yThreshold) && get_prox < (yTarget + yThreshold)){
+						void right_motor_set_speed(int speed=0); //Stop the rotation
+						break;
+					}
+				}
+
+		//waits 0.25 second
+		chThdSleepMilliseconds(250);
+
+		//Return the Xstage to the X offset
+		//Move Xmotor CW, distance 76mm
+		int32_t left_motor_get_pos(void);
+		void left_motor_set_pos(int32_t counter_value=550); //(Normally, 550 step == 76mm)
+		//Find_the_origin function completed
 
 	}
 
-	void left_motor_set_pos();
-	void right_motor_set_pos();
-
 	//Selector choice reading
 	//int selector; -> Which type?
-    init_selector();
-    selector = get_selector();
+    //init_selector();	->Not usefull with ChibiOs it seems
+    int8_t selector = get_selector();
 
     // LEDs sequences
     static const uint8_t seq1[8][4] = {
