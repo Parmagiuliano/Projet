@@ -12,11 +12,8 @@
 /*
  * TO DO LIST:
  *
- * -Linear displacement of the target in front of the IR sensor -> graph of the response, influence of the luminosity.
  * 		->Stick the target to the sensor, in X the luminosity (of sensor IR3/IR2 in epuck monitor) can improve from 0 to approx 30%
  * 										  in Y the luminosity (of sensor IR1/IR0 in epuck monitor) can improve from 0 to 50-100%
- * -Trying the system in test mode, to see if the mechanic is working properly. -> Done, working
- * -Finding the minimal speed required to the motor to turn, threshold of the mechanical resistance (stuck). -> Ideal speed, 300rpm
  * -Define 3 speeds (minimum, common and maximum) for the IMU displacements, and the IMU values associated (thresholds). -> 250/350/450 rpm
  * -Set the distance required in X and Y for the find_the_origin function. -> Stick to the sensor
  *
@@ -37,6 +34,8 @@
 
 #include <pi_regulator.h>
 #include <process_image.h>
+
+#include <Drawing_IMU_function.h>
 
 void SendUint8ToComputer(uint8_t* data, uint16_t size) 
 {
@@ -83,8 +82,8 @@ int main(void)
 	motors_init();
 
 	//stars the threads for the pi regulator and the processing of the image
-	pi_regulator_start();
-	process_image_start();
+	//pi_regulator_start();
+	//process_image_start();
 
 	/*
 	 * Start of the new code
@@ -116,84 +115,84 @@ int main(void)
 	     * Define this position as the origin
 	     */
 
-	left_motor_set_speed(MOTOR_OPTIMAL_SPEED); //CW rotation
+	//left_motor_set_speed(MOTOR_OPTIMAL_SPEED); //CW rotation, test
 
-//	void FindTheOrigin(uint8_t xTarget, uint8_t xThreshold, uint8_t yTarget, uint8_t yThreshold)
-//		{
-//			//Variables declaration
-//			xTarget = 1.3;
-//			xThreshold = 0.1;
-//			yTarget = 1.6;
-//			yThreshold = 0.1;
-//			//uint8_t sensor_x = SENSOR_X;
-//			//uint8_t sensor_y = SENSOR_Y;
-//
-//			//Starts the proximity measurement module
-//			proximity_start();
-//			//Runs the IR sensor calibration process
-//			calibrate_ir();
-//			//Returns the calibration value for the chosen sensors
-//		//	uint8_t sensor_number = SENSOR_X;
-//
-//			uint8_t sensor_x_calibration=get_calibrated_prox(SENSOR_X);
-//			uint8_t sensor_y_calibration=get_calibrated_prox(SENSOR_Y);
-//
-////			get_calibrated_prox(sensor_x);
-////			get_calibrated_prox(sensor_y);
-//
-//			//Infinite loop, X axis
-//			while(1)
-//				{
-//					//Returns the last value measured by the X sensor, U106
-//					//MUST CHECK IF THE SENSORS NUMBERS ARE CORRECTS
-//					//get_prox(sensor_x);
-//					if(get_prox(SENSOR_X) < (xTarget - xThreshold)*sensor_x_calibration){
-//						left_motor_set_speed(MOTOR_OPTIMAL_SPEED); //CW rotation
-//					}else if(get_prox(SENSOR_X) > (xTarget + xThreshold)*sensor_x_calibration){
-//						left_motor_set_speed(-1*MOTOR_OPTIMAL_SPEED); //CCW rotation
-//					}else if(get_prox > (xTarget - xThreshold)*sensor_x_calibration && get_prox < (xTarget + xThreshold)*sensor_x_calibration){
-//						left_motor_set_speed(0); //Stop the rotation
-//					break;
-//					}
-//				}
-//
-//		//waits 0.25 second
-//		chThdSleepMilliseconds(250);
-//
-//		//Return the Xstage to the other limit for the Yoffset
-//		//Move Xmotor CCW, distance 70mm
-//		left_motor_get_pos();
-//		int32_t counter_value = 0;
-//		left_motor_set_pos(counter_value=-500); //(Normally, -500 step == -70mm)
-//
-//		//waits 0.25 second
-//		chThdSleepMilliseconds(250);
-//
-//		//Infinite loop, Y axis
-//			while(1)
-//				{
-//				//Returns the last value measured by the Y sensor, (U108) ->U101
-//					//MUST CHECK IF THE SENSORS NUMBERS ARE CORRECTS
-//					if(get_prox(SENSOR_Y) < (yTarget - yThreshold)*sensor_y_calibration){
-//						right_motor_set_speed(-1*MOTOR_OPTIMAL_SPEED); //CCW rotation
-//					}else if(get_prox(SENSOR_Y) > (yTarget + yThreshold)*sensor_y_calibration){
-//						right_motor_set_speed(MOTOR_OPTIMAL_SPEED); //CW rotation
-//					}else if(get_prox(SENSOR_Y) > (yTarget - yThreshold)*sensor_y_calibration && get_prox(SENSOR_Y) < (yTarget + yThreshold)*sensor_y_calibration){
-//						right_motor_set_speed(0); //Stop the rotation
-//						break;
-//					}
-//				}
-//
-//		//waits 0.25 second
-//		chThdSleepMilliseconds(250);
-//
-//		//Return the Xstage to the X offset
-//		//Move Xmotor CW, distance 76mm
-//		left_motor_get_pos();
-//		left_motor_set_pos(counter_value=500); //(Normally, 500 step == 70mm)
-//		//Find_the_origin function completed
-//
-//	}
+	void FindTheOrigin(uint8_t xTarget, uint8_t xThreshold, uint8_t yTarget, uint8_t yThreshold)
+		{
+			//Variables declaration
+			xTarget = 1.3;
+			xThreshold = 0.1;
+			yTarget = 1.6;
+			yThreshold = 0.1;
+			//uint8_t sensor_x = SENSOR_X;
+			//uint8_t sensor_y = SENSOR_Y;
+
+			//Starts the proximity measurement module
+			proximity_start();
+			//Runs the IR sensor calibration process
+			calibrate_ir();
+			//Returns the calibration value for the chosen sensors
+		//	uint8_t sensor_number = SENSOR_X;
+
+			uint8_t sensor_x_calibration=get_calibrated_prox(SENSOR_X);
+			uint8_t sensor_y_calibration=get_calibrated_prox(SENSOR_Y);
+
+//			get_calibrated_prox(sensor_x);
+//			get_calibrated_prox(sensor_y);
+
+			//Infinite loop, X axis
+			while(1)
+				{
+					//Returns the last value measured by the X sensor, U106
+					//MUST CHECK IF THE SENSORS NUMBERS ARE CORRECTS
+					//get_prox(sensor_x);
+					if(get_prox(SENSOR_X) < (xTarget - xThreshold)*sensor_x_calibration){
+						left_motor_set_speed(MOTOR_OPTIMAL_SPEED); //CW rotation
+					}else if(get_prox(SENSOR_X) > (xTarget + xThreshold)*sensor_x_calibration){
+						left_motor_set_speed(-1*MOTOR_OPTIMAL_SPEED); //CCW rotation
+					}else if(get_prox > (xTarget - xThreshold)*sensor_x_calibration && get_prox < (xTarget + xThreshold)*sensor_x_calibration){
+						left_motor_set_speed(0); //Stop the rotation
+					break;
+					}
+				}
+
+		//waits 0.25 second
+		chThdSleepMilliseconds(250);
+
+		//Return the Xstage to the other limit for the Yoffset
+		//Move Xmotor CCW, distance 70mm
+		left_motor_get_pos();
+		int32_t counter_value = 0;
+		left_motor_set_pos(counter_value=-500); //(Normally, -500 step == -70mm)
+
+		//waits 0.25 second
+		chThdSleepMilliseconds(250);
+
+		//Infinite loop, Y axis
+			while(1)
+				{
+				//Returns the last value measured by the Y sensor, (U108) ->U101
+					//MUST CHECK IF THE SENSORS NUMBERS ARE CORRECTS
+					if(get_prox(SENSOR_Y) < (yTarget - yThreshold)*sensor_y_calibration){
+						right_motor_set_speed(-1*MOTOR_OPTIMAL_SPEED); //CCW rotation
+					}else if(get_prox(SENSOR_Y) > (yTarget + yThreshold)*sensor_y_calibration){
+						right_motor_set_speed(MOTOR_OPTIMAL_SPEED); //CW rotation
+					}else if(get_prox(SENSOR_Y) > (yTarget - yThreshold)*sensor_y_calibration && get_prox(SENSOR_Y) < (yTarget + yThreshold)*sensor_y_calibration){
+						right_motor_set_speed(0); //Stop the rotation
+						break;
+					}
+				}
+
+		//waits 0.25 second
+		chThdSleepMilliseconds(250);
+
+		//Return the Xstage to the X offset
+		//Move Xmotor CW, distance 76mm
+		left_motor_get_pos();
+		left_motor_set_pos(counter_value=500); //(Normally, 500 step == 70mm)
+		//Find_the_origin function completed
+
+	}
 
 	//Selector choice reading
 	//int selector; -> Which type?
@@ -224,7 +223,7 @@ int main(void)
 			break;
 
     	case 1: //Free to use, IMU		->To define: what about Z axis movement? Add a button which move up/down the pen when pressed?
-    		//get_Drawing_IMU_function
+    		show_gravity();
 			break;
 
     	case 2: //Camera, pattern recognition

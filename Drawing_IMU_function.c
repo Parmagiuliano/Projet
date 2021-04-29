@@ -4,32 +4,40 @@
  *  Created on: Apr 22, 2021
  *      Author: sjacq
  */
+
+//Includes to check
+#include <ch.h>
+#include <hal.h>
+#include <main.h>
+#include "usbcfg.h"
+#include "chprintf.h"
+#include "i2c_bus.h"
+#include "imu.h"
+#include "exti.h"
+
+#include <Drawing_IMU_function.h>
 #define NB_SAMPLES_OFFSET     200
 
-//messagebus_t bus;
-//MUTEX_DECL(bus_lock);
-//CONDVAR_DECL(bus_condvar);
+//static void timer11_start(void){
+//    //General Purpose Timer configuration
+//    //timer 11 is a 16 bit timer so we can measure time
+//    //to about 65ms with a 1Mhz counter
+//    static const GPTConfig gpt11cfg = {
+//        1000000,        /* 1MHz timer clock in order to measure uS.*/
+//        NULL,           /* Timer callback.*/
+//        0,
+//        0
+//    };
+//}
 
-static void timer11_start(void){
-    //General Purpose Timer configuration
-    //timer 11 is a 16 bit timer so we can measure time
-    //to about 65ms with a 1Mhz counter
-    static const GPTConfig gpt11cfg = {
-        1000000,        /* 1MHz timer clock in order to measure uS.*/
-        NULL,           /* Timer callback.*/
-        0,
-        0
-    };
 
-imu_start();
-get_acc_offset();
 
 
 void show_gravity(imu_msg_t *imu_values){
+	imu_start();
+	calibrate_acc();
+	get_acc_all();
 
-    //we create variables for the led in order to turn them off at each loop and to
-    //select which one to turn on
-    uint8_t led1 = 0, led3 = 0, led5 = 0, led7 = 0;
     //threshold value to not use the leds when the robot is too horizontal
     float threshold = 0.2;
     float ThresholdAngle = M_PI/10; //Should be contained between 0 and less than PI/2
@@ -39,19 +47,37 @@ void show_gravity(imu_msg_t *imu_values){
     //volatile to not be optimized out by the compiler if not used
     volatile uint16_t time = 0;
 
+    //Variable speed of the motors, depending of the IMU accelerations.
+    //The pen draws faster when the inclination increases.
+    void IMU_drawing_variable_speed(uint32_t imu_max_axis_accel, uint32_t global_max_accel ){
+    	if(fabs(accel[X_AXIS]) > fabs(accel[Y_AXIS]) && fabs(accel[X_AXIS]) > fabs(accel[Z_AXIS])){
+    		imu_max_axis_accel=fabs(accel[X_AXIS]);
+    	}else if(fabs(accel[Y_AXIS]) > fabs(accel[X_AXIS]) && fabs(accel[Y_AXIS]) > fabs(accel[Z_AXIS])){
+    		imu_max_axis_accel=fabs(accel[Y_AXIS]);
+    	}else if(fabs(accel[Z_AXIS]) > fabs(accel[X_AXIS]) && fabs(accel[Z_AXIS]) > fabs(accel[Y_AXIS])){
+    		imu_max_axis_accel=fabs(accel[Z_AXIS]);
+    	}
+    	global_max_accel = 16; //Datasheet max scale: +-16g, to verify
+    	IMU_drawing_speed = (MOTOR_OPTIMAL_SPEED+imu_max_axis_accel/global_max_accel*(MOTOR_SPEED_LIMIT-MOTOR_OPTIMAL_SPEED));
+    }
+
+
+
     /*
-    * Quadrant:
+    * Quadrants & directions:
     *
-    *       BACK
-    *       ####
-    *    #    0   #
-    *  #            #
-    * #-PI/2 TOP PI/2#
-    * #      VIEW    #
-    *  #            #
-    *    # -PI|PI #
-    *       ####
-    *       FRONT
+    *	       BACK
+    *	        @1
+    *	       ####
+    * @8	#    0   #	  @2
+    *	  #            #
+    *@7  #-PI/2 TOP PI/2#	@3
+    *    #     VIEW     #
+    *     #            #
+    * @6    # -PI|PI #	  @4
+    * 	       ####
+    *      		@5
+    *         FRONT
     */
 
     if(fabs(accel[X_AXIS]) > threshold || fabs(accel[Y_AXIS]) > threshold){
@@ -76,44 +102,41 @@ void show_gravity(imu_msg_t *imu_values){
         }
 
         //Select the motor(s) to move depending of the angle value
-        if(angle > -ThresholdAngle && angle < ThresholdAngle){
+        if(angle > -ThresholdAngle && angle < ThresholdAngle){										//@1
         	//X motor -> Static
-        	//Y motor -> CW direction
-        }else if(angle >= ThresholdAngle && angle < (M_PI/2 - ThresholdAngle)){
-        	//X motor -> CW direction
-        	//Y motor -> CW direction
-        }else if(angle >= (M_PI/2 - ThresholdAngle) && angle < (M_PI/2 + ThresholdAngle)){
-        	//X motor -> CW direction
+        	right_motor_set_speed(IMU_drawing_speed);//Y motor -> CW direction
+
+        }else if(angle >= ThresholdAngle && angle < (M_PI/2 - ThresholdAngle)){						//@2
+        	left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
+        	right_motor_set_speed(IMU_drawing_speed);//Y motor -> CW direction
+
+        }else if(angle >= (M_PI/2 - ThresholdAngle) && angle < (M_PI/2 + ThresholdAngle)){			//@3
+        	left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
         	//Y motor -> Static
-        }else if(angle >= (M_PI/2 + ThresholdAngle) && angle < (M_PI - ThresholdAngle)){
-        	//X motor -> CW direction
-        	//Y motor -> CCW direction
-        }else if(angle >= (M_PI - ThresholdAngle) && angle < (-M_PI + ThresholdAngle)){
+
+        }else if(angle >= (M_PI/2 + ThresholdAngle) && angle < (M_PI - ThresholdAngle)){			//@4
+        	left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
+        	right_motor_set_speed(-IMU_drawing_speed);//Y motor -> CCW direction
+
+        }else if(angle >= (M_PI - ThresholdAngle) && angle < (-M_PI + ThresholdAngle)){				//@5
         	//X motor -> Static
-        	//Y motor -> CCW direction
-        }else if(angle >= (-M_PI + ThresholdAngle) && angle < (-M_PI/2 - ThresholdAngle)){
-        	//X motor -> CCW direction
-        	//Y motor -> CCW direction
-        }else if(angle >= (-M_PI/2 - ThresholdAngle) && angle < (-M_PI/2 + ThresholdAngle)){
-        	//X motor -> CCW direction
+        	right_motor_set_speed(-IMU_drawing_speed);//Y motor -> CCW direction
+
+        }else if(angle >= (-M_PI + ThresholdAngle) && angle < (-M_PI/2 - ThresholdAngle)){			//@6
+        	left_motor_set_speed(-IMU_drawing_speed);//X motor -> CCW direction
+        	right_motor_set_speed(-IMU_drawing_speed);//Y motor -> CCW direction
+
+        }else if(angle >= (-M_PI/2 - ThresholdAngle) && angle < (-M_PI/2 + ThresholdAngle)){		//@7
+        	left_motor_set_speed(-IMU_drawing_speed);//X motor -> CCW direction
         	//Y motor -> Static
-        }else if(angle >= (-M_PI/2 + ThresholdAngle) && angle < -ThresholdAngle){
-        	//X motor -> CCW direction
-        	//Y motor -> CW direction
+
+        }else if(angle >= (-M_PI/2 + ThresholdAngle) && angle < -ThresholdAngle){					//@8
+        	left_motor_set_speed(-MOTOR_OPTIMAL_SPEED);//X motor -> CCW direction
+        	right_motor_set_speed(MOTOR_OPTIMAL_SPEED);//Y motor -> CW direction
         }
 
+    	}
 
-
-
-        if(angle >= 0 && angle < M_PI/2){
-        	led5 = 1;
-        }else if(angle >= M_PI/2 && angle < M_PI){
-            led7 = 1;
-        }else if(angle >= -M_PI && angle < -M_PI/2){
-            led1 = 1;
-        }else if(angle >= -M_PI/2 && angle < 0){
-            led3 = 1;
-        }
     }
 }
 
