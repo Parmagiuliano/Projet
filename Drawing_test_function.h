@@ -5,6 +5,8 @@
  *      Author: sjacq
  */
 
+#include
+
 #ifndef DRAWING_TEST_FUNCTION_H_
 #define DRAWING_TEST_FUNCTION_H_
 

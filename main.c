@@ -15,7 +15,6 @@
  * 		->Stick the target to the sensor, in X the luminosity (of sensor IR3/IR2 in epuck monitor) can improve from 0 to approx 30%
  * 										  in Y the luminosity (of sensor IR1/IR0 in epuck monitor) can improve from 0 to 50-100%
  * -Define 3 speeds (minimum, common and maximum) for the IMU displacements, and the IMU values associated (thresholds). -> 250/350/450 rpm
- * -Set the distance required in X and Y for the find_the_origin function. -> Stick to the sensor
  *
  */
 #include <stdio.h>
@@ -32,9 +31,7 @@
 #include <camera/po8030.h>
 #include <chprintf.h>
 
-#include <pi_regulator.h>
 #include <process_image.h>
-
 #include <Drawing_IMU_function.h>
 
 void SendUint8ToComputer(uint8_t* data, uint16_t size) 
@@ -119,26 +116,24 @@ int main(void)
 
 	void FindTheOrigin(uint8_t xTarget, uint8_t xThreshold, uint8_t yTarget, uint8_t yThreshold)
 		{
+			/*
+			 * Variable declaration,
+			 * correspond to the percentage of the calibration value
+			 */
 			//Variables declaration
 			xTarget = 1.3;
 			xThreshold = 0.1;
 			yTarget = 1.6;
 			yThreshold = 0.1;
-			//uint8_t sensor_x = SENSOR_X;
-			//uint8_t sensor_y = SENSOR_Y;
 
 			//Starts the proximity measurement module
 			proximity_start();
 			//Runs the IR sensor calibration process
 			calibrate_ir();
 			//Returns the calibration value for the chosen sensors
-		//	uint8_t sensor_number = SENSOR_X;
 
 			uint8_t sensor_x_calibration=get_calibrated_prox(SENSOR_X);
 			uint8_t sensor_y_calibration=get_calibrated_prox(SENSOR_Y);
-
-//			get_calibrated_prox(sensor_x);
-//			get_calibrated_prox(sensor_y);
 
 			//Infinite loop, X axis
 			while(1)
