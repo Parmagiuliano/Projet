@@ -5,6 +5,11 @@
  *      Author: sjacq
  */
 
+/*
+ * TO DO LIST:
+ * -Define 3 speeds (minimum, common and maximum) for the IMU displacements, and the IMU values associated (thresholds). -> 250/350/450 rpm
+ */
+
 //Includes to check
 #include <ch.h>
 #include <hal.h>
@@ -31,14 +36,22 @@
 //}
 
 
+/** Drawing_IMU function
+* @brief
+* ->Use IR sensors to find X-Y end courses
+* ->Get back to the top right corner and set the position
+* -> Based on the code of the TP 1
+*
+* @param 	x,yTarget     Desired increase of the IR sensor response, to define the end course (percentage of the calibration value)
+* 			x,yThreshold  Margin around both sides of the target (percentage)
+*/
 
-
-void show_gravity(imu_msg_t *imu_values){
+void Drawing_IMU(imu_msg_t *imu_values){
 	imu_start();
 	calibrate_acc();
 	get_acc_all();
 
-    //threshold value to not use the leds when the robot is too horizontal
+    //threshold value to not run the motors when the robot is too horizontal
     float threshold = 0.2;
     float ThresholdAngle = M_PI/10; //Should be contained between 0 and less than PI/2
     //create a pointer to the array for shorter name
@@ -60,8 +73,6 @@ void show_gravity(imu_msg_t *imu_values){
     	global_max_accel = 16; //Datasheet max scale: +-16g, to verify
     	IMU_drawing_speed = (MOTOR_OPTIMAL_SPEED+imu_max_axis_accel/global_max_accel*(MOTOR_SPEED_LIMIT-MOTOR_OPTIMAL_SPEED));
     }
-
-
 
     /*
     * Quadrants & directions:

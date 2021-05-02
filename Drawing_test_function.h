@@ -5,7 +5,7 @@
  *      Author: sjacq
  */
 
-#include
+void Drawing_IMU(imu_msg_t *imu_values);
 
 #ifndef DRAWING_TEST_FUNCTION_H_
 #define DRAWING_TEST_FUNCTION_H_
