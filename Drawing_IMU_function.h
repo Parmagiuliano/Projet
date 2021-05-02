@@ -2,7 +2,7 @@
  * Drawing_IMU_function.h
  *
  *  Created on: Apr 22, 2021
- *      Author: sjacq
+ *  Authors: Parma Giuliano & Jacquart Sylvain
  */
 
 #ifndef DRAWING_IMU_FUNCTION_H_

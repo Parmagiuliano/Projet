@@ -2,12 +2,7 @@
  * Drawing_IMU_function.c
  *
  *  Created on: Apr 22, 2021
- *      Author: sjacq
- */
-
-/*
- * TO DO LIST:
- * -Define 3 speeds (minimum, common and maximum) for the IMU displacements, and the IMU values associated (thresholds). -> 250/350/450 rpm
+ *  Authors: Parma Giuliano & Jacquart Sylvain
  */
 
 //Includes to check
@@ -23,7 +18,7 @@
 #include <Drawing_IMU_function.h>
 #define NB_SAMPLES_OFFSET     200
 
-//static void timer11_start(void){
+//static void timer11_start(void){	//USEFULL?
 //    //General Purpose Timer configuration
 //    //timer 11 is a 16 bit timer so we can measure time
 //    //to about 65ms with a 1Mhz counter
@@ -37,13 +32,11 @@
 
 
 /** Drawing_IMU function
-* @brief
-* ->Use IR sensors to find X-Y end courses
-* ->Get back to the top right corner and set the position
-* -> Based on the code of the TP 1
+* @brief The user is controlling the pen by tilting the ePuck.
+* 		 The IMU controls the function; the speed increases with the increase of the inclination.
+* 		 -> Based on the code of the TP 1
 *
-* @param 	x,yTarget     Desired increase of the IR sensor response, to define the end course (percentage of the calibration value)
-* 			x,yThreshold  Margin around both sides of the target (percentage)
+* @param imu_values -> acceleration (m/s^2)
 */
 
 void Drawing_IMU(imu_msg_t *imu_values){
@@ -70,7 +63,7 @@ void Drawing_IMU(imu_msg_t *imu_values){
     	}else if(fabs(accel[Z_AXIS]) > fabs(accel[X_AXIS]) && fabs(accel[Z_AXIS]) > fabs(accel[Y_AXIS])){
     		imu_max_axis_accel=fabs(accel[Z_AXIS]);
     	}
-    	global_max_accel = 16; //Datasheet max scale: +-16g, to verify
+    	global_max_accel = 16; //Datasheet max scale: +-16g TO VERIFY
     	IMU_drawing_speed = (MOTOR_OPTIMAL_SPEED+imu_max_axis_accel/global_max_accel*(MOTOR_SPEED_LIMIT-MOTOR_OPTIMAL_SPEED));
     }
 
@@ -145,6 +138,11 @@ void Drawing_IMU(imu_msg_t *imu_values){
         	left_motor_set_speed(-MOTOR_OPTIMAL_SPEED);//X motor -> CCW direction
         	right_motor_set_speed(MOTOR_OPTIMAL_SPEED);//Y motor -> CW direction
         }
+
+        /*
+         * Eventually, track the position to avoid any break of the system.
+         * If the IMU value would bring the pen out of the 70x70 square (+-margin), stop the IMU leading instruction.
+         */
 
     	}
 

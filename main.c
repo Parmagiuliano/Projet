@@ -45,9 +45,7 @@ static void serial_start(void)
 	sdStart(&SD3, &ser_cfg); // UART3.
 }
 
-
-
- /** Finding the origin function @In detail
+/** Finding the origin function @In detail
  *
  * By convention for this project, LEFT_MOTOR = X_MOTOR & RIGHT_MOTOR = Y_MOTOR
  *
@@ -190,21 +188,28 @@ int main(void)
     switch (selector)
     {
     	case 0: //Draw a square spiral, starting from the external origin, dimensions 70mm x 70mm
-    		drawing_test_func();
+    		Drawing_test_func();
 			break;
+			//WHEN THE FUNCTION IS FINISHED, ACTIVATION OF THE LED SEQUENCE
 
-    	case 1: //Free to use, IMU
+    	case 1: //Free to draw with IMU
     		Drawing_IMU();
 			break;
+			//WHEN THE FUNCTION IS FINISHED, ACTIVATION OF THE LED SEQUENCE
 
-    	case 2: //Camera, pattern recognition
+    	case 2: //Registered drawing - Epfl Logo
+    		Mighty_update(Mighty_sequence[sequence_pos]);
+    		sequence_pos++;
+    		sequence_pos %= 39;
+    		Drawing_Mighty();
+			break;
+			//WHEN THE FUNCTION IS FINISHED, ACTIVATION OF THE LED SEQUENCE
+
+    	case 3: //Camera, pattern recognition		//SHOULD BE MADE IN 2 SELECTOR FUNC; READ THEN DRAW
     		//get_Process_image
     		//get_PI_regulator
 			break;
 
-    	case 3: //Registered drawing - Epfl Logo
-    		//get_Mighty_logo_function
-			break;
 
 //    	case 4: //Registered drawing - Random
 //    		//get_Random_draw_function_1

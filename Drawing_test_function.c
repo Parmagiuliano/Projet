@@ -2,10 +2,8 @@
  * Drawing_test_function.c
  *
  *  Created on: Apr 27, 2021
- *      Author: sjacq
+ *  Authors: Parma Giuliano & Jacquart Sylvain
  *
- *  Draw a square spiral, starting from the external origin, dimensions 70mm x 70mm
- *  Cf excel file associated
  */
 
 //Includes to check
@@ -19,6 +17,8 @@
 #include "imu.h"
 #include "exti.h"
 
+#include <Drawing_test_function.h>
+
 /* Aimed pattern for the square spiral:
  *1 left_motor CW 70
  *2 rigth_motor CCW 70
@@ -31,14 +31,26 @@
  *9 left_motor CW 60
  * ... until
  *40 right_motor CW 5
+ *
+ *
+ *  --------------------X
+ * 	¦
+ * 	¦    -----------
+ * 	¦    ¦         ¦
+ * 	¦    v         ¦
+ * 	----------------
+ *
  */
 
+/** Drawing_test function
+* @brief Draw a square spiral, starting from the external origin, dimensions 70mm x 70mm.
+* 		 Every change (X/Y motor, motor direction & lenght of lines) are controlled by the modulo of the increment for loop.
+*
+* @param motor_speed_sign		+-1, based on the modulo of the for loop increment
+* 		 counter_value_motor	value set at 507 ~=70cm, decrease by step of 36 ~=5cm
+*/
 
-//Set the motor speed for the function -> usefull?
-//right_motor_set_speed(int speed = MOTOR_OPTIMAL_SPEED);
-//left_motor_set_speed(int speed = MOTOR_OPTIMAL_SPEED);
-
-void drawing_test_func(uint8_t motor_speed_sign, uint16_t counter_value_motor)
+void Drawing_test_func(uint8_t motor_speed_sign, uint16_t counter_value_motor)
 {
 	//Set the origin for the drawing_test_func
 	left_motor_get_pos;
@@ -65,7 +77,7 @@ void drawing_test_func(uint8_t motor_speed_sign, uint16_t counter_value_motor)
 	 	 }
 //	 	 else if (i % 3 != 1)
 //	 	 {
-//	 		 counter_value_motor = counter_value_motor;
+//	 		 counter_value_motor = counter_value_motor;	//No changes
 //	 	 }
 
 	 	 //Using the modulo 2 to choose which motor should run.

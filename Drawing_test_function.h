@@ -2,7 +2,7 @@
  * Drawing_test_function.h
  *
  *  Created on: Apr 27, 2021
- *      Author: sjacq
+ *  Authors: Parma Giuliano & Jacquart Sylvain
  */
 
 void Drawing_IMU(imu_msg_t *imu_values);
