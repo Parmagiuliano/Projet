@@ -8,7 +8,7 @@
  *  Authors: Parma Giuliano & Jacquart Sylvain
  *  Created : 14 april 2021
  */
-
+//INCLUDES TO CHECK
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,7 +24,9 @@
 #include <chprintf.h>
 
 #include <process_image.h>
+#include <Drawing_test_function.h>
 #include <Drawing_IMU_function.h>
+#include <Mighty_logo_function.h>
 
 void SendUint8ToComputer(uint8_t* data, uint16_t size) 
 {
@@ -152,7 +154,7 @@ void FindTheOrigin(uint8_t xTarget, uint8_t xThreshold, uint8_t yTarget, uint8_t
 	//Find_the_origin function completed
 
 	chThdSleepMilliseconds(250);
-}
+	}
 
 // LEDs sequences
 static const uint8_t seq1[8][4] = {
@@ -180,9 +182,10 @@ int main(void)
 	po8030_start();
 	motors_init();
 
-	FindTheOrigin();
+	FindTheOrigin(uint8_t xTarget, uint8_t xThreshold, uint8_t yTarget, uint8_t yThreshold);
 
 	//Selector choice reading
+	int selector;
     selector = get_selector();
 
     switch (selector)
@@ -193,7 +196,7 @@ int main(void)
 			//WHEN THE FUNCTION IS FINISHED, ACTIVATION OF THE LED SEQUENCE
 
     	case 1: //Free to draw with IMU
-    		Drawing_IMU();
+    		Drawing_IMU(imu_msg_t *imu_values);
 			break;
 			//WHEN THE FUNCTION IS FINISHED, ACTIVATION OF THE LED SEQUENCE
 
@@ -201,7 +204,7 @@ int main(void)
     		Mighty_update(Mighty_sequence[sequence_pos]);
     		sequence_pos++;
     		sequence_pos %= 39;
-    		Drawing_Mighty();
+    		Drawing_Mighty(uint8_t motor_speed_sign, uint16_t counter_value_motor);
 			break;
 			//WHEN THE FUNCTION IS FINISHED, ACTIVATION OF THE LED SEQUENCE
 

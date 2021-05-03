@@ -40,74 +40,112 @@
  * @4	Number of steps
  */
 
-static const uint8_t Mighty_sequence[39][4] = {
-{1,		1,	1,	217},
-{2,		0,	0,	74},
-{3,		1,	0,	19},
-{4,		0,	1,	55},
-{5,		1,	0,	41},
-{6,		0,	0,	48},
-{7,		1,	1,	19},
-{8,		0,	1,	48},
-{9,		1,	0,	43},
-{10,	0,	0,	53},
-{11,	1,	0,	19},
-{12,	0,	1,	77},
-{13,	0,	0,	118},
-{14,	1,	1,	86},
-{15,	0,	0,	38},
-{16,	1,	0,	24},
-{17,	0,	1,	38},
-{18,	1,	0,	19},
-{19,	0,	0,	60},
-{20,	1,	1,	50},
-{21,	0,	1,	82},
-{22,	1,	0,	106},
-{23,	0,	0,	120},
-{24,	1,	1,	84},
-{25,	0,	0,	53},
-{26,	1,	1,	19},
-{27,	0,	1,	77},
-{28,	1,	0,	43},
-{29,	0,	0,	72},
-{30,	1,	0,	19},
-{31,	0,	1,	72},
-{32,	1,	0,	19},
-{33,	0,	0,	168},
-{34,	1,	1,	19},
-{35,	0,	1,	53},
-{36,	1,	1,	86},
-{37,	0,	1,	24},
-{38,	1,	0,	106},
-{39,	0,	0,	77},
+static const uint8_t Mighty_sequence[39][3] = {
+//int array[39][3] = {
+{1,	1,	217},
+{0,	0,	74},
+{1,	0,	19},
+{0,	1,	55},
+{1,	0,	41},
+{0,	0,	48},
+{1,	1,	19},
+{0,	1,	48},
+{1,	0,	43},
+{0,	0,	53},
+{1,	0,	19},
+{0,	1,	77},
+{0,	0,	118},
+{1,	1,	86},
+{0,	0,	38},
+{1,	0,	24},
+{0,	1,	38},
+{1,	0,	19},
+{0,	0,	60},
+{1,	1,	50},
+{0,	1,	82},
+{1,	0,	106},
+{0,	0,	120},
+{1,	1,	84},
+{0,	0,	53},
+{1,	1,	19},
+{0,	1,	77},
+{1,	0,	43},
+{0,	0,	72},
+{1,	0,	19},
+{0,	1,	72},
+{1,	0,	19},
+{0,	0,	168},
+{1,	1,	19},
+{0,	1,	53},
+{1,	1,	86},
+{0,	1,	24},
+{1,	0,	106},
+{0,	0,	77},
 };
 
-void Drawing_Mighty(uint8_t motor_speed_sign, uint16_t counter_value_motor){
-	int i;
-	for(i = 1; i < 40; i++){
-		 //Using the 3rd column to change the sens of motors
-			 	 if()//3rd line value = 0
-			 	 {
-			 		 motor_speed_sign = 1;
-			 	 }
-			 	 else if()//3rd line value = 1
-			 	 {
-			 		 motor_speed_sign = -1;
-			 	 }
-	counter_value_motor = 0; //Value of the 4th column
+//ptr = Mighty_sequence;
 
-	//Using the modulo 2 to choose which motor should run.
-		 	 if ()//2nd value = 0
-		 	 {
-		 		 left_motor_set_pos(motor_speed_sign*counter_value_motor);
-		 	 }
-		 	 else if (i % 2 != 0)//2nd value = 1
-		 	 {
-		 		right_motor_set_pos(motor_speed_sign*counter_value_motor);
-		 	 }
-		 	chThdSleepMilliseconds(250);
-		 	return 0;
+void Drawing_Mighty(uint8_t motor_speed_sign, uint16_t counter_value_motor){
+	ptr = Mighty_sequence;
+	int numRows = 38;
+	int numCols = 2;
+	int *ptr;
+	//counter_value_motor = 0; //Default value of the 3th column
+
+	for (int row = 0; row < numRows; row++) // step through the rows in the array
+	{
+	    for (int col = 0; col < numCols; col++) // step through each element in the row
+	    {
+	   	 //Using the 2rd column value to define the sens of motors
+	   			 	 if(ptr + 1 = 0)//2rd line value = 0
+	   			 	 {
+	   			 		 motor_speed_sign = 1;
+	   			 	 }
+	   			 	 else if(ptr + 1 = 1)//2rd line value = 1
+	   			 	 {
+	   			 		 motor_speed_sign = -1;
+	   			 	 }
+	   	//Using the 1st column value to define which motor should run.
+	   			 	counter_value_motor = ptr + 2; //Default value of the 3th column
+	   			 	 if (ptr = 0)//1st value = 0
+	   			 	 {
+	   			 	 left_motor_set_pos(motor_speed_sign*counter_value_motor);
+	   			 	 }
+	   			 	 else if (ptr = 1)//1nd value = 1
+	   			 	 {
+	   			 	 right_motor_set_pos(motor_speed_sign*counter_value_motor);
+	   			 	 }
+	   	chThdSleepMilliseconds(250);
+	   	return 0;
+	    }
 	}
+
+//	//%%%%%%%%%%%%%%%%%%%%%%%%
+//	int i;
+//	for(i = 1; i < 40; i++){
+//		 //Using the 2rd column to change the sens of motors
+//			 	 if()//2rd line value = 0
+//			 	 {
+//			 		 motor_speed_sign = 1;
+//			 	 }
+//			 	 else if()//2rd line value = 1
+//			 	 {
+//			 		 motor_speed_sign = -1;
+//			 	 }
+//	counter_value_motor = 0; //Value of the 3th column
+//
+//	//Using the modulo 2 to choose which motor should run.
+//		 	 if ()//1st value = 0
+//		 	 {
+//		 		 left_motor_set_pos(motor_speed_sign*counter_value_motor);
+//		 	 }
+//		 	 else if (i % 2 != 0)//1nd value = 1
+//		 	 {
+//		 		right_motor_set_pos(motor_speed_sign*counter_value_motor);
+//		 	 }
+//		 	chThdSleepMilliseconds(250);
+//		 	return 0;
+//	}
 }
 
 

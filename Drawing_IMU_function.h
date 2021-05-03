@@ -4,6 +4,10 @@
  *  Created on: Apr 22, 2021
  *  Authors: Parma Giuliano & Jacquart Sylvain
  */
+#include "msgbus/messagebus.h"
+#include "parameter/parameter.h"
+#include "sensors/proximity.h"
+#include "sensors/imu.h"
 
 #ifndef DRAWING_IMU_FUNCTION_H_
 #define DRAWING_IMU_FUNCTION_H_
