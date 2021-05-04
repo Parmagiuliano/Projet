@@ -4,6 +4,7 @@
  *  Created on: Apr 27, 2021
  *  Authors: Parma Giuliano & Jacquart Sylvain
  */
+#include <sensors/imu.h>
 
 void Drawing_IMU(imu_msg_t *imu_values);
 
