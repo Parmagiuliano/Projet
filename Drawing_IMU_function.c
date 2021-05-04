@@ -18,20 +18,10 @@
 #include <Drawing_IMU_function.h>
 #define NB_SAMPLES_OFFSET     200
 
-//static void timer11_start(void){	//USEFULL?
-//    //General Purpose Timer configuration
-//    //timer 11 is a 16 bit timer so we can measure time
 //    //to about 65ms with a 1Mhz counter
-//    static const GPTConfig gpt11cfg = {
-//        1000000,        /* 1MHz timer clock in order to measure uS.*/
-//        NULL,           /* Timer callback.*/
-//        0,
-//        0
-//    };
-//}
 
 
-/** Drawing_IMU function
+/* Drawing_IMU function
 * @brief The user is controlling the pen by tilting the ePuck.
 * 		 The IMU controls the function; the speed increases with the increase of the inclination.
 * 		 -> Based on the code of the TP 1
@@ -147,7 +137,7 @@ void Drawing_IMU(imu_msg_t *imu_values){
     	}
 
     }
-}
+
 
 
 
