@@ -8,6 +8,10 @@
  *  Authors: Parma Giuliano & Jacquart Sylvain
  *  Created : 14 april 2021
  */
+
+/*
+ * STILL TO BE DONE : TRACKING OF THE POS FOR THE DRAWING IMU FCT
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,29 +21,30 @@
 
 #include <ch.h>
 #include <hal.h>
-#include "memory_protection.h"
 #include <usbcfg.h>
 #include <motors.h>
 #include <camera/po8030.h>
 #include <chprintf.h>
 #include <selector.h>
 #include <leds.h>
+#include <sensors/imu.h>
+#include "memory_protection.h"
 #include "i2c_bus.h"
 #include "exti.h"
-
-#include <Drawing_test_function.c>			//If the .c are not include, undefined ref to the fcts in selector seq.
+/*
+ * Mandatory to include the .c, to avoid any "undefined reference to the function".
+ */
+#include <Drawing_test_function.c>
 #include <Drawing_test_function.h>
 #include <Drawing_IMU_function.c>
 #include <Drawing_IMU_function.h>
 #include <Mighty_logo_function.c>
 #include <Mighty_logo_function.h>
 #include <process_image.h>
-
-//#include <messagebus.h>
-#include <sensors/imu.h>		//NOT USEFULL, used only in Drawing_IMU_function
-
-//extern messagebus_t bus;		//ADDED LINE
-static imu_msg_t imu_values;	//ADDED LINE, USEFULL
+/*
+ * Mandatory to define the global imu_values, to avoid the "unspecified variable" error.
+ */
+static imu_msg_t imu_values;
 
 void SendUint8ToComputer(uint8_t* data, uint16_t size) 
 {
@@ -48,25 +53,13 @@ void SendUint8ToComputer(uint8_t* data, uint16_t size)
 	chSequentialStreamWrite((BaseSequentialStream *)&SD3, (uint8_t*)data, size);
 }
 
-//static void serial_start(void)
-//{
-//	static SerialConfig ser_cfg = {
-//	    115200,
-//	    0,
-//	    0,
-//	    0,
-//	};
-//
-//	sdStart(&SD3, &ser_cfg); // UART3.
-//}
-
 /* Finding the origin function @In detail
  *
  * By convention for this project, LEFT_MOTOR = X_MOTOR & RIGHT_MOTOR = Y_MOTOR
  *
  * Unit conversion: 1 step motor = 0.1382 mm with GearRadius R = 22mm.
  * On a square of 80 x 80 mm, we have approx 570 x 570 step of motor.
- * To avoid any damage of the hardware, the pen will move on a square of 70 x 70 mm, approximatively 500 x 500 step.
+ * To avoid any damage to the hardware, the pen will move on a square of 70 x 70 mm, approximatively 500 x 500 step.
  *
  * Schematic of the hardware:
  *
@@ -96,7 +89,7 @@ void SendUint8ToComputer(uint8_t* data, uint16_t size)
 
 /* Finding the origin function @brief
 * ->Use IR sensors to find X-Y end courses
-* ->Get back to the top right corner and set the position
+* ->Get back to the top right corner and set the position as (0,0)
 *
 */
 
@@ -115,10 +108,12 @@ void FindTheOrigin(void)
 					if(get_prox(SENSOR_X) < IR_OPTIMAL_DIST)
 						{
 							left_motor_set_speed(MOTOR_OPTIMAL_SPEED); 	//CW rotation
-						}else if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST){
+						}
+					else if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST)
+						{
 							left_motor_set_speed(MOTOR_NO_SPEED); 		//Stop the rotation
-						break;
-					}
+							break;
+						}
 				 }
 		chThdSleepMilliseconds(250);
 
@@ -134,15 +129,17 @@ void FindTheOrigin(void)
 		 * Returns the last value measured by the Y sensor ->U101
 		 */
 
-		while(1)
-			{
-				if(get_prox(SENSOR_Y) < IR_OPTIMAL_DIST) {
-					right_motor_set_speed(-MOTOR_OPTIMAL_SPEED); 	//CCW rotation
-				}else if(get_prox(SENSOR_Y) > IR_OPTIMAL_DIST){
-					right_motor_set_speed(MOTOR_NO_SPEED); 			//Stop the rotation
-					break;
+		while(1){
+					if(get_prox(SENSOR_Y) < IR_OPTIMAL_DIST)
+						{
+							right_motor_set_speed(-MOTOR_OPTIMAL_SPEED); 	//CCW rotation
+						}
+					else if(get_prox(SENSOR_Y) > IR_OPTIMAL_DIST)
+						{
+							right_motor_set_speed(MOTOR_NO_SPEED); 			//Stop the rotation
+							break;
+						}
 				}
-			}
 		chThdSleepMilliseconds(250);
 
 		/*
@@ -161,7 +158,7 @@ int main(void)
     mpu_init();
 	motors_init();
 
-    //Start the periphericals / communications
+    //Start the peripherals / communication
     serial_start();
     usb_start();
     dcmi_start();

@@ -5,34 +5,17 @@
  *  Authors: Parma Giuliano & Jacquart Sylvain
  */
 
-//Includes to check
 #include <ch.h>
 #include <hal.h>
 #include <main.h>
 #include "usbcfg.h"
 #include "chprintf.h"
-//#include <messagebus.h>
 #include "i2c_bus.h"
-//#include "imu.h"
 #include "exti.h"
 #include <leds.h>
 
 #include <Drawing_IMU_function.h>
 #define NB_SAMPLES_OFFSET     200
-
-
-//static void timer11_start(void){	//USEFULL?
-//    //General Purpose Timer configuration
-//    //timer 11 is a 16 bit timer so we can measure time
-//    //to about 65ms with a 1Mhz counter
-//    static const GPTConfig gpt11cfg = {
-//        1000000,        /* 1MHz timer clock in order to measure uS.*/
-//        NULL,           /* Timer callback.*/
-//        0,
-//        0
-//    };
-//}
-
 
 //** Drawing_IMU function
 messagebus_t bus;
@@ -92,41 +75,24 @@ static THD_FUNCTION(ThdBodyLed, arg) {
         palTogglePad(GPIOB, GPIOB_LED_BODY);
 
         /*
-        *   1st case :  pause the thread during 500ms
+        *   Pause the thread during 500ms
         */
         chThdSleepMilliseconds(500);
-
-        /*
-        *   2nd case :  make the thread work during the 500ms
-        */
-
-        // //about 500ms at 168MHz
-        // for(uint32_t i = 0 ; i < 21000000 ; i++){
-        //     __asm__ volatile ("nop");
-        // }
-
-        /*
-        *   3rd case :  make the thread work during the 500ms
-        *               and block the preemption
-        */
-
-        // chSysLock();
-        // for(uint32_t i = 0 ; i < 21000000 ; i++){
-        //     __asm__ volatile ("nop");
-        // }
-        // chSysUnlock();
     }
 }
 
+/*
+ * Mandatory to define the global imu_values, to avoid the "unspecified variable" error.
+ */
+static imu_msg_t imu_values;
+
 /* Drawing_IMU function
->>>>>>> Stashed changes
 * @brief The user is controlling the pen by tilting the ePuck.
 * 		 The IMU controls the function; the speed increases with the increase of the inclination.
 * 		 -> Based on the code of the TP 1
 *
 * @param imu_values -> acceleration (m/s^2)
 */
-static imu_msg_t imu_values;
 
 void Drawing_IMU(imu_msg_t *imu_values){
     halInit();
@@ -137,7 +103,7 @@ void Drawing_IMU(imu_msg_t *imu_values){
     imu_start();
 
 	calibrate_acc();
-	//get_acc_all();
+
 
 	/** Inits the Inter Process Communication bus. */
 	    messagebus_init(&bus, &bus_lock, &bus_condvar);
@@ -253,12 +219,4 @@ void Drawing_IMU(imu_msg_t *imu_values){
          */
 
     	}
-
     }
-//}
-
-//}
-
-
-
-
