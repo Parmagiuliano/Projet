@@ -32,7 +32,6 @@
  * ... until
  *40 right_motor CW 5
  *
- *
  *  --------------------X
  * 	¦
  * 	¦    -----------
@@ -50,28 +49,32 @@
 * 		 counter_value_motor	value set at 507 ~=70cm, decrease by step of 36 ~=5cm
 */
 
-void Drawing_test_func(uint8_t motor_speed_sign, uint16_t counter_value_motor)
+void Drawing_test_func(void)
 {
 	//Set the origin for the drawing_test_func
-	left_motor_get_pos;
-	right_motor_get_pos;
+	left_motor_set_pos(0);
+	right_motor_set_pos(0);
 
-	int i;
+	//Variables declaration
+
+	uint8_t i;
+	int8_t motor_speed_sign = 0;
+	uint16_t counter_value_motor = 507; 	//507 steps ~= 70cm
+
 	for(i = 1; i < 41; i++)
  	 {
 	 	 //Using the modulo 4 to change the sens of motors in the for loop
-	 	 if(i % 4 == 0 | i % 4 == 1)
+	 	 if((i % 4 == 0) && (i % 4 == 1))
 	 	 {
 	 		 motor_speed_sign = 1;
 	 	 }
-	 	 else if (i % 4 == 2 | i % 4 == 3)
+	 	 else if ((i % 4 == 2) && (i % 4 == 3))
 	 	 {
 	 		 motor_speed_sign = -1;
 	 	 }
 
 	 	 //Using the modulo 3 to decrease the length of lines over time.
-	 	 counter_value_motor = 507; //507 steps ~= 70cm
-	 	 if(i % 3 == 1 && i != 1)
+	 	 if((i % 3 == 1) && (i != 1))
 	 	 {
 	 		 counter_value_motor = counter_value_motor - 36; //36 steps ~= 5cm
 	 	 }
@@ -81,18 +84,18 @@ void Drawing_test_func(uint8_t motor_speed_sign, uint16_t counter_value_motor)
 //	 	 }
 
 	 	 //Using the modulo 2 to choose which motor should run.
-	 	 if (i % 2 == 0)
+	 	 if ((i % 2) == 0)
 	 	 {
-	 		 right_motor_set_pos(motor_speed_sign*counter_value_motor);
+	 		right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, motor_speed_sign*counter_value_motor);
 	 	 }
-	 	 else if (i % 2 != 0)
+	 	 else if ((i % 2) != 0)
 	 	 {
-	 		 left_motor_set_pos(motor_speed_sign*counter_value_motor);
+	 		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, motor_speed_sign*counter_value_motor);
 	 	 }
 
 	chThdSleepMilliseconds(250);
-	return 0;
  	 }
+	return;
 }
 
 

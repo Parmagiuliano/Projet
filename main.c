@@ -27,32 +27,19 @@
 #include "i2c_bus.h"
 #include "exti.h"
 
+#include <Drawing_test_function.c>			//If the .c are not include, undefined ref to the fcts in selector seq.
 #include <Drawing_test_function.h>
+#include <Drawing_IMU_function.c>
 #include <Drawing_IMU_function.h>
+#include <Mighty_logo_function.c>
 #include <Mighty_logo_function.h>
 #include <process_image.h>
 
 //#include <messagebus.h>
-//#include <sensors/imu.h>		//NOT USEFULL, used only in Drawing_IMU_function
+#include <sensors/imu.h>		//NOT USEFULL, used only in Drawing_IMU_function
 
 //extern messagebus_t bus;		//ADDED LINE
 static imu_msg_t imu_values;	//ADDED LINE, USEFULL
-
-static void timer11_start(void){
-    //General Purpose Timer configuration
-    //timer 11 is a 16 bit timer so we can measure time
-    //to about 65ms with a 1Mhz counter
-    static const GPTConfig gpt11cfg = {
-        1000000,        /* 1MHz timer clock in order to measure uS.*/
-        NULL,           /* Timer callback.*/
-        0,
-        0
-    };
-
-    gptStart(&GPTD11, &gpt11cfg);
-    //let the timer count to max value
-    gptStartContinuous(&GPTD11, 0xFFFF);
-}
 
 void SendUint8ToComputer(uint8_t* data, uint16_t size) 
 {
@@ -61,17 +48,17 @@ void SendUint8ToComputer(uint8_t* data, uint16_t size)
 	chSequentialStreamWrite((BaseSequentialStream *)&SD3, (uint8_t*)data, size);
 }
 
-static void serial_start(void)
-{
-	static SerialConfig ser_cfg = {
-	    115200,
-	    0,
-	    0,
-	    0,
-	};
-
-	sdStart(&SD3, &ser_cfg); // UART3.
-}
+//static void serial_start(void)
+//{
+//	static SerialConfig ser_cfg = {
+//	    115200,
+//	    0,
+//	    0,
+//	    0,
+//	};
+//
+//	sdStart(&SD3, &ser_cfg); // UART3.
+//}
 
 /* Finding the origin function @In detail
  *
@@ -113,7 +100,7 @@ static void serial_start(void)
 *
 */
 
-static void FindTheOrigin()
+void FindTheOrigin(void)
 	{
 		//Starts the proximity measurement module
 		proximity_start();
@@ -125,14 +112,14 @@ static void FindTheOrigin()
 		 * Returns the last value measured by the X sensor ->U106
 		 */
 		while(1){
-					if(get_prox(SENSOR_X) < IR_OPTIMAL_DIST){
-						left_motor_set_speed(MOTOR_OPTIMAL_SPEED); 	//CW rotation
-					}else if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST){
-						left_motor_set_speed(MOTOR_NO_SPEED); 		//Stop the rotation
+					if(get_prox(SENSOR_X) < IR_OPTIMAL_DIST)
+						{
+							left_motor_set_speed(MOTOR_OPTIMAL_SPEED); 	//CW rotation
+						}else if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST){
+							left_motor_set_speed(MOTOR_NO_SPEED); 		//Stop the rotation
 						break;
 					}
 				 }
-
 		chThdSleepMilliseconds(250);
 
 		/*
@@ -156,7 +143,6 @@ static void FindTheOrigin()
 					break;
 				}
 			}
-
 		chThdSleepMilliseconds(250);
 
 		/*
@@ -169,13 +155,13 @@ static void FindTheOrigin()
 
 int main(void)
 {
-    //start the system
+    //Initialize the system
     halInit();
     chSysInit();
     mpu_init();
 	motors_init();
 
-    //Some initializations
+    //Start the periphericals / communications
     serial_start();
     usb_start();
     dcmi_start();

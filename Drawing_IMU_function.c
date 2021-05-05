@@ -11,15 +11,16 @@
 #include <main.h>
 #include "usbcfg.h"
 #include "chprintf.h"
-#include <messagebus.h>
+//#include <messagebus.h>
 #include "i2c_bus.h"
-#include "imu.h"
+//#include "imu.h"
 #include "exti.h"
+#include <leds.h>
 
 #include <Drawing_IMU_function.h>
 #define NB_SAMPLES_OFFSET     200
 
-<<<<<<< Updated upstream
+
 //static void timer11_start(void){	//USEFULL?
 //    //General Purpose Timer configuration
 //    //timer 11 is a 16 bit timer so we can measure time
@@ -33,13 +34,10 @@
 //}
 
 
-/** Drawing_IMU function
-=======
+//** Drawing_IMU function
 messagebus_t bus;
 MUTEX_DECL(bus_lock);
 CONDVAR_DECL(bus_condvar);
-
-
 
 static void serial_start(void)
 {
@@ -108,7 +106,9 @@ void Drawing_IMU(imu_msg_t *imu_values){
 
     //Variable speed of the motors, depending of the IMU accelerations.
     //The pen draws faster when the inclination increases.
-    void IMU_drawing_variable_speed(uint32_t imu_max_axis_accel, uint32_t global_max_accel ){
+    void IMU_drawing_variable_speed(){
+    	uint32_t imu_max_axis_accel;
+    	uint32_t global_max_accel
     	if(fabs(accel[X_AXIS]) > fabs(accel[Y_AXIS]) && fabs(accel[X_AXIS]) > fabs(accel[Z_AXIS])){
     		imu_max_axis_accel=fabs(accel[X_AXIS]);
     	}else if(fabs(accel[Y_AXIS]) > fabs(accel[X_AXIS]) && fabs(accel[Y_AXIS]) > fabs(accel[Z_AXIS])){
@@ -198,14 +198,12 @@ void Drawing_IMU(imu_msg_t *imu_values){
          */
 
     	}
-<<<<<<< Updated upstream
 
     }
-}
-=======
-}
+//}
 
->>>>>>> Stashed changes
+//}
+
 
 
 
