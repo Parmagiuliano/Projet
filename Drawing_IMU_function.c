@@ -11,6 +11,7 @@
 #include <main.h>
 #include "usbcfg.h"
 #include "chprintf.h"
+#include <messagebus.h>
 #include "i2c_bus.h"
 #include "imu.h"
 #include "exti.h"
@@ -18,6 +19,7 @@
 #include <Drawing_IMU_function.h>
 #define NB_SAMPLES_OFFSET     200
 
+<<<<<<< Updated upstream
 //static void timer11_start(void){	//USEFULL?
 //    //General Purpose Timer configuration
 //    //timer 11 is a 16 bit timer so we can measure time
@@ -32,17 +34,68 @@
 
 
 /** Drawing_IMU function
+=======
+messagebus_t bus;
+MUTEX_DECL(bus_lock);
+CONDVAR_DECL(bus_condvar);
+
+
+
+static void serial_start(void)
+{
+    static SerialConfig ser_cfg = {
+        115200,
+        0,
+        0,
+        0,
+    };
+
+    sdStart(&SD3, &ser_cfg); // UART3. Connected to the second com port of the programmer
+}
+
+static void timer11_start(void){
+    //General Purpose Timer configuration
+    //timer 11 is a 16 bit timer so we can measure time
+    //to about 65ms with a 1Mhz counter
+    static const GPTConfig gpt11cfg = {
+        1000000,        /* 1MHz timer clock in order to measure uS.*/
+        NULL,           /* Timer callback.*/
+        0,
+        0
+    };
+
+    gptStart(&GPTD11, &gpt11cfg);
+    //let the timer count to max value
+    gptStartContinuous(&GPTD11, 0xFFFF);
+}
+
+/* Drawing_IMU function
+>>>>>>> Stashed changes
 * @brief The user is controlling the pen by tilting the ePuck.
 * 		 The IMU controls the function; the speed increases with the increase of the inclination.
 * 		 -> Based on the code of the TP 1
 *
 * @param imu_values -> acceleration (m/s^2)
 */
+static imu_msg_t imu_values;
 
 void Drawing_IMU(imu_msg_t *imu_values){
-	imu_start();
+    halInit();
+    chSysInit();
+    serial_start();
+    timer11_start();
+    i2c_start();
+    imu_start();
+
 	calibrate_acc();
-	get_acc_all();
+	//get_acc_all();
+
+	/** Inits the Inter Process Communication bus. */
+	    messagebus_init(&bus, &bus_lock, &bus_condvar);
+
+	    chThdCreateStatic(waThdFrontLed, sizeof(waThdFrontLed), NORMALPRIO, ThdFrontLed, NULL);
+	    chThdCreateStatic(waThdBodyLed, sizeof(waThdBodyLed), NORMALPRIO, ThdBodyLed, NULL);
+
 
     //threshold value to not run the motors when the robot is too horizontal
     float threshold = 0.2;
@@ -145,9 +198,14 @@ void Drawing_IMU(imu_msg_t *imu_values){
          */
 
     	}
+<<<<<<< Updated upstream
 
     }
 }
+=======
+}
+
+>>>>>>> Stashed changes
 
 
 
