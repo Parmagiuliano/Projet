@@ -92,21 +92,12 @@ void Drawing_Mighty(uint8_t motor_speed_sign, uint16_t counter_value_motor){
 	int *ptr;
 	//counter_value_motor = 0; //Default value of the 3th column
 
-<<<<<<< Updated upstream
 	for (int row = 0; row < numRows; row++) // step through the rows in the array
-=======
-	for (uint8_t i = 0; i < numRows; i++) // step through the rows in the array
->>>>>>> Stashed changes
 	{
 	    for (int col = 0; col < numCols; col++) // step through each element in the row
 	    {
-<<<<<<< Updated upstream
 	   	 //Using the 2rd column value to define the sens of motors
 	   			 	 if(ptr + 1 = 0)//2rd line value = 0
-=======
-	    			 //Using the 2rd column value to define the sens of motors
-	   			 	 if(ptr + 1 = 0)//2nd line value = 0
->>>>>>> Stashed changes
 	   			 	 {
 	   			 		 motor_speed_sign = 1;
 	   			 	 }

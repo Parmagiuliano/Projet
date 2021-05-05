@@ -14,7 +14,7 @@
 #include "usbcfg.h"
 #include "chprintf.h"
 #include "i2c_bus.h"
-//#include "imu.h"		//NOT USEFULL
+#include "imu.h"
 #include "exti.h"
 
 #include <Drawing_test_function.h>
