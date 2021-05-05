@@ -67,6 +67,57 @@ static void timer11_start(void){
     gptStartContinuous(&GPTD11, 0xFFFF);
 }
 
+static THD_WORKING_AREA(waThdFrontLed, 128);
+static THD_FUNCTION(ThdFrontLed, arg) {
+
+    chRegSetThreadName(__FUNCTION__);
+    (void)arg;
+
+    systime_t time;
+
+    while(1){
+        time = chVTGetSystemTime();
+        palTogglePad(GPIOD, GPIOD_LED_FRONT);
+        chThdSleepUntilWindowed(time, time + MS2ST(10));
+    }
+}
+
+static THD_WORKING_AREA(waThdBodyLed, 128);
+static THD_FUNCTION(ThdBodyLed, arg) {
+
+    chRegSetThreadName(__FUNCTION__);
+    (void)arg;
+
+    while(1){
+        palTogglePad(GPIOB, GPIOB_LED_BODY);
+
+        /*
+        *   1st case :  pause the thread during 500ms
+        */
+        chThdSleepMilliseconds(500);
+
+        /*
+        *   2nd case :  make the thread work during the 500ms
+        */
+
+        // //about 500ms at 168MHz
+        // for(uint32_t i = 0 ; i < 21000000 ; i++){
+        //     __asm__ volatile ("nop");
+        // }
+
+        /*
+        *   3rd case :  make the thread work during the 500ms
+        *               and block the preemption
+        */
+
+        // chSysLock();
+        // for(uint32_t i = 0 ; i < 21000000 ; i++){
+        //     __asm__ volatile ("nop");
+        // }
+        // chSysUnlock();
+    }
+}
+
 /* Drawing_IMU function
 >>>>>>> Stashed changes
 * @brief The user is controlling the pen by tilting the ePuck.
@@ -104,20 +155,24 @@ void Drawing_IMU(imu_msg_t *imu_values){
     //volatile to not be optimized out by the compiler if not used
     volatile uint16_t time = 0;
 
+    int IMU_drawing_speed;
+
     //Variable speed of the motors, depending of the IMU accelerations.
     //The pen draws faster when the inclination increases.
     void IMU_drawing_variable_speed(){
     	uint32_t imu_max_axis_accel;
-    	uint32_t global_max_accel
+    	uint32_t global_max_accel;
     	if(fabs(accel[X_AXIS]) > fabs(accel[Y_AXIS]) && fabs(accel[X_AXIS]) > fabs(accel[Z_AXIS])){
     		imu_max_axis_accel=fabs(accel[X_AXIS]);
     	}else if(fabs(accel[Y_AXIS]) > fabs(accel[X_AXIS]) && fabs(accel[Y_AXIS]) > fabs(accel[Z_AXIS])){
     		imu_max_axis_accel=fabs(accel[Y_AXIS]);
     	}else if(fabs(accel[Z_AXIS]) > fabs(accel[X_AXIS]) && fabs(accel[Z_AXIS]) > fabs(accel[Y_AXIS])){
     		imu_max_axis_accel=fabs(accel[Z_AXIS]);
-    	}
+
     	global_max_accel = 16; //Datasheet max scale: +-16g TO VERIFY
     	IMU_drawing_speed = (MOTOR_OPTIMAL_SPEED+imu_max_axis_accel/global_max_accel*(MOTOR_SPEED_LIMIT-MOTOR_OPTIMAL_SPEED));
+
+    	}
     }
 
     /*

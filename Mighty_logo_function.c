@@ -84,10 +84,10 @@ const int Mighty_sequence_array[39][3] = {
 void Drawing_Mighty(void){
 
 	//Variables declaration
-	ptr[1][3] = Mighty_sequence_array[i];
+	//int Read_line_array = Mighty_sequence_array[i];
 	uint8_t numRows = 38;
-	uint8_t numCols = 2;
-	int *ptr;
+	//uint8_t numCols = 2;
+	//int *ptr;
 	int8_t motor_speed_sign = 0;
 	uint16_t counter_value_motor = 0;
 
@@ -95,30 +95,35 @@ void Drawing_Mighty(void){
 
 	for (uint8_t row = 0; row < numRows; row++) // step through the rows in the array
 	{
-	    for (uint8_t col = 0; col < numCols; col++) // step through each element in the row
-	    {
+//	    for (uint8_t col = 0; col < numCols; col++) // step through each element in the row
+//	    {
 	    		 //Using the 2rd column value to define the sens of motors
-	   			 	 if(ptr + 1 == 0)//2nd line value = 0
+	    	if(Mighty_sequence_array[row][1] == 0)
+//	   			 	 if(ptr + 1 == 0)//2nd line value = 0
 	   			 	 	 {
 	   			 		 	 motor_speed_sign = 1;
 	   			 	 	 }
-	   			 	 else if(ptr + 1 == 1)//2rd line value = 1
+//	   			 	 else if(ptr + 1 == 1)//2rd line value = 1
+	    	else if(Mighty_sequence_array[row][1] == 1)
 	   			 	 	 {
 	   			 		 	 motor_speed_sign = -1;
 	   			 	 	 }
 	   			 //Using the 1st column value to define which motor should run.
-	   			 counter_value_motor = ptr + 2; //Default value of the 3th column
-	   			 	 if (ptr == 0)//1st value = 0
+//	   			 counter_value_motor = ptr + 2; //Default value of the 3th column
+	    	counter_value_motor = Mighty_sequence_array[row][2];
+//	   			 	 if (ptr == 0)//1st value = 0
+	    	if(Mighty_sequence_array[row][0] == 0)
 	   			 	 	 {
 	   			 		 	 left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, motor_speed_sign*counter_value_motor);
 	   			 	 	 }
-	   			 	 else if (ptr == 1)//1nd value = 1
+	    	else if(Mighty_sequence_array[row][0] == 1)
+//	   			 	 else if (ptr == 1)//1nd value = 1
 	   			 	 	 {
 	   			 		 	 right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, motor_speed_sign*counter_value_motor);
 	   			 	 	 }
 	   			 chThdSleepMilliseconds(250);
 	    }
-	    return 0;
+	    return;
 	}
 
 //	//%%%%%%%%%%%%%%%%%%%%%%%%
@@ -147,6 +152,6 @@ void Drawing_Mighty(void){
 //		 	chThdSleepMilliseconds(250);
 //		 	return 0;
 //	}
-}
+//}
 
 
