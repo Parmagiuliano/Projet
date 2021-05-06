@@ -104,6 +104,10 @@ void Drawing_IMU(imu_msg_t *imu_values){
 
 	calibrate_acc();
 
+	//Set the origin for the drawing_IMU_func
+	left_motor_set_pos(0);
+	right_motor_set_pos(0);
+
 
 	/** Inits the Inter Process Communication bus. */
 	    messagebus_init(&bus, &bus_lock, &bus_condvar);
@@ -213,10 +217,23 @@ void Drawing_IMU(imu_msg_t *imu_values){
         	right_motor_set_speed(MOTOR_OPTIMAL_SPEED);//Y motor -> CW direction
         }
 
+//        while(1){
+//        	//Reads the positions
+//        	left_motor_get_pos();
+//        	right_motor_get_pos();
+//
+//
+//
+//                /*
+//                *   Pause the thread during 500ms
+//                */
+//                chThdSleepMilliseconds(500);
+//            }
+
         /*
          * Eventually, track the position to avoid any break of the system.
          * If the IMU value would bring the pen out of the 70x70 square (+-margin), stop the IMU leading instruction.
          */
 
-    	}
     }
+}

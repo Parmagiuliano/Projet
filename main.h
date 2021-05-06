@@ -34,7 +34,7 @@ extern "C" {
 
 #define SENSOR_X				2
 #define SENSOR_Y				0
-#define IR_OPTIMAL_DIST			400
+#define IR_OPTIMAL_DIST			4000
 
 
 /** Robot wide IPC bus. */

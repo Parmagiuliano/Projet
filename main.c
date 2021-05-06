@@ -27,10 +27,12 @@
 #include <chprintf.h>
 #include <selector.h>
 #include <leds.h>
+#include <sensors/proximity.h>
 #include <sensors/imu.h>
 #include "memory_protection.h"
 #include "i2c_bus.h"
 #include "exti.h"
+
 /*
  * Mandatory to include the .c, to avoid any "undefined reference to the function".
  */
@@ -45,6 +47,9 @@
  * Mandatory to define the global imu_values, to avoid the "unspecified variable" error.
  */
 static imu_msg_t imu_values;
+messagebus_t bus;
+
+
 
 void SendUint8ToComputer(uint8_t* data, uint16_t size) 
 {
@@ -95,6 +100,7 @@ void SendUint8ToComputer(uint8_t* data, uint16_t size)
 
 void FindTheOrigin(void)
 	{
+		messagebus_init(&bus, &bus_lock, &bus_condvar);
 		//Starts the proximity measurement module
 		proximity_start();
 		//Runs the IR sensor calibration process
@@ -104,17 +110,36 @@ void FindTheOrigin(void)
 		 * Infinite loop, X axis
 		 * Returns the last value measured by the X sensor ->U106
 		 */
-		while(1){
-					if(get_prox(SENSOR_X) < IR_OPTIMAL_DIST)
-						{
-							left_motor_set_speed(MOTOR_OPTIMAL_SPEED); 	//CW rotation
-						}
-					else if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST)
-						{
-							left_motor_set_speed(MOTOR_NO_SPEED); 		//Stop the rotation
-							break;
-						}
-				 }
+			left_motor_set_speed(MOTOR_OPTIMAL_SPEED); 	//CW rotation
+			while(1){
+				if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST){
+					left_motor_set_speed(MOTOR_NO_SPEED);
+					break;
+				}
+			}
+
+			//		while(1){
+//					chThdSleepMilliseconds(250);
+//					else if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST)
+//											{
+//												left_motor_set_speed(MOTOR_NO_SPEED); 		//Stop the rotation
+//												break;
+//											}
+//		}
+//		if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST)
+//			left_motor_set_speed(MOTOR_NO_SPEED);
+//		chThdSleepMilliseconds(250);
+//		while(1){
+//					if(get_prox(SENSOR_X) < IR_OPTIMAL_DIST)
+//						{
+//
+//						}
+//					else if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST)
+//						{
+//							left_motor_set_speed(MOTOR_NO_SPEED); 		//Stop the rotation
+//							break;
+//						}
+//				 }
 		chThdSleepMilliseconds(250);
 
 		/*
@@ -129,18 +154,26 @@ void FindTheOrigin(void)
 		 * Returns the last value measured by the Y sensor ->U101
 		 */
 
-		while(1){
-					if(get_prox(SENSOR_Y) < IR_OPTIMAL_DIST)
-						{
-							right_motor_set_speed(-MOTOR_OPTIMAL_SPEED); 	//CCW rotation
-						}
-					else if(get_prox(SENSOR_Y) > IR_OPTIMAL_DIST)
-						{
-							right_motor_set_speed(MOTOR_NO_SPEED); 			//Stop the rotation
+		right_motor_set_speed(MOTOR_OPTIMAL_SPEED); 	//CW rotation
+					while(1){
+						if(get_prox(SENSOR_Y) > IR_OPTIMAL_DIST){
+							right_motor_set_speed(MOTOR_NO_SPEED);
 							break;
 						}
-				}
-		chThdSleepMilliseconds(250);
+					}
+
+//		while(1){
+//					if(get_prox(SENSOR_Y) < IR_OPTIMAL_DIST)
+//						{
+//							right_motor_set_speed(-MOTOR_OPTIMAL_SPEED); 	//CCW rotation
+//						}
+//					else if(get_prox(SENSOR_Y) > IR_OPTIMAL_DIST)
+//						{
+//							right_motor_set_speed(MOTOR_NO_SPEED); 			//Stop the rotation
+//							break;
+//						}
+//				}
+//		chThdSleepMilliseconds(250);
 
 		/*
 		 * Return the Xstage to the X offset
