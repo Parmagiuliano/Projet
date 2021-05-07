@@ -14,6 +14,10 @@
 #include "exti.h"
 #include <leds.h>
 
+//#include <messagebus.h>		//JUST ADDED
+#include <sensors/imu.h>			//
+//#include <sensors/imu.c>
+
 #include <Drawing_IMU_function.h>
 #define NB_SAMPLES_OFFSET     200
 
@@ -50,36 +54,36 @@ static void timer11_start(void){
     gptStartContinuous(&GPTD11, 0xFFFF);
 }
 
-static THD_WORKING_AREA(waThdFrontLed, 128);
-static THD_FUNCTION(ThdFrontLed, arg) {
-
-    chRegSetThreadName(__FUNCTION__);
-    (void)arg;
-
-    systime_t time;
-
-    while(1){
-        time = chVTGetSystemTime();
-        palTogglePad(GPIOD, GPIOD_LED_FRONT);
-        chThdSleepUntilWindowed(time, time + MS2ST(10));
-    }
-}
-
-static THD_WORKING_AREA(waThdBodyLed, 128);
-static THD_FUNCTION(ThdBodyLed, arg) {
-
-    chRegSetThreadName(__FUNCTION__);
-    (void)arg;
-
-    while(1){
-        palTogglePad(GPIOB, GPIOB_LED_BODY);
-
-        /*
-        *   Pause the thread during 500ms
-        */
-        chThdSleepMilliseconds(500);
-    }
-}
+//static THD_WORKING_AREA(waThdFrontLed, 128);
+//static THD_FUNCTION(ThdFrontLed, arg) {
+//
+//    chRegSetThreadName(__FUNCTION__);
+//    (void)arg;
+//
+//    systime_t time;
+//
+//    while(1){
+//        time = chVTGetSystemTime();
+//        palTogglePad(GPIOD, GPIOD_LED_FRONT);
+//        chThdSleepUntilWindowed(time, time + MS2ST(10));
+//    }
+//}
+//
+//static THD_WORKING_AREA(waThdBodyLed, 128);
+//static THD_FUNCTION(ThdBodyLed, arg) {
+//
+//    chRegSetThreadName(__FUNCTION__);
+//    (void)arg;
+//
+//    while(1){
+//        palTogglePad(GPIOB, GPIOB_LED_BODY);
+//
+//        /*
+//        *   Pause the thread during 500ms
+//        */
+//        chThdSleepMilliseconds(500);
+//    }
+//}
 
 /*
  * Mandatory to define the global imu_values, to avoid the "unspecified variable" error.
@@ -95,25 +99,25 @@ static imu_msg_t imu_values;
 */
 
 void Drawing_IMU(imu_msg_t *imu_values){
-    halInit();
-    chSysInit();
-    serial_start();
-    timer11_start();
-    i2c_start();
-    imu_start();
-
-	calibrate_acc();
-
-	//Set the origin for the drawing_IMU_func
-	left_motor_set_pos(0);
-	right_motor_set_pos(0);
+//    halInit();
+//    chSysInit();
+//    serial_start();
+//    timer11_start();
+//    i2c_start();
+//    imu_start();
+//
+//	calibrate_acc();
+//
+//	//Set the origin for the drawing_IMU_func
+//	left_motor_set_pos(0);
+//	right_motor_set_pos(0);
 
 
 	/** Inits the Inter Process Communication bus. */
 	    messagebus_init(&bus, &bus_lock, &bus_condvar);
 
-	    chThdCreateStatic(waThdFrontLed, sizeof(waThdFrontLed), NORMALPRIO, ThdFrontLed, NULL);
-	    chThdCreateStatic(waThdBodyLed, sizeof(waThdBodyLed), NORMALPRIO, ThdBodyLed, NULL);
+//	    chThdCreateStatic(waThdFrontLed, sizeof(waThdFrontLed), NORMALPRIO, ThdFrontLed, NULL);
+//	    chThdCreateStatic(waThdBodyLed, sizeof(waThdBodyLed), NORMALPRIO, ThdBodyLed, NULL);
 
 
     //threshold value to not run the motors when the robot is too horizontal
@@ -126,6 +130,7 @@ void Drawing_IMU(imu_msg_t *imu_values){
     volatile uint16_t time = 0;
 
     int IMU_drawing_speed;
+//    int IMU_drawing_speed=MOTOR_OPTIMAL_SPEED;
 
     //Variable speed of the motors, depending of the IMU accelerations.
     //The pen draws faster when the inclination increases.
@@ -185,7 +190,7 @@ void Drawing_IMU(imu_msg_t *imu_values){
 
         //Select the motor(s) to move depending of the angle value
         if(angle > -ThresholdAngle && angle < ThresholdAngle){										//@1
-        	//X motor -> Static
+        	left_motor_set_speed(MOTOR_NO_SPEED); //X motor -> Static
         	right_motor_set_speed(IMU_drawing_speed);//Y motor -> CW direction
 
         }else if(angle >= ThresholdAngle && angle < (M_PI/2 - ThresholdAngle)){						//@2
@@ -194,14 +199,14 @@ void Drawing_IMU(imu_msg_t *imu_values){
 
         }else if(angle >= (M_PI/2 - ThresholdAngle) && angle < (M_PI/2 + ThresholdAngle)){			//@3
         	left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
-        	//Y motor -> Static
+        	right_motor_set_speed(MOTOR_NO_SPEED); ////Y motor -> Static
 
         }else if(angle >= (M_PI/2 + ThresholdAngle) && angle < (M_PI - ThresholdAngle)){			//@4
         	left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
         	right_motor_set_speed(-IMU_drawing_speed);//Y motor -> CCW direction
 
         }else if(angle >= (M_PI - ThresholdAngle) && angle < (-M_PI + ThresholdAngle)){				//@5
-        	//X motor -> Static
+        	left_motor_set_speed(MOTOR_NO_SPEED); //X motor -> Static
         	right_motor_set_speed(-IMU_drawing_speed);//Y motor -> CCW direction
 
         }else if(angle >= (-M_PI + ThresholdAngle) && angle < (-M_PI/2 - ThresholdAngle)){			//@6
@@ -210,12 +215,55 @@ void Drawing_IMU(imu_msg_t *imu_values){
 
         }else if(angle >= (-M_PI/2 - ThresholdAngle) && angle < (-M_PI/2 + ThresholdAngle)){		//@7
         	left_motor_set_speed(-IMU_drawing_speed);//X motor -> CCW direction
-        	//Y motor -> Static
+        	right_motor_set_speed(MOTOR_NO_SPEED); ////Y motor -> Static
 
         }else if(angle >= (-M_PI/2 + ThresholdAngle) && angle < -ThresholdAngle){					//@8
         	left_motor_set_speed(-MOTOR_OPTIMAL_SPEED);//X motor -> CCW direction
         	right_motor_set_speed(MOTOR_OPTIMAL_SPEED);//Y motor -> CW direction
         }
+
+
+        //Test with only conditions
+        // //we find which led of each axis should be turned on
+//         if(accel[X_AXIS] > threshold){
+//                    	left_motor_set_speed(MOTOR_NO_SPEED); //X motor -> Static
+//    					right_motor_set_speed(IMU_drawing_speed);//Y motor -> CW direction
+//         }else if(accel[X_AXIS] < -threshold){
+//             left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
+//    			right_motor_set_speed(IMU_drawing_speed);//Y motor -> CW direction
+//         }
+//         if(accel[Y_AXIS] > threshold){
+//             left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
+//    			right_motor_set_speed(MOTOR_NO_SPEED); ////Y motor -> Static
+//         }else if(accel[Y_AXIS] < -threshold){
+//             left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
+//    			right_motor_set_speed(-IMU_drawing_speed);//Y motor -> CCW direction
+//         }
+
+        // //if two leds are turned on, turn off the one with the smaller
+        // //accelerometer value
+        // if(led1 && led3){
+        //     if(accel[Y_AXIS] < accel[X_AXIS])
+        //         led3 = 0;
+        //     else
+        //         led1 = 0;
+        // }else if(led3 && led5){
+        //     if(accel[X_AXIS] < -accel[Y_AXIS])
+        //         led5 = 0;
+        //     else
+        //         led3 = 0;
+        // }else if(led5 && led7){
+        //     if(accel[Y_AXIS] > accel[X_AXIS])
+        //         led7 = 0;
+        //     else
+        //         led5 = 0;
+        // }else if(led7 && led1){
+        //     if(accel[X_AXIS] > -accel[Y_AXIS])
+        //         led1 = 0;
+        //     else
+        //         led7 = 0;
+        // }
+
 
 //        while(1){
 //        	//Reads the positions

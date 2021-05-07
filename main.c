@@ -9,9 +9,6 @@
  *  Created : 14 april 2021
  */
 
-/*
- * STILL TO BE DONE : TRACKING OF THE POS FOR THE DRAWING IMU FCT
- */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,9 +26,13 @@
 #include <leds.h>
 #include <sensors/proximity.h>
 #include <sensors/imu.h>
+//#include <sensors/imu.c>
 #include "memory_protection.h"
 #include "i2c_bus.h"
 #include "exti.h"
+
+#include <msgbus/messagebus.h>	//JUST ADDED
+#include <time.h>				//JUST ADDED
 
 /*
  * Mandatory to include the .c, to avoid any "undefined reference to the function".
@@ -43,6 +44,8 @@
 #include <Mighty_logo_function.c>
 #include <Mighty_logo_function.h>
 #include <process_image.h>
+
+#define NB_SAMPLES_OFFSET     200
 /*
  * Mandatory to define the global imu_values, to avoid the "unspecified variable" error.
  */
@@ -188,7 +191,25 @@ int main(void)
 			break;
 
     	case 2: //Free to draw with IMU
-    		Drawing_IMU(&imu_values);
+    			//It comes from TP3
+
+    	    /** Inits the Inter Process Communication bus. */
+    	    messagebus_init(&bus, &bus_lock, &bus_condvar);
+
+    	    messagebus_topic_t *imu_topic = messagebus_find_topic_blocking(&bus, "/imu");
+    	    imu_msg_t imu_values;
+
+    	    //wait 2 sec to be sure the e-puck is in a stable position
+    	    chThdSleepMilliseconds(2000);
+    	    imu_compute_offset(imu_topic, NB_SAMPLES_OFFSET);
+    		while(1){
+    		        //wait for new measures to be published
+    		        messagebus_topic_wait(imu_topic, &imu_values, sizeof(imu_values));
+
+    		        Drawing_IMU(&imu_values);
+    		        chThdSleepMilliseconds(100);
+    		}
+    		//Drawing_IMU(&imu_values);
 			break;
 
     	case 3: //Registered drawing - Epfl Logo
