@@ -73,12 +73,12 @@ void SendUint8ToComputer(uint8_t* data, uint16_t size)
  * 	-                   Origin  0-
  * 	-                            -
  * 	-                            -
- * 	-         TOP VIEW           -  YYY
- * 	-                            - YYOYY
- * 	-                            -  YYY
- * 	-   XXX                      -
- * 	-  XXOXX                     -Y AXIS
- * 	-   XXX                      -   ¦
+ * 	-         TOP VIEW           -  OOO
+ * 	-                            - OOYOO
+ * 	-                            -  OOO
+ * 	-   OOO                      -
+ * 	-  OOXOO                     -Y AXIS
+ * 	-   OOO                      -   ¦
  * 	------------------------------   v
  *
  * Rotate the X motor CW to push the wooden stage to the X origin.
@@ -110,43 +110,27 @@ void FindTheOrigin(void)
 		 * Infinite loop, X axis
 		 * Returns the last value measured by the X sensor ->U106
 		 */
-			left_motor_set_speed(MOTOR_OPTIMAL_SPEED); 	//CW rotation
-			while(1){
-				if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST){
-					left_motor_set_speed(MOTOR_NO_SPEED);
-					break;
-				}
-			}
 
-			//		while(1){
-//					chThdSleepMilliseconds(250);
-//					else if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST)
-//											{
-//												left_motor_set_speed(MOTOR_NO_SPEED); 		//Stop the rotation
-//												break;
-//											}
-//		}
-//		if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST)
-//			left_motor_set_speed(MOTOR_NO_SPEED);
-//		chThdSleepMilliseconds(250);
-//		while(1){
-//					if(get_prox(SENSOR_X) < IR_OPTIMAL_DIST)
-//						{
-//
-//						}
-//					else if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST)
-//						{
-//							left_motor_set_speed(MOTOR_NO_SPEED); 		//Stop the rotation
-//							break;
-//						}
-//				 }
-		chThdSleepMilliseconds(250);
+		//Semaphore
+		/*XReady
+		 * Chwait partie Y
+		 * Ch Signal XReady	-> peut passer au Y
+		 *
+		 */
+		while(1){
+					left_motor_set_speed(-MOTOR_OPTIMAL_SPEED); 	//CCW rotation
+					if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST)
+						{
+							left_motor_set_speed(MOTOR_NO_SPEED);
+							break;
+						}
+				}
 
 		/*
 		 * Return the Xstage to the other limit for the Yoffset
-		 * Move Xmotor CCW, distance 76mm ~=550 steps
+		 * Move Xmotor CW, distance 65mm ~=470 steps
 		 */
-		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -550);
+		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 470);
 		chThdSleepMilliseconds(250);
 
 		/*
@@ -154,33 +138,21 @@ void FindTheOrigin(void)
 		 * Returns the last value measured by the Y sensor ->U101
 		 */
 
-		right_motor_set_speed(MOTOR_OPTIMAL_SPEED); 	//CW rotation
-					while(1){
-						if(get_prox(SENSOR_Y) > IR_OPTIMAL_DIST){
-							right_motor_set_speed(MOTOR_NO_SPEED);
+		while(1){
+					right_motor_set_speed(MOTOR_OPTIMAL_SPEED); 	//CW rotation
+					if(get_prox(SENSOR_Y) > IR_OPTIMAL_DIST)
+						{
+							right_motor_set_speed(-MOTOR_NO_SPEED);
 							break;
 						}
-					}
-
-//		while(1){
-//					if(get_prox(SENSOR_Y) < IR_OPTIMAL_DIST)
-//						{
-//							right_motor_set_speed(-MOTOR_OPTIMAL_SPEED); 	//CCW rotation
-//						}
-//					else if(get_prox(SENSOR_Y) > IR_OPTIMAL_DIST)
-//						{
-//							right_motor_set_speed(MOTOR_NO_SPEED); 			//Stop the rotation
-//							break;
-//						}
-//				}
-//		chThdSleepMilliseconds(250);
+				}
 
 		/*
 		 * Return the Xstage to the X offset
-		 * Move Xmotor CW, distance 70mm for a margin of 6 mm
+		 * Move Xmotor CW, distance 55mm
 		 */
-		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 500);
-		chThdSleepMilliseconds(250);
+		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -400);
+//		chThdSleepMilliseconds(250);
 	}
 
 int main(void)

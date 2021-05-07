@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -28,7 +28,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
   25              	_idle_thread:
   26              	.LFB219:
   27              		.file 1 "../../lib/e-puck2_main-processor/ChibiOS//os/rt/src/chsys.c"
-  28              		.loc 1 65 0
+  28              		.loc 1 66 0
   29              		.cfi_startproc
   30              		@ Volatile: function does not return.
   31              		@ args = 0, pretend = 0, frame = 8
@@ -38,7 +38,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
   35 0000 024B     		ldr	r3, .L6
   36 0002 82B0     		sub	sp, sp, #8
   37              		.cfi_def_cfa_offset 8
-  38              		.loc 1 65 0
+  38              		.loc 1 66 0
   39 0004 1B68     		ldr	r3, [r3]
   40 0006 0193     		str	r3, [sp, #4]
   41              	.L2:
@@ -58,13 +58,13 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
   55              		.thumb
   56              		.thumb_func
   57              		.fpu fpv4-sp-d16
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 2
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 2
 
 
   58              		.type	chSysInit, %function
   59              	chSysInit:
   60              	.LFB220:
-  61              		.loc 1 93 0
+  61              		.loc 1 94 0
   62              		.cfi_startproc
   63              		@ args = 0, pretend = 0, frame = 8
   64              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -83,7 +83,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
   77 0004 294B     		ldr	r3, .L12+4
   78              	.LBE133:
   79              	.LBE132:
-  80              		.loc 1 93 0
+  80              		.loc 1 94 0
   81 0006 3268     		ldr	r2, [r6]
   82              	.LBB148:
   83              	.LBB144:
@@ -91,7 +91,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
   85 0008 2948     		ldr	r0, .L12+8
   86              	.LBE144:
   87              	.LBE148:
-  88              		.loc 1 93 0
+  88              		.loc 1 94 0
   89 000a 85B0     		sub	sp, sp, #20
   90              		.cfi_def_cfa_offset 40
   91              	.LBB149:
@@ -100,7 +100,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
   94 000c 0024     		movs	r4, #0
   95              	.LBE145:
   96              	.LBE149:
-  97              		.loc 1 93 0
+  97              		.loc 1 94 0
   98 000e 0392     		str	r2, [sp, #12]
   99              	.LBB150:
  100              	.LBB146:
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  112              		.loc 3 1441 0
  113 0016 4FF6FF05 		movw	r5, #63743
  114 001a 2940     		ands	r1, r1, r5
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 3
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 3
 
 
  115              	.LVL3:
@@ -136,7 +136,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  127 0022 2549     		ldr	r1, .L12+16
  128              	.LBE146:
  129              	.LBE150:
- 130              		.loc 1 119 0
+ 130              		.loc 1 120 0
  131 0024 254D     		ldr	r5, .L12+20
  132              	.LBB151:
  133              	.LBB147:
@@ -173,43 +173,43 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  164              	.LBE143:
  165              	.LBE147:
  166              	.LBE151:
- 167              		.loc 1 99 0
+ 167              		.loc 1 100 0
  168 003e FFF7FEFF 		bl	_scheduler_init
  169              	.LVL9:
- 170              		.loc 1 100 0
+ 170              		.loc 1 101 0
  171 0042 FFF7FEFF 		bl	_vt_init
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 4
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 4
 
 
  172              	.LVL10:
- 173              		.loc 1 102 0
+ 173              		.loc 1 103 0
  174 0046 FFF7FEFF 		bl	_tm_init
  175              	.LVL11:
- 176              		.loc 1 105 0
+ 176              		.loc 1 106 0
  177 004a FFF7FEFF 		bl	_core_init
  178              	.LVL12:
- 179              		.loc 1 108 0
+ 179              		.loc 1 109 0
  180 004e FFF7FEFF 		bl	_heap_init
  181              	.LVL13:
- 182              		.loc 1 111 0
+ 182              		.loc 1 112 0
  183 0052 FFF7FEFF 		bl	_stats_init
  184              	.LVL14:
- 185              		.loc 1 114 0
+ 185              		.loc 1 115 0
  186 0056 FFF7FEFF 		bl	_dbg_trace_init
  187              	.LVL15:
- 188              		.loc 1 119 0
+ 188              		.loc 1 120 0
  189 005a 4021     		movs	r1, #64
  190 005c 05F58860 		add	r0, r5, #1088
  191 0060 FFF7FEFF 		bl	_thread_init
  192              	.LVL16:
- 193              		.loc 1 125 0
+ 193              		.loc 1 126 0
  194 0064 0127     		movs	r7, #1
- 195              		.loc 1 129 0
+ 195              		.loc 1 130 0
  196 0066 164B     		ldr	r3, .L12+24
  197 0068 C361     		str	r3, [r0, #28]
- 198              		.loc 1 125 0
+ 198              		.loc 1 126 0
  199 006a 80F82070 		strb	r7, [r0, #32]
- 200              		.loc 1 119 0
+ 200              		.loc 1 120 0
  201 006e A861     		str	r0, [r5, #24]
  202              	.LBB152:
  203              	.LBB153:
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  226              	@ 331 "../../lib/e-puck2_main-processor/ChibiOS//os/ext/CMSIS/include/core_cmFunc.h" 1
  227 0078 62B6     		cpsie i
  228              	@ 0 "" 2
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 5
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 5
 
 
  229              	.LVL19:
@@ -260,7 +260,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  245              	.LBE160:
  246              	.LBE159:
  247              	.LBB161:
- 248              		.loc 1 144 0
+ 248              		.loc 1 145 0
  249 0080 4FF4C471 		mov	r1, #392
  250 0084 3A46     		mov	r2, r7
  251 0086 104B     		ldr	r3, .L12+32
@@ -269,7 +269,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  254 008e FFF7FEFF 		bl	chThdCreateStatic
  255              	.LVL21:
  256              	.LBE161:
- 257              		.loc 1 152 0
+ 257              		.loc 1 153 0
  258 0092 039A     		ldr	r2, [sp, #12]
  259 0094 3368     		ldr	r3, [r6]
  260              	.LBB164:
@@ -282,7 +282,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  267              	.LBE163:
  268              	.LBE162:
  269              	.LBE164:
- 270              		.loc 1 152 0
+ 270              		.loc 1 153 0
  271 009a 9A42     		cmp	r2, r3
  272 009c 01D1     		bne	.L11
  273 009e 05B0     		add	sp, sp, #20
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  283 00a6 00BF     		.align	2
  284              	.L12:
  285 00a8 00000000 		.word	__stack_chk_guard
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 6
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 6
 
 
  286 00ac 00ED00E0 		.word	-536810240
@@ -324,7 +324,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  306              		.type	chSysHalt, %function
  307              	chSysHalt:
  308              	.LFB221:
- 309              		.loc 1 166 0
+ 309              		.loc 1 167 0
  310              		.cfi_startproc
  311              		@ Volatile: function does not return.
  312              		@ args = 0, pretend = 0, frame = 8
@@ -336,7 +336,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  318 0002 054B     		ldr	r3, .L18
  319 0004 83B0     		sub	sp, sp, #12
  320              		.cfi_def_cfa_offset 16
- 321              		.loc 1 166 0
+ 321              		.loc 1 167 0
  322 0006 1B68     		ldr	r3, [r3]
  323 0008 0193     		str	r3, [sp, #4]
  324 000a 0446     		mov	r4, r0
@@ -353,12 +353,12 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  335              	.LBE167:
  336              	.LBE166:
  337              	.LBE165:
- 338              		.loc 1 171 0
+ 338              		.loc 1 172 0
  339 000e FFF7FEFF 		bl	panic_handler
  340              	.LVL25:
- 341              		.loc 1 175 0
+ 341              		.loc 1 176 0
  342 0012 024B     		ldr	r3, .L18+4
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 7
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 7
 
 
  343 0014 DC62     		str	r4, [r3, #44]
@@ -383,7 +383,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  362              		.type	chSysIntegrityCheckI, %function
  363              	chSysIntegrityCheckI:
  364              	.LFB222:
- 365              		.loc 1 206 0
+ 365              		.loc 1 207 0
  366              		.cfi_startproc
  367              		@ args = 0, pretend = 0, frame = 8
  368              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -396,166 +396,166 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  375 0002 304D     		ldr	r5, .L66
  376 0004 83B0     		sub	sp, sp, #12
  377              		.cfi_def_cfa_offset 24
- 378              		.loc 1 206 0
+ 378              		.loc 1 207 0
  379 0006 0446     		mov	r4, r0
  380 0008 2B68     		ldr	r3, [r5]
  381 000a 0193     		str	r3, [sp, #4]
- 382              		.loc 1 209 0
+ 382              		.loc 1 210 0
  383 000c FFF7FEFF 		bl	chDbgCheckClassI
  384              	.LVL27:
- 385              		.loc 1 212 0
+ 385              		.loc 1 213 0
  386 0010 E207     		lsls	r2, r4, #31
  387 0012 13D5     		bpl	.L21
  388              	.LVL28:
  389              	.LBB168:
- 390              		.loc 1 217 0
+ 390              		.loc 1 218 0
  391 0014 2C4B     		ldr	r3, .L66+4
  392 0016 D3E90010 		ldrd	r1, r0, [r3]
- 393              		.loc 1 218 0
+ 393              		.loc 1 219 0
  394 001a 9942     		cmp	r1, r3
  395 001c 45D0     		beq	.L22
- 396              		.loc 1 216 0
+ 396              		.loc 1 217 0
  397 001e 0022     		movs	r2, #0
  398              	.LVL29:
  399              	.L23:
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 8
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 8
 
 
- 400              		.loc 1 220 0
+ 400              		.loc 1 221 0
  401 0020 0968     		ldr	r1, [r1]
  402              	.LVL30:
- 403              		.loc 1 218 0
+ 403              		.loc 1 219 0
  404 0022 9942     		cmp	r1, r3
- 405              		.loc 1 219 0
+ 405              		.loc 1 220 0
  406 0024 02F10102 		add	r2, r2, #1
  407              	.LVL31:
- 408              		.loc 1 218 0
+ 408              		.loc 1 219 0
  409 0028 FAD1     		bne	.L23
  410              	.LVL32:
- 411              		.loc 1 225 0
+ 411              		.loc 1 226 0
  412 002a 8842     		cmp	r0, r1
  413 002c 3BD0     		beq	.L48
  414              	.LVL33:
  415              	.L27:
- 416              		.loc 1 227 0
+ 416              		.loc 1 228 0
  417 002e 4068     		ldr	r0, [r0, #4]
  418              	.LVL34:
- 419              		.loc 1 225 0
+ 419              		.loc 1 226 0
  420 0030 9842     		cmp	r0, r3
- 421              		.loc 1 226 0
+ 421              		.loc 1 227 0
  422 0032 02F1FF32 		add	r2, r2, #-1
  423              	.LVL35:
- 424              		.loc 1 225 0
+ 424              		.loc 1 226 0
  425 0036 FAD1     		bne	.L27
- 426              		.loc 1 231 0
+ 426              		.loc 1 232 0
  427 0038 002A     		cmp	r2, #0
  428 003a 34D1     		bne	.L48
  429              	.LVL36:
  430              	.L21:
  431              	.LBE168:
- 432              		.loc 1 237 0
+ 432              		.loc 1 238 0
  433 003c A307     		lsls	r3, r4, #30
  434 003e 13D5     		bpl	.L28
  435              	.LVL37:
  436              	.LBB169:
- 437              		.loc 1 242 0
+ 437              		.loc 1 243 0
  438 0040 2148     		ldr	r0, .L66+4
  439 0042 D0E90721 		ldrd	r2, r1, [r0, #28]
- 440              		.loc 1 243 0
+ 440              		.loc 1 244 0
  441 0046 1C30     		adds	r0, r0, #28
  442 0048 8242     		cmp	r2, r0
  443 004a 32D0     		beq	.L29
- 444              		.loc 1 241 0
+ 444              		.loc 1 242 0
  445 004c 0023     		movs	r3, #0
  446              	.LVL38:
  447              	.L30:
- 448              		.loc 1 245 0
+ 448              		.loc 1 246 0
  449 004e 1268     		ldr	r2, [r2]
  450              	.LVL39:
- 451              		.loc 1 243 0
+ 451              		.loc 1 244 0
  452 0050 8242     		cmp	r2, r0
- 453              		.loc 1 244 0
+ 453              		.loc 1 245 0
  454 0052 03F10103 		add	r3, r3, #1
  455              	.LVL40:
- 456              		.loc 1 243 0
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 9
+ 456              		.loc 1 244 0
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 9
 
 
  457 0056 FAD1     		bne	.L30
  458              	.LVL41:
- 459              		.loc 1 250 0
+ 459              		.loc 1 251 0
  460 0058 9142     		cmp	r1, r2
  461 005a 24D0     		beq	.L48
  462              	.LVL42:
  463              	.L33:
- 464              		.loc 1 252 0
+ 464              		.loc 1 253 0
  465 005c 4968     		ldr	r1, [r1, #4]
  466              	.LVL43:
- 467              		.loc 1 250 0
+ 467              		.loc 1 251 0
  468 005e 8142     		cmp	r1, r0
- 469              		.loc 1 251 0
+ 469              		.loc 1 252 0
  470 0060 03F1FF33 		add	r3, r3, #-1
  471              	.LVL44:
- 472              		.loc 1 250 0
+ 472              		.loc 1 251 0
  473 0064 FAD1     		bne	.L33
- 474              		.loc 1 256 0
+ 474              		.loc 1 257 0
  475 0066 F3B9     		cbnz	r3, .L48
  476              	.LVL45:
  477              	.L28:
  478              	.LBE169:
- 479              		.loc 1 262 0
+ 479              		.loc 1 263 0
  480 0068 14F00400 		ands	r0, r4, #4
  481 006c 15D0     		beq	.L26
  482              	.LVL46:
  483              	.LBB170:
- 484              		.loc 1 267 0
+ 484              		.loc 1 268 0
  485 006e 164B     		ldr	r3, .L66+4
  486 0070 D3E90421 		ldrd	r2, r1, [r3, #16]
- 487              		.loc 1 268 0
+ 487              		.loc 1 269 0
  488 0074 9A42     		cmp	r2, r3
- 489              		.loc 1 266 0
+ 489              		.loc 1 267 0
  490 0076 4FF00000 		mov	r0, #0
- 491              		.loc 1 268 0
+ 491              		.loc 1 269 0
  492 007a 1ED0     		beq	.L34
  493              	.LVL47:
  494              	.L35:
- 495              		.loc 1 270 0
+ 495              		.loc 1 271 0
  496 007c 1269     		ldr	r2, [r2, #16]
  497              	.LVL48:
- 498              		.loc 1 268 0
+ 498              		.loc 1 269 0
  499 007e 9A42     		cmp	r2, r3
- 500              		.loc 1 269 0
+ 500              		.loc 1 270 0
  501 0080 00F10100 		add	r0, r0, #1
  502              	.LVL49:
- 503              		.loc 1 268 0
+ 503              		.loc 1 269 0
  504 0084 FAD1     		bne	.L35
  505              	.LVL50:
- 506              		.loc 1 275 0
+ 506              		.loc 1 276 0
  507 0086 9142     		cmp	r1, r2
  508 0088 0DD0     		beq	.L48
  509              	.LVL51:
  510              	.L38:
- 511              		.loc 1 277 0
+ 511              		.loc 1 278 0
  512 008a 4969     		ldr	r1, [r1, #20]
  513              	.LVL52:
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 10
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 10
 
 
- 514              		.loc 1 275 0
+ 514              		.loc 1 276 0
  515 008c 9942     		cmp	r1, r3
- 516              		.loc 1 276 0
+ 516              		.loc 1 277 0
  517 008e 00F1FF30 		add	r0, r0, #-1
  518              	.LVL53:
- 519              		.loc 1 275 0
+ 519              		.loc 1 276 0
  520 0092 FAD1     		bne	.L38
- 521              		.loc 1 281 0
+ 521              		.loc 1 282 0
  522 0094 0030     		adds	r0, r0, #0
  523 0096 18BF     		it	ne
  524 0098 0120     		movne	r0, #1
  525              	.LVL54:
  526              	.L26:
  527              	.LBE170:
- 528              		.loc 1 294 0
+ 528              		.loc 1 295 0
  529 009a 019A     		ldr	r2, [sp, #4]
  530 009c 2B68     		ldr	r3, [r5]
  531 009e 9A42     		cmp	r2, r3
@@ -569,42 +569,42 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  539              	.L48:
  540              		.cfi_restore_state
  541              	.LBB171:
- 542              		.loc 1 232 0
+ 542              		.loc 1 233 0
  543 00a6 0120     		movs	r0, #1
  544 00a8 F7E7     		b	.L26
  545              	.LVL56:
  546              	.L22:
- 547              		.loc 1 225 0
+ 547              		.loc 1 226 0
  548 00aa 9842     		cmp	r0, r3
  549 00ac C6D0     		beq	.L21
- 550              		.loc 1 216 0
+ 550              		.loc 1 217 0
  551 00ae 0022     		movs	r2, #0
  552 00b0 BDE7     		b	.L27
  553              	.LVL57:
  554              	.L29:
  555              	.LBE171:
  556              	.LBB172:
- 557              		.loc 1 250 0
+ 557              		.loc 1 251 0
  558 00b2 8142     		cmp	r1, r0
  559 00b4 D8D0     		beq	.L28
- 560              		.loc 1 241 0
+ 560              		.loc 1 242 0
  561 00b6 0023     		movs	r3, #0
  562 00b8 D0E7     		b	.L33
  563              	.LVL58:
  564              	.L34:
  565              	.LBE172:
  566              	.LBB173:
- 567              		.loc 1 275 0
+ 567              		.loc 1 276 0
  568 00ba 9142     		cmp	r1, r2
  569 00bc E5D1     		bne	.L38
  570 00be ECE7     		b	.L26
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 11
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 11
 
 
  571              	.LVL59:
  572              	.L65:
  573              	.LBE173:
- 574              		.loc 1 294 0
+ 574              		.loc 1 295 0
  575 00c0 FFF7FEFF 		bl	__stack_chk_fail
  576              	.LVL60:
  577              	.L67:
@@ -626,7 +626,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  593              		.type	chSysTimerHandlerI, %function
  594              	chSysTimerHandlerI:
  595              	.LFB223:
- 596              		.loc 1 307 0
+ 596              		.loc 1 308 0
  597              		.cfi_startproc
  598              		@ args = 0, pretend = 0, frame = 8
  599              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -641,29 +641,29 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  608              		.cfi_offset 10, -8
  609              		.cfi_offset 14, -4
  610 0004 DFF890A0 		ldr	r10, .L80+4
- 611              		.loc 1 313 0
+ 611              		.loc 1 314 0
  612 0008 224D     		ldr	r5, .L80
- 613              		.loc 1 307 0
+ 613              		.loc 1 308 0
  614 000a DAF80030 		ldr	r3, [r10]
  615 000e 82B0     		sub	sp, sp, #8
  616              		.cfi_def_cfa_offset 40
- 617              		.loc 1 307 0
+ 617              		.loc 1 308 0
  618 0010 0193     		str	r3, [sp, #4]
- 619              		.loc 1 309 0
+ 619              		.loc 1 310 0
  620 0012 FFF7FEFF 		bl	chDbgCheckClassI
  621              	.LVL61:
- 622              		.loc 1 313 0
+ 622              		.loc 1 314 0
  623 0016 AB69     		ldr	r3, [r5, #24]
  624 0018 93F82320 		ldrb	r2, [r3, #35]	@ zero_extendqisi2
  625 001c 12B1     		cbz	r2, .L69
- 626              		.loc 1 315 0
+ 626              		.loc 1 316 0
  627 001e 013A     		subs	r2, r2, #1
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 12
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 12
 
 
  628 0020 83F82320 		strb	r2, [r3, #35]
  629              	.L69:
- 630              		.loc 1 319 0
+ 630              		.loc 1 320 0
  631 0024 5A6A     		ldr	r2, [r3, #36]
  632              	.LBB189:
  633              	.LBB190:
@@ -672,7 +672,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  636 0026 DFF87480 		ldr	r8, .L80+8
  637              	.LBE190:
  638              	.LBE189:
- 639              		.loc 1 319 0
+ 639              		.loc 1 320 0
  640 002a 0132     		adds	r2, r2, #1
  641 002c 5A62     		str	r2, [r3, #36]
  642              	.LBB211:
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  682              	.LBE193:
  683              	.LBE192:
  684              		.loc 7 482 0
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 13
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 13
 
 
  685 004e 2368     		ldr	r3, [r4]
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  739              		.syntax unified
  740              	.LBE198:
  741              	.LBE199:
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 14
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 14
 
 
  742              	.LBE200:
@@ -802,7 +802,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  760              	.L68:
  761              	.LBE210:
  762              	.LBE211:
- 763              		.loc 1 325 0
+ 763              		.loc 1 326 0
  764 0080 019A     		ldr	r2, [sp, #4]
  765 0082 DAF80030 		ldr	r3, [r10]
  766 0086 9A42     		cmp	r2, r3
@@ -836,9 +836,9 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  794              		.type	chSysGetStatusAndLockX, %function
  795              	chSysGetStatusAndLockX:
  796              	.LFB224:
- 797              		.loc 1 340 0
+ 797              		.loc 1 341 0
  798              		.cfi_startproc
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 15
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 15
 
 
  799              		@ args = 0, pretend = 0, frame = 8
@@ -851,7 +851,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  806 0002 124D     		ldr	r5, .L89
  807 0004 83B0     		sub	sp, sp, #12
  808              		.cfi_def_cfa_offset 24
- 809              		.loc 1 340 0
+ 809              		.loc 1 341 0
  810 0006 2B68     		ldr	r3, [r5]
  811 0008 0193     		str	r3, [sp, #4]
  812              	.LBB212:
@@ -869,7 +869,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  824              	.LBE214:
  825              	.LBE213:
  826              	.LBE212:
- 827              		.loc 1 343 0
+ 827              		.loc 1 344 0
  828 000e 5CB9     		cbnz	r4, .L82
  829              	.LBB216:
  830              	.LBB217:
@@ -888,7 +888,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  843 0014 C3F30803 		ubfx	r3, r3, #0, #9
  844              	.LBE217:
  845              	.LBE216:
- 846              		.loc 1 344 0
+ 846              		.loc 1 345 0
  847 0018 6BB9     		cbnz	r3, .L87
  848              	.LVL75:
  849              	.LBB220:
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  853              	.LBB224:
  854              		.loc 5 546 0
  855 001a 2023     		movs	r3, #32
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 16
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 16
 
 
  856              		.syntax unified
@@ -920,7 +920,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  872              	.L82:
  873              	.LBE221:
  874              	.LBE220:
- 875              		.loc 1 352 0
+ 875              		.loc 1 353 0
  876 0028 019A     		ldr	r2, [sp, #4]
  877 002a 2B68     		ldr	r3, [r5]
  878 002c 9A42     		cmp	r2, r3
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  910              	.LVL81:
  911              		.loc 4 390 0
  912 0040 FFF7FEFF 		bl	_dbg_check_lock_from_isr
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 17
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 17
 
 
  913              	.LVL82:
@@ -966,7 +966,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  915              	.L88:
  916              	.LBE226:
  917              	.LBE225:
- 918              		.loc 1 352 0
+ 918              		.loc 1 353 0
  919 0046 FFF7FEFF 		bl	__stack_chk_fail
  920              	.LVL83:
  921              	.L90:
@@ -987,7 +987,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  936              		.type	chSysRestoreStatusX, %function
  937              	chSysRestoreStatusX:
  938              	.LFB225:
- 939              		.loc 1 363 0
+ 939              		.loc 1 364 0
  940              		.cfi_startproc
  941              		@ args = 0, pretend = 0, frame = 8
  942              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1000,10 +1000,10 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  949 0002 174C     		ldr	r4, .L100
  950 0004 83B0     		sub	sp, sp, #12
  951              		.cfi_def_cfa_offset 24
- 952              		.loc 1 363 0
+ 952              		.loc 1 364 0
  953 0006 2368     		ldr	r3, [r4]
  954 0008 0193     		str	r3, [sp, #4]
- 955              		.loc 1 365 0
+ 955              		.loc 1 366 0
  956 000a B0B9     		cbnz	r0, .L91
  957              	.LBB246:
  958              	.LBB247:
@@ -1018,16 +1018,16 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  967              		.syntax unified
  968              	.LBE249:
  969              	.LBE248:
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 18
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 18
 
 
  970              		.loc 2 436 0
  971 0010 C3F30803 		ubfx	r3, r3, #0, #9
  972              	.LBE247:
  973              	.LBE246:
- 974              		.loc 1 366 0
+ 974              		.loc 1 367 0
  975 0014 BBB9     		cbnz	r3, .L97
- 976              		.loc 1 370 0
+ 976              		.loc 1 371 0
  977 0016 FFF7FEFF 		bl	chSchRescheduleS
  978              	.LVL85:
  979              	.LBB250:
@@ -1068,7 +1068,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1014              	.LBE252:
  1015              	.LBE251:
  1016              	.LBE250:
- 1017              		.loc 1 374 0
+ 1017              		.loc 1 375 0
  1018 003a 019A     		ldr	r2, [sp, #4]
  1019 003c 2368     		ldr	r3, [r4]
  1020 003e 9A42     		cmp	r2, r3
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1024              		.cfi_def_cfa_offset 12
  1025              		@ sp needed
  1026 0044 30BD     		pop	{r4, r5, pc}
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 19
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 19
 
 
  1027              	.LVL90:
@@ -1114,7 +1114,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1057              	.LBE258:
  1058              	.LBE257:
  1059              	.LBE256:
- 1060              		.loc 1 374 0
+ 1060              		.loc 1 375 0
  1061 0056 FFF7FEFF 		bl	__stack_chk_fail
  1062              	.LVL95:
  1063              	.L98:
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1081              		.section	.text.chSysIsCounterWithinX,"ax",%progbits
  1082              		.align	1
  1083              		.p2align 4,,15
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 20
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 20
 
 
  1084              		.global	chSysIsCounterWithinX
@@ -1149,7 +1149,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1089              		.type	chSysIsCounterWithinX, %function
  1090              	chSysIsCounterWithinX:
  1091              	.LFB226:
- 1092              		.loc 1 395 0
+ 1092              		.loc 1 396 0
  1093              		.cfi_startproc
  1094              		@ args = 0, pretend = 0, frame = 8
  1095              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1161,19 +1161,19 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1101 0002 094B     		ldr	r3, .L106
  1102 0004 82B0     		sub	sp, sp, #8
  1103              		.cfi_def_cfa_offset 16
- 1104              		.loc 1 395 0
+ 1104              		.loc 1 396 0
  1105 0006 1C68     		ldr	r4, [r3]
  1106 0008 0194     		str	r4, [sp, #4]
- 1107              		.loc 1 397 0
+ 1107              		.loc 1 398 0
  1108 000a 401A     		subs	r0, r0, r1
  1109              	.LVL98:
- 1110              		.loc 1 398 0
+ 1110              		.loc 1 399 0
  1111 000c 019C     		ldr	r4, [sp, #4]
  1112 000e 1B68     		ldr	r3, [r3]
- 1113              		.loc 1 397 0
+ 1113              		.loc 1 398 0
  1114 0010 521A     		subs	r2, r2, r1
  1115              	.LVL99:
- 1116              		.loc 1 398 0
+ 1116              		.loc 1 399 0
  1117 0012 9042     		cmp	r0, r2
  1118 0014 2CBF     		ite	cs
  1119 0016 0020     		movcs	r0, #0
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1138              		.size	chSysIsCounterWithinX, .-chSysIsCounterWithinX
  1139              		.section	.text.chSysPolledDelayX,"ax",%progbits
  1140              		.align	1
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 21
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 21
 
 
  1141              		.p2align 4,,15
@@ -1210,7 +1210,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1147              		.type	chSysPolledDelayX, %function
  1148              	chSysPolledDelayX:
  1149              	.LFB227:
- 1150              		.loc 1 411 0
+ 1150              		.loc 1 412 0
  1151              		.cfi_startproc
  1152              		@ args = 0, pretend = 0, frame = 8
  1153              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1226,11 +1226,11 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1163 0004 094A     		ldr	r2, .L114+4
  1164              	.LBE264:
  1165              	.LBE263:
- 1166              		.loc 1 411 0
+ 1166              		.loc 1 412 0
  1167 0006 2368     		ldr	r3, [r4]
  1168 0008 82B0     		sub	sp, sp, #8
  1169              		.cfi_def_cfa_offset 16
- 1170              		.loc 1 411 0
+ 1170              		.loc 1 412 0
  1171 000a 0193     		str	r3, [sp, #4]
  1172              	.LBB266:
  1173              	.LBB265:
@@ -1248,17 +1248,17 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1185              	.LBE267:
  1186              	.LBB269:
  1187              	.LBB270:
- 1188              		.loc 1 397 0 is_stmt 1 discriminator 1
+ 1188              		.loc 1 398 0 is_stmt 1 discriminator 1
  1189 0010 5B1A     		subs	r3, r3, r1
  1190              	.LBE270:
  1191              	.LBE269:
- 1192              		.loc 1 415 0 discriminator 1
+ 1192              		.loc 1 416 0 discriminator 1
  1193 0012 9842     		cmp	r0, r3
  1194 0014 FBD8     		bhi	.L109
- 1195              		.loc 1 417 0
+ 1195              		.loc 1 418 0
  1196 0016 019A     		ldr	r2, [sp, #4]
  1197 0018 2368     		ldr	r3, [r4]
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 22
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 22
 
 
  1198 001a 9A42     		cmp	r2, r3
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1249 0000 9C1B0000 		.4byte	0x1b9c
  1250 0004 0400     		.2byte	0x4
  1251 0006 00000000 		.4byte	.Ldebug_abbrev0
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 23
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 23
 
 
  1252 000a 04       		.byte	0x4
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1306 0079 4D       		.byte	0x4d
  1307 007a 7E000000 		.4byte	0x7e
  1308 007e 03       		.uleb128 0x3
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 24
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 24
 
 
  1309 007f 04       		.byte	0x4
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1363 00f4 04       		.uleb128 0x4
  1364 00f5 120C0000 		.4byte	.LASF20
  1365 00f9 0A       		.byte	0xa
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 25
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 25
 
 
  1366 00fa 45       		.byte	0x45
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1420 0172 0A       		.byte	0xa
  1421 0173 52       		.byte	0x52
  1422 0174 D4000000 		.4byte	0xd4
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 26
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 26
 
 
  1423 0178 04       		.uleb128 0x4
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1477 01e7 08       		.uleb128 0x8
  1478 01e8 9B120000 		.4byte	.LASF40
  1479 01ec 0C       		.byte	0xc
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 27
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 27
 
 
  1480 01ed D2       		.byte	0xd2
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1534 025b 3C01     		.2byte	0x13c
  1535 025d E6020000 		.4byte	0x2e6
  1536 0261 30       		.byte	0x30
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 28
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 28
 
 
  1537 0262 0A       		.uleb128 0xa
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1591 02d4 B0       		.byte	0xb0
  1592 02d5 E6020000 		.4byte	0x2e6
  1593 02d9 08       		.uleb128 0x8
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 29
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 29
 
 
  1594 02da F1030000 		.4byte	.LASF34
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1648 0349 D4010000 		.4byte	.LASF65
  1649 034d 0C       		.byte	0xc
  1650 034e 9401     		.2byte	0x194
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 30
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 30
 
 
  1651 0350 BC0B0000 		.4byte	0xbbc
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1705 03c1 5F0B0000 		.4byte	.LASF73
  1706 03c5 0C       		.byte	0xc
  1707 03c6 6D01     		.2byte	0x16d
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 31
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 31
 
 
  1708 03c8 4F0F0000 		.4byte	0xf4f
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1762 043c 83010000 		.4byte	0x183
  1763 0440 0C       		.byte	0xc
  1764 0441 00       		.byte	0
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 32
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 32
 
 
  1765 0442 04       		.uleb128 0x4
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1819 04b7 9B100000 		.4byte	.LASF89
  1820 04bb 0C       		.byte	0xc
  1821 04bc CA01     		.2byte	0x1ca
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 33
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 33
 
 
  1822 04be F5030000 		.4byte	0x3f5
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1876 0532 7B       		.sleb128 -5
  1877 0533 14       		.uleb128 0x14
  1878 0534 600F0000 		.4byte	.LASF98
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 34
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 34
 
 
  1879 0538 7C       		.sleb128 -4
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1933 05a4 0F       		.byte	0xf
  1934 05a5 15       		.uleb128 0x15
  1935 05a6 5E080000 		.4byte	.LASF117
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 35
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 35
 
 
  1936 05aa 10       		.byte	0x10
@@ -2098,7 +2098,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  1990 0616 22       		.byte	0x22
  1991 0617 15       		.uleb128 0x15
  1992 0618 550B0000 		.4byte	.LASF136
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 36
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 36
 
 
  1993 061c 23       		.byte	0x23
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2047 0688 35       		.byte	0x35
  2048 0689 15       		.uleb128 0x15
  2049 068a DC120000 		.4byte	.LASF155
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 37
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 37
 
 
  2050 068e 36       		.byte	0x36
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2104 06fa 48       		.byte	0x48
  2105 06fb 15       		.uleb128 0x15
  2106 06fc CF0D0000 		.4byte	.LASF174
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 38
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 38
 
 
  2107 0700 49       		.byte	0x49
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2161 076e 5501     		.2byte	0x155
  2162 0770 08080000 		.4byte	0x808
  2163 0774 A0       		.byte	0xa0
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 39
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 39
 
 
  2164 0775 11       		.uleb128 0x11
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2218 07f2 00       		.byte	0
  2219 07f3 17       		.uleb128 0x17
  2220 07f4 DF000000 		.4byte	0xdf
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 40
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 40
 
 
  2221 07f8 03080000 		.4byte	0x803
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2275 0871 DC040000 		.4byte	.LASF197
  2276 0875 03       		.byte	0x3
  2277 0876 7301     		.2byte	0x173
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 41
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 41
 
 
  2278 0878 DF000000 		.4byte	0xdf
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2332 08ed DF000000 		.4byte	0xdf
  2333 08f1 30       		.byte	0x30
  2334 08f2 0A       		.uleb128 0xa
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 42
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 42
 
 
  2335 08f3 D50F0000 		.4byte	.LASF204
@@ -2518,7 +2518,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2389 0968 E0110000 		.4byte	.LASF209
  2390 096c 03       		.byte	0x3
  2391 096d 8601     		.2byte	0x186
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 43
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 43
 
 
  2392 096f DF000000 		.4byte	0xdf
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2446 09ed 03       		.byte	0x3
  2447 09ee 8701     		.2byte	0x187
  2448 09f0 5A080000 		.4byte	0x85a
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 44
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 44
 
 
  2449 09f4 17       		.uleb128 0x17
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2503 0a68 0A       		.uleb128 0xa
  2504 0a69 C40E0000 		.4byte	.LASF218
  2505 0a6d 03       		.byte	0x3
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 45
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 45
 
 
  2506 0a6e 0F03     		.2byte	0x30f
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2560 0ae3 1803     		.2byte	0x318
  2561 0ae5 DF000000 		.4byte	0xdf
  2562 0ae9 40       		.byte	0x40
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 46
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 46
 
 
  2563 0aea 0A       		.uleb128 0xa
@@ -2758,7 +2758,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2617 0b5c 47040000 		.4byte	.LASF234
  2618 0b60 03       		.byte	0x3
  2619 0b61 FA04     		.2byte	0x4fa
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 47
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 47
 
 
  2620 0b63 DF000000 		.4byte	0xdf
@@ -2818,7 +2818,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2674 0bd6 240D0000 		.4byte	.LASF243
  2675 0bda 64       		.byte	0x64
  2676 0bdb 02       		.byte	0x2
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 48
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 48
 
 
  2677 0bdc F4       		.byte	0xf4
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2731 0c48 A60B0000 		.4byte	0xba6
  2732 0c4c 20       		.byte	0x20
  2733 0c4d 1E       		.uleb128 0x1e
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 49
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 49
 
 
  2734 0c4e 73323500 		.ascii	"s25\000"
@@ -2938,7 +2938,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2788 0cc0 723600   		.ascii	"r6\000"
  2789 0cc3 02       		.byte	0x2
  2790 0cc4 0901     		.2byte	0x109
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 50
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 50
 
 
  2791 0cc6 A60B0000 		.4byte	0xba6
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2845 0d31 B9020000 		.4byte	.LASF245
  2846 0d35 10       		.byte	0x10
  2847 0d36 59       		.byte	0x59
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 51
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 51
 
 
  2848 0d37 BC020000 		.4byte	0x2bc
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2902 0da4 04       		.uleb128 0x4
  2903 0da5 C4070000 		.4byte	.LASF252
  2904 0da9 10       		.byte	0x10
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 52
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 52
 
 
  2905 0daa 74       		.byte	0x74
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  2959 0e11 00       		.byte	0
  2960 0e12 04       		.uleb128 0x4
  2961 0e13 BF020000 		.4byte	.LASF259
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 53
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 53
 
 
  2962 0e17 11       		.byte	0x11
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3016 0e82 B9060000 		.4byte	.LASF267
  3017 0e86 0C       		.byte	0xc
  3018 0e87 0F01     		.2byte	0x10f
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 54
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 54
 
 
  3019 0e89 99030000 		.4byte	0x399
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3073 0efc 200B0000 		.4byte	.LASF276
  3074 0f00 14       		.byte	0x14
  3075 0f01 3A       		.byte	0x3a
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 55
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 55
 
 
  3076 0f02 E6020000 		.4byte	0x2e6
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3130 0f71 9F0B0000 		.4byte	.LASF281
  3131 0f75 15       		.byte	0x15
  3132 0f76 34       		.byte	0x34
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 56
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 56
 
 
  3133 0f77 88030000 		.4byte	0x388
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3187 0fe3 08       		.uleb128 0x8
  3188 0fe4 E2010000 		.4byte	.LASF290
  3189 0fe8 06       		.byte	0x6
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 57
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 57
 
 
  3190 0fe9 3D       		.byte	0x3d
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3244 1055 48       		.byte	0x48
  3245 1056 A9000000 		.4byte	0xa9
  3246 105a 15       		.byte	0x15
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 58
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 58
 
 
  3247 105b 00       		.byte	0
@@ -3452,7 +3452,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3275 1098 24       		.uleb128 0x24
  3276 1099 37080000 		.4byte	.LASF305
  3277 109d 01       		.byte	0x1
- 3278 109e 9B01     		.2byte	0x19b
+ 3278 109e 9C01     		.2byte	0x19c
  3279 10a0 00000000 		.4byte	.LFB227
  3280 10a4 30000000 		.4byte	.LFE227-.LFB227
  3281 10a8 01       		.uleb128 0x1
@@ -3461,41 +3461,41 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3284 10ae 25       		.uleb128 0x25
  3285 10af 14020000 		.4byte	.LASF307
  3286 10b3 01       		.byte	0x1
- 3287 10b4 9B01     		.2byte	0x19b
+ 3287 10b4 9C01     		.2byte	0x19c
  3288 10b6 F4000000 		.4byte	0xf4
  3289 10ba 00000000 		.4byte	.LLST28
  3290 10be 26       		.uleb128 0x26
  3291 10bf 0E100000 		.4byte	.LASF303
  3292 10c3 01       		.byte	0x1
- 3293 10c4 9C01     		.2byte	0x19c
+ 3293 10c4 9D01     		.2byte	0x19d
  3294 10c6 F4000000 		.4byte	0xf4
  3295 10ca 27       		.uleb128 0x27
  3296 10cb 656E6400 		.ascii	"end\000"
  3297 10cf 01       		.byte	0x1
- 3298 10d0 9D01     		.2byte	0x19d
+ 3298 10d0 9E01     		.2byte	0x19e
  3299 10d2 F4000000 		.4byte	0xf4
  3300 10d6 21000000 		.4byte	.LLST29
  3301 10da 28       		.uleb128 0x28
  3302 10db 16190000 		.4byte	0x1916
  3303 10df 04000000 		.4byte	.LBB263
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 59
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 59
 
 
  3304 10e3 20010000 		.4byte	.Ldebug_ranges0+0x120
  3305 10e7 01       		.byte	0x1
- 3306 10e8 9C01     		.2byte	0x19c
+ 3306 10e8 9D01     		.2byte	0x19d
  3307 10ea 29       		.uleb128 0x29
  3308 10eb 16190000 		.4byte	0x1916
  3309 10ef 0E000000 		.4byte	.LBB267
  3310 10f3 02000000 		.4byte	.LBE267-.LBB267
  3311 10f7 01       		.byte	0x1
- 3312 10f8 9F01     		.2byte	0x19f
+ 3312 10f8 A001     		.2byte	0x1a0
  3313 10fa 2A       		.uleb128 0x2a
  3314 10fb 28110000 		.4byte	0x1128
  3315 10ff 10000000 		.4byte	.LBB269
  3316 1103 02000000 		.4byte	.LBE269-.LBB269
  3317 1107 01       		.byte	0x1
- 3318 1108 9F01     		.2byte	0x19f
+ 3318 1108 A001     		.2byte	0x1a0
  3319 110a 1E110000 		.4byte	0x111e
  3320 110e 2B       		.uleb128 0x2b
  3321 110f 51110000 		.4byte	0x1151
@@ -3511,24 +3511,24 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3331 1128 2D       		.uleb128 0x2d
  3332 1129 220C0000 		.4byte	.LASF376
  3333 112d 01       		.byte	0x1
- 3334 112e 8B01     		.2byte	0x18b
+ 3334 112e 8C01     		.2byte	0x18c
  3335 1130 5E110000 		.4byte	0x115e
  3336 1134 01       		.byte	0x1
  3337 1135 5E110000 		.4byte	0x115e
  3338 1139 2E       		.uleb128 0x2e
  3339 113a 636E7400 		.ascii	"cnt\000"
  3340 113e 01       		.byte	0x1
- 3341 113f 8B01     		.2byte	0x18b
+ 3341 113f 8C01     		.2byte	0x18c
  3342 1141 F4000000 		.4byte	0xf4
  3343 1145 2F       		.uleb128 0x2f
  3344 1146 0E100000 		.4byte	.LASF303
  3345 114a 01       		.byte	0x1
- 3346 114b 8B01     		.2byte	0x18b
+ 3346 114b 8C01     		.2byte	0x18c
  3347 114d F4000000 		.4byte	0xf4
  3348 1151 2E       		.uleb128 0x2e
  3349 1152 656E6400 		.ascii	"end\000"
  3350 1156 01       		.byte	0x1
- 3351 1157 8B01     		.2byte	0x18b
+ 3351 1157 8C01     		.2byte	0x18c
  3352 1159 F4000000 		.4byte	0xf4
  3353 115d 00       		.byte	0
  3354 115e 03       		.uleb128 0x3
@@ -3538,10 +3538,10 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3358 1165 24       		.uleb128 0x24
  3359 1166 5A0D0000 		.4byte	.LASF306
  3360 116a 01       		.byte	0x1
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 60
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 60
 
 
- 3361 116b 6B01     		.2byte	0x16b
+ 3361 116b 6C01     		.2byte	0x16c
  3362 116d 00000000 		.4byte	.LFB225
  3363 1171 6C000000 		.4byte	.LFE225-.LFB225
  3364 1175 01       		.uleb128 0x1
@@ -3550,7 +3550,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3367 117b 30       		.uleb128 0x30
  3368 117c 73747300 		.ascii	"sts\000"
  3369 1180 01       		.byte	0x1
- 3370 1181 6B01     		.2byte	0x16b
+ 3370 1181 6C01     		.2byte	0x16c
  3371 1183 0A010000 		.4byte	0x10a
  3372 1187 39000000 		.4byte	.LLST22
  3373 118b 2A       		.uleb128 0x2a
@@ -3558,7 +3558,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3375 1190 0C000000 		.4byte	.LBB246
  3376 1194 08000000 		.4byte	.LBE246-.LBB246
  3377 1198 01       		.byte	0x1
- 3378 1199 6E01     		.2byte	0x16e
+ 3378 1199 6F01     		.2byte	0x16f
  3379 119b C0110000 		.4byte	0x11c0
  3380 119f 31       		.uleb128 0x31
  3381 11a0 441A0000 		.4byte	0x1a44
@@ -3579,7 +3579,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3396 11c5 1A000000 		.4byte	.LBB250
  3397 11c9 08010000 		.4byte	.Ldebug_ranges0+0x108
  3398 11cd 01       		.byte	0x1
- 3399 11ce 7301     		.2byte	0x173
+ 3399 11ce 7401     		.2byte	0x174
  3400 11d0 34120000 		.4byte	0x1234
  3401 11d4 35       		.uleb128 0x35
  3402 11d5 08010000 		.4byte	.Ldebug_ranges0+0x108
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3415 11fb 06000000 		.4byte	.LBE253-.LBB253
  3416 11ff 02       		.byte	0x2
  3417 1200 CD01     		.2byte	0x1cd
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 61
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 61
 
 
  3418 1202 36       		.uleb128 0x36
@@ -3629,7 +3629,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3443 1239 48000000 		.4byte	.LBB256
  3444 123d 0E000000 		.4byte	.LBE256-.LBB256
  3445 1241 01       		.byte	0x1
- 3446 1242 6F01     		.2byte	0x16f
+ 3446 1242 7001     		.2byte	0x170
  3447 1244 9B120000 		.4byte	0x129b
  3448 1248 2A       		.uleb128 0x2a
  3449 1249 3E190000 		.4byte	0x193e
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3472 1287 00       		.byte	0
  3473 1288 2C       		.uleb128 0x2c
  3474 1289 4C000000 		.4byte	.LVL91
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 62
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 62
 
 
  3475 128d CB1A0000 		.4byte	0x1acb
@@ -3676,7 +3676,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3487 12ae 39       		.uleb128 0x39
  3488 12af 9A030000 		.4byte	.LASF309
  3489 12b3 01       		.byte	0x1
- 3490 12b4 5401     		.2byte	0x154
+ 3490 12b4 5501     		.2byte	0x155
  3491 12b6 0A010000 		.4byte	0x10a
  3492 12ba 00000000 		.4byte	.LFB224
  3493 12be 50000000 		.4byte	.LFE224-.LFB224
@@ -3686,14 +3686,14 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3497 12c8 3A       		.uleb128 0x3a
  3498 12c9 73747300 		.ascii	"sts\000"
  3499 12cd 01       		.byte	0x1
- 3500 12ce 5601     		.2byte	0x156
+ 3500 12ce 5701     		.2byte	0x157
  3501 12d0 0A010000 		.4byte	0x10a
  3502 12d4 2A       		.uleb128 0x2a
  3503 12d5 8D190000 		.4byte	0x198d
  3504 12d9 0A000000 		.4byte	.LBB212
  3505 12dd 04000000 		.4byte	.LBE212-.LBB212
  3506 12e1 01       		.byte	0x1
- 3507 12e2 5601     		.2byte	0x156
+ 3507 12e2 5701     		.2byte	0x157
  3508 12e4 1A130000 		.4byte	0x131a
  3509 12e8 32       		.uleb128 0x32
  3510 12e9 0A000000 		.4byte	.LBB213
@@ -3718,14 +3718,14 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3529 1318 00       		.byte	0
  3530 1319 00       		.byte	0
  3531 131a 2A       		.uleb128 0x2a
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 63
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 63
 
 
  3532 131b 62190000 		.4byte	0x1962
  3533 131f 10000000 		.4byte	.LBB216
  3534 1323 08000000 		.4byte	.LBE216-.LBB216
  3535 1327 01       		.byte	0x1
- 3536 1328 5801     		.2byte	0x158
+ 3536 1328 5901     		.2byte	0x159
  3537 132a 4F130000 		.4byte	0x134f
  3538 132e 31       		.uleb128 0x31
  3539 132f 441A0000 		.4byte	0x1a44
@@ -3746,7 +3746,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3554 1354 1A000000 		.4byte	.LBB220
  3555 1358 0E000000 		.4byte	.LBE220-.LBB220
  3556 135c 01       		.byte	0x1
- 3557 135d 5C01     		.2byte	0x15c
+ 3557 135d 5D01     		.2byte	0x15d
  3558 135f A5130000 		.4byte	0x13a5
  3559 1363 2A       		.uleb128 0x2a
  3560 1364 59190000 		.4byte	0x1959
@@ -3778,10 +3778,10 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3586 13aa 36000000 		.4byte	.LBB225
  3587 13ae 10000000 		.4byte	.LBE225-.LBB225
  3588 13b2 01       		.byte	0x1
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 64
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 64
 
 
- 3589 13b3 5901     		.2byte	0x159
+ 3589 13b3 5A01     		.2byte	0x15a
  3590 13b5 0C140000 		.4byte	0x140c
  3591 13b9 2A       		.uleb128 0x2a
  3592 13ba 47190000 		.4byte	0x1947
@@ -3822,7 +3822,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3627 1416 24       		.uleb128 0x24
  3628 1417 380C0000 		.4byte	.LASF308
  3629 141b 01       		.byte	0x1
- 3630 141c 3301     		.2byte	0x133
+ 3630 141c 3401     		.2byte	0x134
  3631 141e 00000000 		.4byte	.LFB223
  3632 1422 A0000000 		.4byte	.LFE223-.LFB223
  3633 1426 01       		.uleb128 0x1
@@ -3833,12 +3833,12 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3638 1431 26000000 		.4byte	.LBB189
  3639 1435 C0000000 		.4byte	.Ldebug_ranges0+0xc0
  3640 1439 01       		.byte	0x1
- 3641 143a 4101     		.2byte	0x141
+ 3641 143a 4201     		.2byte	0x142
  3642 143c 44150000 		.4byte	0x1544
  3643 1440 3C       		.uleb128 0x3c
  3644 1441 A8180000 		.4byte	0x18a8
  3645 1445 4A000000 		.4byte	.LBB191
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 65
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 65
 
 
  3646 1449 2E000000 		.4byte	.LBE191-.LBB191
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3700 14de 2A       		.uleb128 0x2a
  3701 14df 3E190000 		.4byte	0x193e
  3702 14e3 64000000 		.4byte	.LBB205
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 66
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 66
 
 
  3703 14e7 04000000 		.4byte	.LBE205-.LBB205
@@ -3950,7 +3950,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3749 1557 40       		.uleb128 0x40
  3750 1558 13030000 		.4byte	.LASF310
  3751 155c 01       		.byte	0x1
- 3752 155d CE       		.byte	0xce
+ 3752 155d CF       		.byte	0xcf
  3753 155e 5E110000 		.4byte	0x115e
  3754 1562 00000000 		.4byte	.LFB222
  3755 1566 CC000000 		.4byte	.LFE222-.LFB222
@@ -3958,18 +3958,18 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3757 156b 9C       		.byte	0x9c
  3758 156c E9150000 		.4byte	0x15e9
  3759 1570 41       		.uleb128 0x41
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 67
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 67
 
 
  3760 1571 BB070000 		.4byte	.LASF311
  3761 1575 01       		.byte	0x1
- 3762 1576 CE       		.byte	0xce
+ 3762 1576 CF       		.byte	0xcf
  3763 1577 2C000000 		.4byte	0x2c
  3764 157b 1F010000 		.4byte	.LLST11
  3765 157f 42       		.uleb128 0x42
  3766 1580 6E00     		.ascii	"n\000"
  3767 1582 01       		.byte	0x1
- 3768 1583 CF       		.byte	0xcf
+ 3768 1583 D0       		.byte	0xd0
  3769 1584 62010000 		.4byte	0x162
  3770 1588 3D010000 		.4byte	.LLST12
  3771 158c 43       		.uleb128 0x43
@@ -3978,7 +3978,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3774 1595 42       		.uleb128 0x42
  3775 1596 747000   		.ascii	"tp\000"
  3776 1599 01       		.byte	0x1
- 3777 159a D5       		.byte	0xd5
+ 3777 159a D6       		.byte	0xd6
  3778 159b BC020000 		.4byte	0x2bc
  3779 159f 96010000 		.4byte	.LLST13
  3780 15a3 00       		.byte	0
@@ -3988,7 +3988,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3784 15ad 42       		.uleb128 0x42
  3785 15ae 76747000 		.ascii	"vtp\000"
  3786 15b2 01       		.byte	0x1
- 3787 15b3 EE       		.byte	0xee
+ 3787 15b3 EF       		.byte	0xef
  3788 15b4 4F0F0000 		.4byte	0xf4f
  3789 15b8 CA010000 		.4byte	.LLST14
  3790 15bc 00       		.byte	0
@@ -3998,7 +3998,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3794 15c6 27       		.uleb128 0x27
  3795 15c7 747000   		.ascii	"tp\000"
  3796 15ca 01       		.byte	0x1
- 3797 15cb 0701     		.2byte	0x107
+ 3797 15cb 0801     		.2byte	0x108
  3798 15cd BC020000 		.4byte	0x2bc
  3799 15d1 FE010000 		.4byte	.LLST15
  3800 15d5 00       		.byte	0
@@ -4012,19 +4012,19 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3808 15e9 44       		.uleb128 0x44
  3809 15ea B3100000 		.4byte	.LASF312
  3810 15ee 01       		.byte	0x1
- 3811 15ef A6       		.byte	0xa6
+ 3811 15ef A7       		.byte	0xa7
  3812 15f0 00000000 		.4byte	.LFB221
  3813 15f4 20000000 		.4byte	.LFE221-.LFB221
  3814 15f8 01       		.uleb128 0x1
  3815 15f9 9C       		.byte	0x9c
  3816 15fa 42160000 		.4byte	0x1642
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 68
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 68
 
 
  3817 15fe 41       		.uleb128 0x41
  3818 15ff A40E0000 		.4byte	.LASF313
  3819 1603 01       		.byte	0x1
- 3820 1604 A6       		.byte	0xa6
+ 3820 1604 A7       		.byte	0xa7
  3821 1605 320F0000 		.4byte	0xf32
  3822 1609 32020000 		.4byte	.LLST10
  3823 160d 45       		.uleb128 0x45
@@ -4032,7 +4032,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3825 1612 0C000000 		.4byte	.LBB165
  3826 1616 02000000 		.4byte	.LBE165-.LBB165
  3827 161a 01       		.byte	0x1
- 3828 161b A8       		.byte	0xa8
+ 3828 161b A9       		.byte	0xa9
  3829 161c 31160000 		.4byte	0x1631
  3830 1620 29       		.uleb128 0x29
  3831 1621 621A0000 		.4byte	0x1a62
@@ -4055,7 +4055,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3848 1642 44       		.uleb128 0x44
  3849 1643 43110000 		.4byte	.LASF314
  3850 1647 01       		.byte	0x1
- 3851 1648 5D       		.byte	0x5d
+ 3851 1648 5E       		.byte	0x5e
  3852 1649 00000000 		.4byte	.LFB220
  3853 164d D0000000 		.4byte	.LFE220-.LFB220
  3854 1651 01       		.uleb128 0x1
@@ -4064,7 +4064,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3857 1657 1D       		.uleb128 0x1d
  3858 1658 7B0B0000 		.4byte	.LASF315
  3859 165c 01       		.byte	0x1
- 3860 165d 5F       		.byte	0x5f
+ 3860 165d 60       		.byte	0x60
  3861 165e B10B0000 		.4byte	0xbb1
  3862 1662 43       		.uleb128 0x43
  3863 1663 60000000 		.4byte	.Ldebug_ranges0+0x60
@@ -4072,18 +4072,18 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3865 166b 42       		.uleb128 0x42
  3866 166c 747000   		.ascii	"tp\000"
  3867 166f 01       		.byte	0x1
- 3868 1670 90       		.byte	0x90
+ 3868 1670 91       		.byte	0x91
  3869 1671 BC020000 		.4byte	0x2bc
  3870 1675 50020000 		.4byte	.LLST7
  3871 1679 45       		.uleb128 0x45
  3872 167a 61180000 		.4byte	0x1861
  3873 167e 96000000 		.4byte	.LBB162
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 69
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 69
 
 
  3874 1682 04000000 		.4byte	.LBE162-.LBB162
  3875 1686 01       		.byte	0x1
- 3876 1687 95       		.byte	0x95
+ 3876 1687 96       		.byte	0x96
  3877 1688 9F160000 		.4byte	0x169f
  3878 168c 36       		.uleb128 0x36
  3879 168d 77180000 		.4byte	0x1877
@@ -4133,12 +4133,12 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3923 16d3 04000000 		.4byte	.LBB132
  3924 16d7 00000000 		.4byte	.Ldebug_ranges0+0
  3925 16db 01       		.byte	0x1
- 3926 16dc 62       		.byte	0x62
+ 3926 16dc 63       		.byte	0x63
  3927 16dd 63170000 		.4byte	0x1763
  3928 16e1 2A       		.uleb128 0x2a
  3929 16e2 DA190000 		.4byte	0x19da
  3930 16e6 12000000 		.4byte	.LBB134
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 70
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 70
 
 
  3931 16ea 0E000000 		.4byte	.LBE134-.LBB134
@@ -4192,13 +4192,13 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  3979 1768 70000000 		.4byte	.LBB152
  3980 176c 0A000000 		.4byte	.LBE152-.LBB152
  3981 1770 01       		.byte	0x1
- 3982 1771 83       		.byte	0x83
+ 3982 1771 84       		.byte	0x84
  3983 1772 C3170000 		.4byte	0x17c3
  3984 1776 2A       		.uleb128 0x2a
  3985 1777 2C190000 		.4byte	0x192c
  3986 177b 74000000 		.4byte	.LBB154
  3987 177f 06000000 		.4byte	.LBE154-.LBB154
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 71
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 71
 
 
  3988 1783 04       		.byte	0x4
@@ -4231,7 +4231,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4015 17c8 7A000000 		.4byte	.LBB159
  4016 17cc 06000000 		.4byte	.LBE159-.LBB159
  4017 17d0 01       		.byte	0x1
- 4018 17d1 88       		.byte	0x88
+ 4018 17d1 89       		.byte	0x89
  4019 17d2 DC170000 		.4byte	0x17dc
  4020 17d6 2B       		.uleb128 0x2b
  4021 17d7 8F180000 		.4byte	0x188f
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4042 1813 5A000000 		.4byte	.LVL15
  4043 1817 891B0000 		.4byte	0x1b89
  4044 181b 48       		.uleb128 0x48
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 72
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 72
 
 
  4045 181c 64000000 		.4byte	.LVL16
@@ -4284,7 +4284,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4065 1840 49       		.uleb128 0x49
  4066 1841 AE070000 		.4byte	.LASF377
  4067 1845 01       		.byte	0x1
- 4068 1846 41       		.byte	0x41
+ 4068 1846 42       		.byte	0x42
  4069 1847 00000000 		.4byte	.LFB219
  4070 184b 10000000 		.4byte	.LFE219-.LFB219
  4071 184f 01       		.uleb128 0x1
@@ -4293,7 +4293,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4074 1855 4A       		.uleb128 0x4a
  4075 1856 7000     		.ascii	"p\000"
  4076 1858 01       		.byte	0x1
- 4077 1859 41       		.byte	0x41
+ 4077 1859 42       		.byte	0x42
  4078 185a 99030000 		.4byte	0x399
  4079 185e 01       		.uleb128 0x1
  4080 185f 50       		.byte	0x50
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4099 1883 4B       		.uleb128 0x4b
  4100 1884 80120000 		.4byte	.LASF318
  4101 1888 06       		.byte	0x6
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 73
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 73
 
 
  4102 1889 84       		.byte	0x84
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4156 18fd 0B       		.byte	0xb
  4157 18fe 00       		.byte	0
  4158 18ff 06       		.uleb128 0x6
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 74
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 74
 
 
  4159 1900 EF180000 		.4byte	0x18ef
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4213 1967 02       		.byte	0x2
  4214 1968 B201     		.2byte	0x1b2
  4215 196a 5E110000 		.4byte	0x115e
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 75
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 75
 
 
  4216 196e 03       		.byte	0x3
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4270 19e3 0C1A0000 		.4byte	0x1a0c
  4271 19e7 2F       		.uleb128 0x2f
  4272 19e8 56110000 		.4byte	.LASF342
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 76
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 76
 
 
  4273 19ec 03       		.byte	0x3
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4327 1a67 05       		.byte	0x5
  4328 1a68 5401     		.2byte	0x154
  4329 1a6a 03       		.byte	0x3
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 77
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 77
 
 
  4330 1a6b 50       		.uleb128 0x50
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4384 1aee 04060000 		.4byte	.LASF357
  4385 1af2 04060000 		.4byte	.LASF357
  4386 1af6 12       		.byte	0x12
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 78
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 78
 
 
  4387 1af7 4F       		.byte	0x4f
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4441 1b71 17       		.byte	0x17
  4442 1b72 61       		.byte	0x61
  4443 1b73 56       		.uleb128 0x56
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 79
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 79
 
 
  4444 1b74 BE090000 		.4byte	.LASF369
@@ -4738,7 +4738,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4498 0020 00       		.byte	0
  4499 0021 0B       		.uleb128 0xb
  4500 0022 0B       		.uleb128 0xb
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 80
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 80
 
 
  4501 0023 3E       		.uleb128 0x3e
@@ -4798,7 +4798,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4555 0059 0B       		.uleb128 0xb
  4556 005a 3B       		.uleb128 0x3b
  4557 005b 0B       		.uleb128 0xb
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 81
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 81
 
 
  4558 005c 49       		.uleb128 0x49
@@ -4858,7 +4858,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4612 0092 3B       		.uleb128 0x3b
  4613 0093 05       		.uleb128 0x5
  4614 0094 01       		.uleb128 0x1
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 82
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 82
 
 
  4615 0095 13       		.uleb128 0x13
@@ -4918,7 +4918,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4669 00cb 00       		.byte	0
  4670 00cc 00       		.byte	0
  4671 00cd 12       		.uleb128 0x12
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 83
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 83
 
 
  4672 00ce 0D       		.uleb128 0xd
@@ -4978,7 +4978,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4726 0104 3A       		.uleb128 0x3a
  4727 0105 0B       		.uleb128 0xb
  4728 0106 3B       		.uleb128 0x3b
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 84
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 84
 
 
  4729 0107 05       		.uleb128 0x5
@@ -5038,7 +5038,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4783 013d 01       		.uleb128 0x1
  4784 013e 13       		.uleb128 0x13
  4785 013f 00       		.byte	0
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 85
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 85
 
 
  4786 0140 00       		.byte	0
@@ -5098,7 +5098,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4840 0176 0B       		.uleb128 0xb
  4841 0177 3A       		.uleb128 0x3a
  4842 0178 0B       		.uleb128 0xb
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 86
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 86
 
 
  4843 0179 3B       		.uleb128 0x3b
@@ -5158,7 +5158,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4897 01af 49       		.uleb128 0x49
  4898 01b0 13       		.uleb128 0x13
  4899 01b1 3F       		.uleb128 0x3f
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 87
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 87
 
 
  4900 01b2 19       		.uleb128 0x19
@@ -5218,7 +5218,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  4954 01e9 49       		.uleb128 0x49
  4955 01ea 13       		.uleb128 0x13
  4956 01eb 00       		.byte	0
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 88
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 88
 
 
  4957 01ec 00       		.byte	0
@@ -5278,7 +5278,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5011 0222 06       		.uleb128 0x6
  5012 0223 58       		.uleb128 0x58
  5013 0224 0B       		.uleb128 0xb
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 89
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 89
 
 
  5014 0225 59       		.uleb128 0x59
@@ -5338,7 +5338,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5068 025d 00       		.byte	0
  5069 025e 00       		.byte	0
  5070 025f 2F       		.uleb128 0x2f
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 90
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 90
 
 
  5071 0260 05       		.uleb128 0x5
@@ -5398,7 +5398,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5125 0296 31       		.uleb128 0x31
  5126 0297 13       		.uleb128 0x13
  5127 0298 00       		.byte	0
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 91
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 91
 
 
  5128 0299 00       		.byte	0
@@ -5458,7 +5458,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5182 02d4 01       		.byte	0x1
  5183 02d5 3F       		.uleb128 0x3f
  5184 02d6 19       		.uleb128 0x19
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 92
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 92
 
 
  5185 02d7 03       		.uleb128 0x3
@@ -5518,7 +5518,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5239 030e 13       		.uleb128 0x13
  5240 030f 00       		.byte	0
  5241 0310 00       		.byte	0
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 93
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 93
 
 
  5242 0311 3D       		.uleb128 0x3d
@@ -5578,7 +5578,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5296 034a 9742     		.uleb128 0x2117
  5297 034c 19       		.uleb128 0x19
  5298 034d 01       		.uleb128 0x1
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 94
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 94
 
 
  5299 034e 13       		.uleb128 0x13
@@ -5638,7 +5638,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5353 0384 19       		.uleb128 0x19
  5354 0385 11       		.uleb128 0x11
  5355 0386 01       		.uleb128 0x1
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 95
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 95
 
 
  5356 0387 12       		.uleb128 0x12
@@ -5698,7 +5698,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5410 03be 898201   		.uleb128 0x4109
  5411 03c1 01       		.byte	0x1
  5412 03c2 11       		.uleb128 0x11
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 96
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 96
 
 
  5413 03c3 01       		.uleb128 0x1
@@ -5758,7 +5758,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5467 03fa 27       		.uleb128 0x27
  5468 03fb 19       		.uleb128 0x19
  5469 03fc 20       		.uleb128 0x20
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 97
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 97
 
 
  5470 03fd 0B       		.uleb128 0xb
@@ -5818,7 +5818,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5524 0433 2E       		.uleb128 0x2e
  5525 0434 00       		.byte	0
  5526 0435 03       		.uleb128 0x3
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 98
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 98
 
 
  5527 0436 0E       		.uleb128 0xe
@@ -5878,7 +5878,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5581 046c 20       		.uleb128 0x20
  5582 046d 0B       		.uleb128 0xb
  5583 046e 01       		.uleb128 0x1
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 99
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 99
 
 
  5584 046f 13       		.uleb128 0x13
@@ -5938,7 +5938,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5638 04a6 19       		.uleb128 0x19
  5639 04a7 3C       		.uleb128 0x3c
  5640 04a8 19       		.uleb128 0x19
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 100
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 100
 
 
  5641 04a9 6E       		.uleb128 0x6e
@@ -5998,7 +5998,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5695 005c 50       		.byte	0x50
  5696 005d 4B000000 		.4byte	.LVL91-1
  5697 0061 56000000 		.4byte	.LVL94
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 101
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 101
 
 
  5698 0065 0100     		.2byte	0x1
@@ -6058,7 +6058,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5752 00e7 80000000 		.4byte	.LVL73
  5753 00eb 0100     		.2byte	0x1
  5754 00ed 57       		.byte	0x57
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 102
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 102
 
 
  5755 00ee 00000000 		.4byte	0
@@ -6118,7 +6118,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5809 0177 7C000000 		.4byte	.LVL47
  5810 017b 9A000000 		.4byte	.LVL54
  5811 017f 0100     		.2byte	0x1
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 103
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 103
 
 
  5812 0181 50       		.byte	0x50
@@ -6178,7 +6178,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5866 0213 52       		.byte	0x52
  5867 0214 8A000000 		.4byte	.LVL51
  5868 0218 8C000000 		.4byte	.LVL52
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 104
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 104
 
 
  5869 021c 0100     		.2byte	0x1
@@ -6238,7 +6238,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5923 02ac 51       		.byte	0x51
  5924 02ad 1E000000 		.4byte	.LVL4
  5925 02b1 20000000 		.4byte	.LVL5
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 105
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 105
 
 
  5926 02b5 0100     		.2byte	0x1
@@ -6298,7 +6298,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  5980 033b F3       		.byte	0xf3
  5981 033c 01       		.uleb128 0x1
  5982 033d 50       		.byte	0x50
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 106
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 106
 
 
  5983 033e 9F       		.byte	0x9f
@@ -6358,7 +6358,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6037 004c 2C000000 		.4byte	.LFE226-.LFB226
  6038 0050 00000000 		.4byte	.LFB227
  6039 0054 30000000 		.4byte	.LFE227-.LFB227
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 107
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 107
 
 
  6040 0058 00000000 		.4byte	0
@@ -6418,7 +6418,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6094 00c8 2E000000 		.4byte	.LBB211
  6095 00cc 80000000 		.4byte	.LBE211
  6096 00d0 00000000 		.4byte	0
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 108
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 108
 
 
  6097 00d4 00000000 		.4byte	0
@@ -6478,7 +6478,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6146      56454431 
  6146      00
  6147              	.LASF104:
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 109
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 109
 
 
  6148 0009 5254435F 		.ascii	"RTC_WKUP_IRQn\000"
@@ -6538,7 +6538,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6170      753D6670 
  6170      76342D73 
  6170      702D6431 
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 110
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 110
 
 
  6171 0115 2D676764 		.ascii	"-ggdb -O2 -fomit-frame-pointer -falign-functions=16"
@@ -6598,7 +6598,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6193              	.LASF323:
  6194 021b 5F5F6675 		.ascii	"__func__\000"
  6194      6E635F5F 
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 111
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 111
 
 
  6194      00
@@ -6658,7 +6658,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6221              	.LASF129:
  6222 02af 54494D32 		.ascii	"TIM2_IRQn\000"
  6222      5F495251 
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 112
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 112
 
 
  6222      6E00
@@ -6718,7 +6718,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6247 036c 65786974 		.ascii	"exitcode\000"
  6247      636F6465 
  6247      00
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 113
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 113
 
 
  6248              	.LASF6:
@@ -6778,7 +6778,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6273      74617465 
  6273      00
  6274              	.LASF35:
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 114
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 114
 
 
  6275 0411 705F7072 		.ascii	"p_prev\000"
@@ -6838,7 +6838,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6301 04a0 4D41534B 		.ascii	"MASK2\000"
  6301      3200
  6302              	.LASF353:
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 115
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 115
 
 
  6303 04a6 5F737461 		.ascii	"_stats_stop_measure_crit_thd\000"
@@ -6898,7 +6898,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6330              	.LASF114:
  6331 0540 444D4131 		.ascii	"DMA1_Stream2_IRQn\000"
  6331      5F537472 
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 116
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 116
 
 
  6331      65616D32 
@@ -6958,7 +6958,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6355 05d6 725F6E65 		.ascii	"r_newer\000"
  6355      77657200 
  6356              	.LASF22:
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 117
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 117
 
 
  6357 05de 73797373 		.ascii	"syssts_t\000"
@@ -7018,7 +7018,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6382              	.LASF279:
  6383 0678 6D5F636E 		.ascii	"m_cnt\000"
  6383      7400
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 118
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 118
 
 
  6384              	.LASF210:
@@ -7078,7 +7078,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6410      50726F6A 
  6410      657400
  6411              	.LASF241:
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 119
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 119
 
 
  6412 0729 73746B61 		.ascii	"stkalign_t\000"
@@ -7138,7 +7138,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6440      00
  6441              	.LASF311:
  6442 07bb 74657374 		.ascii	"testmask\000"
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 120
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 120
 
 
  6442      6D61736B 
@@ -7198,7 +7198,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6465              	.LASF117:
  6466 085e 444D4131 		.ascii	"DMA1_Stream5_IRQn\000"
  6466      5F537472 
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 121
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 121
 
 
  6466      65616D35 
@@ -7258,7 +7258,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6489              	.LASF283:
  6490 090a 63685F7A 		.ascii	"ch_zero\000"
  6490      65726F00 
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 122
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 122
 
 
  6491              	.LASF324:
@@ -7318,7 +7318,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6514      5F537472 
  6514      65616D30 
  6514      5F495251 
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 123
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 123
 
 
  6514      6E00
@@ -7378,7 +7378,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6539              	.LASF317:
  6540 0a50 63685265 		.ascii	"chRegSetThreadNameX\000"
  6540      67536574 
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 124
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 124
 
 
  6540      54687265 
@@ -7438,7 +7438,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6562 0afb 4554485F 		.ascii	"ETH_WKUP_IRQn\000"
  6562      574B5550 
  6562      5F495251 
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 125
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 125
 
 
  6562      6E00
@@ -7498,7 +7498,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6589              	.LASF153:
  6590 0ba7 55415254 		.ascii	"UART4_IRQn\000"
  6590      345F4952 
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 126
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 126
 
 
  6590      516E00
@@ -7558,7 +7558,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6614      724900
  6615              	.LASF134:
  6616 0c4b 49324332 		.ascii	"I2C2_EV_IRQn\000"
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 127
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 127
 
 
  6616      5F45565F 
@@ -7618,7 +7618,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6642      00
  6643              	.LASF344:
  6644 0ce0 5072696F 		.ascii	"PriorityGroupTmp\000"
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 128
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 128
 
 
  6644      72697479 
@@ -7678,7 +7678,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6666      6E00
  6667              	.LASF235:
  6668 0d86 44435244 		.ascii	"DCRDR\000"
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 129
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 129
 
 
  6668      5200
@@ -7738,7 +7738,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6693              	.LASF16:
  6694 0e1e 75696E74 		.ascii	"uint16_t\000"
  6694      31365F74 
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 130
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 130
 
 
  6694      00
@@ -7798,7 +7798,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6718      6F636B00 
  6719              	.LASF218:
  6720 0ec4 50435352 		.ascii	"PCSR\000"
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 131
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 131
 
 
  6720      00
@@ -7858,7 +7858,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6748      6E00
  6749              	.LASF170:
  6750 0f4e 444D4132 		.ascii	"DMA2_Stream6_IRQn\000"
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 132
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 132
 
 
  6750      5F537472 
@@ -7918,7 +7918,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6776 0fdb 73686F72 		.ascii	"short int\000"
  6776      7420696E 
  6776      7400
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 133
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 133
 
 
  6777              	.LASF19:
@@ -7978,7 +7978,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6802      6C616773 
  6802      00
  6803              	.LASF126:
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 134
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 134
 
 
  6804 107b 54494D31 		.ascii	"TIM1_UP_TIM10_IRQn\000"
@@ -8038,7 +8038,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6828      66665F73 
  6828      746B6C69 
  6828      6D697400 
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 135
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 135
 
 
  6829              	.LASF56:
@@ -8098,7 +8098,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6852      7369676E 
  6852      65642069 
  6852      6E7400
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 136
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 136
 
 
  6853              	.LASF147:
@@ -8158,7 +8158,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6879              	.LASF341:
  6880 125a 4E564943 		.ascii	"NVIC_SetPriorityGrouping\000"
  6880      5F536574 
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 137
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 137
 
 
  6880      5072696F 
@@ -8218,7 +8218,7 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6906      00
  6907              	.LASF49:
  6908 1301 705F6D73 		.ascii	"p_msg\000"
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 138
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 138
 
 
  6908      6700
@@ -8226,41 +8226,41 @@ ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 1
  6910 1307 705F7374 		.ascii	"p_state\000"
  6910      61746500 
  6911              		.ident	"GCC: (GNU Tools for Arm Embedded Processors 7-2017-q4-major) 7.2.1 20170904 (release) [ARM
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 139
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 139
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 chsys.c
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:18     .text._idle_thread:00000000 $t
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:25     .text._idle_thread:00000000 _idle_thread
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:46     .text._idle_thread:0000000c $d
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:51     .text.chSysInit:00000000 $t
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:59     .text.chSysInit:00000000 chSysInit
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:285    .text.chSysInit:000000a8 $d
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:299    .text.chSysHalt:00000000 $t
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:307    .text.chSysHalt:00000000 chSysHalt
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:349    .text.chSysHalt:00000018 $d
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:355    .text.chSysIntegrityCheckI:00000000 $t
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:363    .text.chSysIntegrityCheckI:00000000 chSysIntegrityCheckI
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:580    .text.chSysIntegrityCheckI:000000c4 $d
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:586    .text.chSysTimerHandlerI:00000000 $t
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:594    .text.chSysTimerHandlerI:00000000 chSysTimerHandlerI
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:780    .text.chSysTimerHandlerI:00000094 $d
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:787    .text.chSysGetStatusAndLockX:00000000 $t
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:795    .text.chSysGetStatusAndLockX:00000000 chSysGetStatusAndLockX
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:924    .text.chSysGetStatusAndLockX:0000004c $d
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:929    .text.chSysRestoreStatusX:00000000 $t
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:937    .text.chSysRestoreStatusX:00000000 chSysRestoreStatusX
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:1073   .text.chSysRestoreStatusX:00000060 $d
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:1082   .text.chSysIsCounterWithinX:00000000 $t
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:1090   .text.chSysIsCounterWithinX:00000000 chSysIsCounterWithinX
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:1135   .text.chSysIsCounterWithinX:00000028 $d
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:1140   .text.chSysPolledDelayX:00000000 $t
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:1148   .text.chSysPolledDelayX:00000000 chSysPolledDelayX
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:1212   .text.chSysPolledDelayX:00000028 $d
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:1218   .rodata.__func__.7153:00000000 $d
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:1222   .rodata.__func__.7153:00000000 __func__.7153
-C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s:1225   .rodata.chSysInit.str1.4:00000000 $d
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:18     .text._idle_thread:00000000 $t
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:25     .text._idle_thread:00000000 _idle_thread
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:46     .text._idle_thread:0000000c $d
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:51     .text.chSysInit:00000000 $t
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:59     .text.chSysInit:00000000 chSysInit
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:285    .text.chSysInit:000000a8 $d
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:299    .text.chSysHalt:00000000 $t
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:307    .text.chSysHalt:00000000 chSysHalt
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:349    .text.chSysHalt:00000018 $d
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:355    .text.chSysIntegrityCheckI:00000000 $t
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:363    .text.chSysIntegrityCheckI:00000000 chSysIntegrityCheckI
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:580    .text.chSysIntegrityCheckI:000000c4 $d
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:586    .text.chSysTimerHandlerI:00000000 $t
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:594    .text.chSysTimerHandlerI:00000000 chSysTimerHandlerI
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:780    .text.chSysTimerHandlerI:00000094 $d
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:787    .text.chSysGetStatusAndLockX:00000000 $t
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:795    .text.chSysGetStatusAndLockX:00000000 chSysGetStatusAndLockX
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:924    .text.chSysGetStatusAndLockX:0000004c $d
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:929    .text.chSysRestoreStatusX:00000000 $t
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:937    .text.chSysRestoreStatusX:00000000 chSysRestoreStatusX
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:1073   .text.chSysRestoreStatusX:00000060 $d
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:1082   .text.chSysIsCounterWithinX:00000000 $t
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:1090   .text.chSysIsCounterWithinX:00000000 chSysIsCounterWithinX
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:1135   .text.chSysIsCounterWithinX:00000028 $d
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:1140   .text.chSysPolledDelayX:00000000 $t
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:1148   .text.chSysPolledDelayX:00000000 chSysPolledDelayX
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:1212   .text.chSysPolledDelayX:00000028 $d
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:1218   .rodata.__func__.7153:00000000 $d
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:1222   .rodata.__func__.7153:00000000 __func__.7153
+C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s:1225   .rodata.chSysInit.str1.4:00000000 $d
 
 UNDEFINED SYMBOLS
 __stack_chk_guard
@@ -8286,7 +8286,7 @@ _stats_start_measure_crit_isr
 _dbg_check_lock_from_isr
 _stats_start_measure_crit_thd
 _dbg_check_lock
-ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQ6kcOv.s 			page 140
+ARM GAS  C:\Users\sjacq\AppData\Local\Temp\ccQWNJqp.s 			page 140
 
 
 chSchRescheduleS

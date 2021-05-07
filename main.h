@@ -34,7 +34,7 @@ extern "C" {
 
 #define SENSOR_X				2
 #define SENSOR_Y				0
-#define IR_OPTIMAL_DIST			4000
+#define IR_OPTIMAL_DIST			400
 
 
 /** Robot wide IPC bus. */
@@ -47,7 +47,7 @@ static void serial_start(void);
 void FindTheOrigin(void);
 void Drawing_test_func(void);
 void Drawing_IMU(imu_msg_t *imu_values);
-void Drawing_Mighty(void);
+//void Drawing_Mighty(void);
 
 
 #ifdef __cplusplus
