@@ -10,7 +10,7 @@
 
 
 static float distance_cm = 0;
-static uint16_t line_position = IMAGE_BUFFER_SIZE/2;	//middle
+	//middle
 
 //semaphore
 static BSEMAPHORE_DECL(image_ready_sem, TRUE);
@@ -88,7 +88,7 @@ uint16_t extract_line_width(uint8_t *buffer){
 		width = last_width;
 	}else{
 		last_width = width = (end - begin);
-		line_position = (begin + end)/2; //gives the line position.
+		//line_position = (begin + end)/2; //gives the line position.
 	}
 
 	//sets a maximum width or returns the measured width
@@ -99,15 +99,128 @@ uint16_t extract_line_width(uint8_t *buffer){
 	}
 }
 
+line_data get_line_data (uint8_t *buffer){
+	line_data current_line;
+	uint16_t i = 0, begin = 0, end = 0;
+		uint8_t stop = 0, wrong_line = 0, line_not_found = 0;
+		uint32_t mean = 0;
+		current_line.width = current_line.position = 0;
+
+		//mean
+		for(uint16_t i = 0 ; i < IMAGE_BUFFER_SIZE ; i++){
+				mean += buffer[i];
+			}
+			mean /= IMAGE_BUFFER_SIZE;
+			i = 0;
+			do{
+
+				wrong_line = 0;
+
+
+				//search for a begin
+				while(stop == 0 && i < (IMAGE_BUFFER_SIZE-MIN_LINE_WIDTH))
+				{
+					//the slope must at least be WIDTH_SLOPE wide and is compared
+				    //to the mean of the image
+					//sign changed
+					 if(buffer[i] < mean   && buffer[i+WIDTH_SLOPE] > mean  )
+				    {
+				        begin = i;
+				        stop = 1;
+				    }
+				    i++;
+				}
+				//if a begin was found, search for an end
+
+				if (i < (IMAGE_BUFFER_SIZE - WIDTH_SLOPE) && begin)
+				{
+				    stop = 0;
+
+				    //changed signs
+				    while(stop == 0 && i > WIDTH_SLOPE)
+				    {
+				    	if(buffer[i] < mean   && buffer[i-WIDTH_SLOPE] > mean )
+				        {
+				            end = i;
+				            stop = 1;
+				        }
+				        i++;
+				    }
+				    //if an end was not found
+				    if (i > IMAGE_BUFFER_SIZE || !end)
+				    {
+				        line_not_found = 1;
+
+				    }
+				}
+				else//if no begin was found
+				{
+				    line_not_found = 1;
+
+				}
+
+				//if a line too small has been detected, continues the search
+				if(!line_not_found && (end-begin) < MIN_LINE_WIDTH){
+					i = end;
+					begin = 0;
+					end = 0;
+					stop = 0;
+					wrong_line = 1;
+				}
+			}while(wrong_line);
+
+			if(line_not_found){
+					begin = 0;
+					end = 0;
+
+
+				}else{
+					current_line.width  = (end - begin);
+					current_line.position = (begin + end)/2; //gives the line position.
+
+
+
+				}
+
+				//sets a maximum width or returns the measured width
+				//if((PXTOCM/width) > MAX_DISTANCE){
+					//return PXTOCM/MAX_DISTANCE;
+				//}else{
+					return current_line;
+				//}
+
+
+}
+bool test_continuity (uint8_t *points){
+	uint8_t adjoining = 0, diagonal = 0;
+	for(uint8_t i =0; i < (MAX_POINTS) ; i++){
+		if(points [i]){
+			//on teste la continuité de la trace et qu ça soit fermé
+			adjoining = points [i-1] + points [i+1] + points [i-RESOLUTION] + points [i+RESOLUTION];
+			diagonal = points [i-RESOLUTION + 1] + points [i+RESOLUTION +1] + points [i-RESOLUTION - 1] + points [i+RESOLUTION - 1];
+			if (adjoining > 2 || diagonal > 2 || (adjoining + diagonal) <2 ){
+				return false;
+			}
+			else{
+				break;
+			}
+		}
+			else{
+				break;
+			}
+		}
+	return true;
+}
+
 static THD_WORKING_AREA(waCaptureImage, 256);
 static THD_FUNCTION(CaptureImage, arg) {
 
     chRegSetThreadName(__FUNCTION__);
     (void)arg;
 
-	//Takes pixels 0 to IMAGE_BUFFER_SIZE of the line 10 + 11 (minimum 2 lines because reasons)
-	po8030_advanced_config(FORMAT_RGB565, 0, 10, IMAGE_BUFFER_SIZE, 2, SUBSAMPLING_X1, SUBSAMPLING_X1);
-	dcmi_enable_double_buffering();
+	//Take 97 x 97 pixels from a square of 388x388 on the sensor with a SUBSAMPLING factor of 4 (9409 pixels in total)
+	po8030_advanced_config(FORMAT_RGB565, 126, 1, 384, 384, SUBSAMPLING_X4, SUBSAMPLING_X4);
+	dcmi_disable_double_buffering();
 	dcmi_set_capture_mode(CAPTURE_ONE_SHOT);
 	dcmi_prepare();
 
@@ -127,11 +240,14 @@ static THD_FUNCTION(ProcessImage, arg) {
 
     chRegSetThreadName(__FUNCTION__);
     (void)arg;
-
+    uint8_t led1= 0, led3 = 0, led5 = 0, led7 = 0, points_counter = 0;
 	uint8_t *img_buff_ptr;
 	uint8_t image[IMAGE_BUFFER_SIZE] = {0};
-	uint16_t lineWidth = 0;
-
+	uint8_t colonne[IMAGE_BUFFER_SIZE] = {0};
+	uint8_t points[MAX_POINTS] = {0};
+	uint16_t mean = 0;
+	line_data width , height;
+	width.width = width.position = height.width = height.position = 0;
 	bool send_to_computer = true;
 
     while(1){
@@ -140,39 +256,100 @@ static THD_FUNCTION(ProcessImage, arg) {
 		//gets the pointer to the array filled with the last image in RGB565    
 		img_buff_ptr = dcmi_get_last_image_ptr();
 
-		//Extracts only the red pixels
-		for(uint16_t i = 0 ; i < (2 * IMAGE_BUFFER_SIZE) ; i+=2){
+		//Extracts only the blue pixels
+		for(uint16_t i =0; i < (2*IMAGE_BUFFER_SIZE) ; i+= 2){
 			//extracts first 5bits of the first byte
 			//takes nothing from the second byte
-			image[i/2] = (uint8_t)img_buff_ptr[i]&0xF8;
+			image[i/2] = (((uint8_t)img_buff_ptr[(IMAGE_BUFFER_SIZE*IMAGE_BUFFER_SIZE)+i+1]&0x1f));
 		}
 
 		//search for a line in the image and gets its width in pixels
-		lineWidth = extract_line_width(image);
+		width = get_line_data(image);
+		led1 = ( width.position || 0);
+		//remplissage tableau pour lecture colonne
 
-		//converts the width into a distance between the robot and the camera
-		if(lineWidth){
-			distance_cm = PXTOCM/lineWidth;
+		if(width.position){
+			for(uint16_t i =0; i < (2*IMAGE_BUFFER_SIZE) ; i+= 2){
+						//extracts first 5bits of the first byte
+						//takes nothing from the second byte
+						// read the column centered on the width
+						colonne[i/2] = (((uint8_t)img_buff_ptr[IMAGE_BUFFER_SIZE*i+2*width.position+1]&0x1f));
+			}
+				//height of the square found
+						height = get_line_data(colonne);
+						led3 = (height.position || 0);
+						}
+		else{
+			//height not founf
+			led3 = 0;
 		}
+		palWritePad(GPIOD, GPIOD_LED1, led1 ? 0 : 1);
+		palWritePad(GPIOD, GPIOD_LED3, led3 ? 0 : 1);
+		if(height.position & width.position){
+			// lecture points en frequence rouge
+					for(uint16_t i =0; i < (2*RESOLUTION) ; i+= 2){
+						for(uint16_t j =0; j < (2*RESOLUTION) ; j+= 2){
+							mean = 0;
+										for(uint8_t k = 0; k < (4) ; k+= 2){
+											//lecture de 4 points disposés en carré
+											mean += (((uint8_t)img_buff_ptr[2*(width.position-width.width/2) +2*(height.position-height.width/2)*width.width+
+																			i*(width.width) +j*(width.width/RESOLUTION+1)+ k*width.width]&0xf8));
 
-		if(send_to_computer){
-			//sends to the computer the image
-			SendUint8ToComputer(image, IMAGE_BUFFER_SIZE);
-		}
-		//invert the bool
-		send_to_computer = !send_to_computer;
+											mean += (((uint8_t)img_buff_ptr[2*(width.position-width.width/2) +2*(height.position-height.width/2)*width.width+
+																			i*(width.width) +j*(width.width/RESOLUTION+3)+ k*width.width]&0xf8));
+
+
+										}
+							//moyenne
+							mean /= 4;
+							points[i*j/2] = mean;
+
+						}
+					}
+
+			//attributions valeurs buoleens
+					mean = 0;
+					for(uint8_t i =0; i < (MAX_POINTS) ; i++){
+						mean += points[i];
+
+					}
+
+					mean /= MAX_POINTS;
+
+					for(uint8_t i =0; i < (MAX_POINTS) ; i++){
+						points [i] = points [i] < mean;
+						points_counter += points [i];
+					}
+
+					led5 = test_continuity(points);
+					led7 = (points_counter == 21);
+					palWritePad(GPIOD, GPIOD_LED5, led5 ? 0 : 1);
+					palWritePad(GPIOD, GPIOD_LED7, led7 ? 0 : 1);
+					chThdSleepMilliseconds(1000);
+
+			}
+
+		else{
+						led5 = 0;
+						led7 = 0;
+						palWritePad(GPIOD, GPIOD_LED5, led5 ? 0 : 1);
+						palWritePad(GPIOD, GPIOD_LED7, led7 ? 0 : 1);
+
+			}
+
     }
+
+
+
+
 }
 
-float get_distance_cm(void){
-	return distance_cm;
-}
 
-uint16_t get_line_position(void){
-	return line_position;
-}
+
+
 
 void process_image_start(void){
 	chThdCreateStatic(waProcessImage, sizeof(waProcessImage), NORMALPRIO, ProcessImage, NULL);
 	chThdCreateStatic(waCaptureImage, sizeof(waCaptureImage), NORMALPRIO, CaptureImage, NULL);
 }
+

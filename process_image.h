@@ -1,8 +1,12 @@
 #ifndef PROCESS_IMAGE_H
 #define PROCESS_IMAGE_H
+typedef struct {
+	uint16_t position;
+	uint16_t width;
+} line_data;
 
-float get_distance_cm(void);
+
 uint16_t get_line_position(void);
-void process_image_start(void);
+
 
 #endif /* PROCESS_IMAGE_H */
