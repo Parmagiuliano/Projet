@@ -4,7 +4,6 @@
  *  Created on: Apr 22, 2021
  *  Authors: Parma Giuliano & Jacquart Sylvain
  */
-
 #include <ch.h>
 #include <hal.h>
 #include <main.h>
@@ -38,7 +37,7 @@ static void serial_start(void)
     sdStart(&SD3, &ser_cfg); // UART3. Connected to the second com port of the programmer
 }
 
-static void timer11_start(void){
+static void timer11_start(void){		//JUST COMMENTED
     //General Purpose Timer configuration
     //timer 11 is a 16 bit timer so we can measure time
     //to about 65ms with a 1Mhz counter
@@ -121,34 +120,34 @@ void Drawing_IMU(imu_msg_t *imu_values){
 
 
     //threshold value to not run the motors when the robot is too horizontal
-    float threshold = 0.2;
-    float ThresholdAngle = M_PI/10; //Should be contained between 0 and less than PI/2
+    float threshold = 0.4; //0.2
+    float ThresholdAngle = M_PI/10;//Should be contained between 0 and less than PI/2
     //create a pointer to the array for shorter name
     float *accel = imu_values->acceleration;
     //variable to measure the time some functions take
     //volatile to not be optimized out by the compiler if not used
     volatile uint16_t time = 0;
 
-    int IMU_drawing_speed;
-//    int IMU_drawing_speed=MOTOR_OPTIMAL_SPEED;
+//    int IMU_drawing_speed;
+    int IMU_drawing_speed=MOTOR_OPTIMAL_SPEED;
 
     //Variable speed of the motors, depending of the IMU accelerations.
     //The pen draws faster when the inclination increases.
-    void IMU_drawing_variable_speed(){
-    	uint32_t imu_max_axis_accel;
-    	uint32_t global_max_accel;
-    	if(fabs(accel[X_AXIS]) > fabs(accel[Y_AXIS]) && fabs(accel[X_AXIS]) > fabs(accel[Z_AXIS])){
-    		imu_max_axis_accel=fabs(accel[X_AXIS]);
-    	}else if(fabs(accel[Y_AXIS]) > fabs(accel[X_AXIS]) && fabs(accel[Y_AXIS]) > fabs(accel[Z_AXIS])){
-    		imu_max_axis_accel=fabs(accel[Y_AXIS]);
-    	}else if(fabs(accel[Z_AXIS]) > fabs(accel[X_AXIS]) && fabs(accel[Z_AXIS]) > fabs(accel[Y_AXIS])){
-    		imu_max_axis_accel=fabs(accel[Z_AXIS]);
-
-    	global_max_accel = 16; //Datasheet max scale: +-16g TO VERIFY
-    	IMU_drawing_speed = (MOTOR_OPTIMAL_SPEED+imu_max_axis_accel/global_max_accel*(MOTOR_SPEED_LIMIT-MOTOR_OPTIMAL_SPEED));
-
-    	}
-    }
+//    void IMU_drawing_variable_speed(){
+//    	uint32_t imu_max_axis_accel;
+//    	uint32_t global_max_accel;
+//    	if(fabs(accel[X_AXIS]) > fabs(accel[Y_AXIS]) && fabs(accel[X_AXIS]) > fabs(accel[Z_AXIS])){
+//    		imu_max_axis_accel=fabs(accel[X_AXIS]);
+//    	}else if(fabs(accel[Y_AXIS]) > fabs(accel[X_AXIS]) && fabs(accel[Y_AXIS]) > fabs(accel[Z_AXIS])){
+//    		imu_max_axis_accel=fabs(accel[Y_AXIS]);
+//    	}else if(fabs(accel[Z_AXIS]) > fabs(accel[X_AXIS]) && fabs(accel[Z_AXIS]) > fabs(accel[Y_AXIS])){
+//    		imu_max_axis_accel=fabs(accel[Z_AXIS]);
+//
+//    	global_max_accel = 16; //Datasheet max scale: +-16g TO VERIFY
+//    	IMU_drawing_speed = (MOTOR_OPTIMAL_SPEED+imu_max_axis_accel/global_max_accel*(MOTOR_SPEED_LIMIT-MOTOR_OPTIMAL_SPEED));
+//
+// 	}
+//}
 
     /*
     * Quadrants & directions:
@@ -166,6 +165,7 @@ void Drawing_IMU(imu_msg_t *imu_values){
     *      		@5
     *         FRONT
     */
+
 
     if(fabs(accel[X_AXIS]) > threshold || fabs(accel[Y_AXIS]) > threshold){
 
@@ -194,15 +194,15 @@ void Drawing_IMU(imu_msg_t *imu_values){
         	right_motor_set_speed(IMU_drawing_speed);//Y motor -> CW direction
 
         }else if(angle >= ThresholdAngle && angle < (M_PI/2 - ThresholdAngle)){						//@2
-        	left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
+        	left_motor_set_speed(-IMU_drawing_speed);//X motor -> CCW direction
         	right_motor_set_speed(IMU_drawing_speed);//Y motor -> CW direction
 
         }else if(angle >= (M_PI/2 - ThresholdAngle) && angle < (M_PI/2 + ThresholdAngle)){			//@3
-        	left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
+        	left_motor_set_speed(-IMU_drawing_speed);//X motor -> CCW direction
         	right_motor_set_speed(MOTOR_NO_SPEED); ////Y motor -> Static
 
         }else if(angle >= (M_PI/2 + ThresholdAngle) && angle < (M_PI - ThresholdAngle)){			//@4
-        	left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
+        	left_motor_set_speed(-IMU_drawing_speed);//X motor -> CCW direction
         	right_motor_set_speed(-IMU_drawing_speed);//Y motor -> CCW direction
 
         }else if(angle >= (M_PI - ThresholdAngle) && angle < (-M_PI + ThresholdAngle)){				//@5
@@ -210,17 +210,42 @@ void Drawing_IMU(imu_msg_t *imu_values){
         	right_motor_set_speed(-IMU_drawing_speed);//Y motor -> CCW direction
 
         }else if(angle >= (-M_PI + ThresholdAngle) && angle < (-M_PI/2 - ThresholdAngle)){			//@6
-        	left_motor_set_speed(-IMU_drawing_speed);//X motor -> CCW direction
+        	left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
         	right_motor_set_speed(-IMU_drawing_speed);//Y motor -> CCW direction
 
         }else if(angle >= (-M_PI/2 - ThresholdAngle) && angle < (-M_PI/2 + ThresholdAngle)){		//@7
-        	left_motor_set_speed(-IMU_drawing_speed);//X motor -> CCW direction
+        	left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
         	right_motor_set_speed(MOTOR_NO_SPEED); ////Y motor -> Static
 
         }else if(angle >= (-M_PI/2 + ThresholdAngle) && angle < -ThresholdAngle){					//@8
-        	left_motor_set_speed(-MOTOR_OPTIMAL_SPEED);//X motor -> CCW direction
+        	left_motor_set_speed(MOTOR_OPTIMAL_SPEED);//X motor -> CW direction
         	right_motor_set_speed(MOTOR_OPTIMAL_SPEED);//Y motor -> CW direction
+        }else if(fabs(accel[X_AXIS]) < threshold || fabs(accel[Y_AXIS]) < threshold){				//Stop
+        	left_motor_set_speed(MOTOR_NO_SPEED); ////Y motor -> Static
+        	right_motor_set_speed(MOTOR_NO_SPEED); ////Y motor -> Static
         }
+
+
+        //JUST COMMENT
+//        uint8_t led1 = 0, led3 = 0, led5 = 0, led7 = 0;
+//        if(angle >= 0 && angle < M_PI/2){
+//                    led5 = 1;
+//                }else if(angle >= M_PI/2 && angle < M_PI){
+//                    led7 = 1;
+//                }else if(angle >= -M_PI && angle < -M_PI/2){
+//                    led1 = 1;
+//                }else if(angle >= -M_PI/2 && angle < 0){
+//                    led3 = 1;
+//                }
+
+        //JUST COMMENT
+//        //to see the duration on the console
+//        chprintf((BaseSequentialStream *)&SD3, "time = %dus\n",time);
+//        //we invert the values because a led is turned on if the signal is low
+//        palWritePad(GPIOD, GPIOD_LED1, led1 ? 0 : 1);
+//        palWritePad(GPIOD, GPIOD_LED3, led3 ? 0 : 1);
+//        palWritePad(GPIOD, GPIOD_LED5, led5 ? 0 : 1);
+//        palWritePad(GPIOD, GPIOD_LED7, led7 ? 0 : 1);
 
 
         //Test with only conditions
@@ -277,11 +302,6 @@ void Drawing_IMU(imu_msg_t *imu_values){
 //                */
 //                chThdSleepMilliseconds(500);
 //            }
-
-        /*
-         * Eventually, track the position to avoid any break of the system.
-         * If the IMU value would bring the pen out of the 70x70 square (+-margin), stop the IMU leading instruction.
-         */
 
     }
 }
