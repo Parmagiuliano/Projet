@@ -8,6 +8,10 @@ typedef struct {
 #define MAX_POINTS		10	//Must be corrected
 #define RESOLUTION		10	//Same
 
+#define SMALL_SQUARE_SIDE	60 //px
+#define BIG_SQUARE_SIDE		9*SMALL_SQUARE_SIDE //px
+
+
 
 
 

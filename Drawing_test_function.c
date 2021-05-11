@@ -120,7 +120,7 @@ void Drawing_test_func(void){
 *  Every change (X/Y motor, motor direction & lenght of lines) are controlled by the modulo of the increment for loop.
 *
 * @param motor_speed_sign		+-1, based on the modulo of the for loop increment
-* 		 counter_value_motor	value set at 507 ~=70cm, decrease by step of 36 ~=5cm
+* 		 counter_value_motor	value set at 507 ~=70mm, decrease by step of 36 ~=5mm
 */
 
 //void Drawing_test_func(void)

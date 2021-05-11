@@ -39,8 +39,8 @@
 #include <Drawing_IMU_function.h>
 #include <Mighty_logo_function.c>
 #include <Mighty_logo_function.h>
-//#include <process_image.c>
-//#include <process_image.h>
+#include <process_image.c>		//JUST ADDED
+#include <process_image.h>		//JUST ADDED
 
 /*
  * Definition of functions
@@ -147,6 +147,8 @@ void FindTheOrigin(void)
 /*
  * Definition of threads
  */
+
+//Calling the Drawing_IMU function
 static THD_WORKING_AREA(waThdDrawing_IMU, 128);
 static THD_FUNCTION(ThdDrawing_IMU, arg) {
 
@@ -171,6 +173,7 @@ static THD_FUNCTION(ThdDrawing_IMU, arg) {
     }
 }
 
+//Looking for a selector change while the plotter is working
 static THD_WORKING_AREA(waThdSwitch_Selector, 128);
 static THD_FUNCTION(ThdSwitch_Selector, arg) {
 
@@ -181,12 +184,19 @@ static THD_FUNCTION(ThdSwitch_Selector, arg) {
     while(1){
     	int8_t current_selector_position = get_selector();
     	if (current_selector_position != last_selector_position){
+    		/*
+    		 * Stop the current drawing
+    		 * Wait for X seconds, recheck if the selector pos changed again.
+    		 * If not, procede to a new iteration of the FindTheOrigin function,
+    		 * then start the the function chosen by the selecter.
+    		 */
 
     	}
 
     }
 }
 
+//Tracking the pen position during the Drawing_IMU func, to avoid hardware damages
 static THD_WORKING_AREA(waThdIMU_Pen_Tracker, 128);
 static THD_FUNCTION(ThdIMU_Pen_Tracker, arg) {
 
@@ -200,29 +210,33 @@ static THD_FUNCTION(ThdIMU_Pen_Tracker, arg) {
 	right_motor_set_pos(0);
 
     while(1){
+    	//track in real time the position of the pen in the board
 		int x_pos_motor = left_motor_get_pos();
 		int y_pos_motor = right_motor_get_pos();
 
 		//Size of the border to fit
 		if(x_pos_motor > pos_motor_limit_max ){
 				left_motor_set_speed(MOTOR_NO_SPEED); //X motor -> Stop
+				chThdSleepMilliseconds(500);
 				left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -10);
 
 		}else if(x_pos_motor < pos_motor_limit_min){
             	left_motor_set_speed(MOTOR_NO_SPEED); //X motor -> Stop
+            	chThdSleepMilliseconds(500);
             	left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 10);
 
 		}else if(y_pos_motor > pos_motor_limit_max){
 				right_motor_set_speed(MOTOR_NO_SPEED); //Y motor -> Stop
+				chThdSleepMilliseconds(500);
 				right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -10);
 
 		}else if(y_pos_motor < pos_motor_limit_min){
 				right_motor_set_speed(MOTOR_NO_SPEED); //Y motor -> Stop
+				chThdSleepMilliseconds(500);
 				right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 10);
 		}
     }
 }
-
 
 int main(void)
 {

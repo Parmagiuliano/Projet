@@ -77,8 +77,9 @@ void Drawing_Mighty(void){
 	chThdSleepMilliseconds(20000);		//Sleep to set the sheet under the pen
 
 	//Variables declaration
-	uint8_t numRows = 38;
-	int8_t motor_speed_sign = 0;
+	uint8_t numRows = sizeof(Mighty_sequence_array) / sizeof(Mighty_sequence_array[0]);
+	//uint8_t numRows = 38;
+	int8_t motor_speed_sign = 0;		//Init value for the 2nd column
 	uint8_t counter_value_motor = 0;	//Init value for the 3th column
 
 	for (uint8_t row = 0; row < numRows; row++)
