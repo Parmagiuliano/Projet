@@ -208,10 +208,15 @@ static THD_FUNCTION(ProcessImage, arg) {
 						for(uint8_t j =0; j < (2*RESOLUTION) ; j+= 2){
 										for(uint8_t k = 0; k < (4) ; k+= 2){
 											//lecture de 4 points disposés en carré
+<<<<<<< Updated upstream
 											indice_1 = 2*(width.position-width.width/2+SHIFT) +2*(height.position-height.width/2+SHIFT)*IMAGE_BUFFER_SIZE+
 													i*(IMAGE_BUFFER_SIZE * (height.width/RESOLUTION)) +j*(width.width/RESOLUTION)+ k*IMAGE_BUFFER_SIZE;
 											indice_2 = 2*(width.position-width.width/2+SHIFT) +2*(height.position-height.width/2+SHIFT)*IMAGE_BUFFER_SIZE+
 													i*(IMAGE_BUFFER_SIZE* (height.width/RESOLUTION)) +j*(width.width/RESOLUTION)+ k*IMAGE_BUFFER_SIZE +2;
+=======
+											indice_1 = 2*(width.position-width.width/2) +2*(height.position-height.width/2)*IMAGE_BUFFER_SIZE+i*(IMAGE_BUFFER_SIZE * (height.width/RESOLUTION)) +j*(width.width/RESOLUTION)+ k*IMAGE_BUFFER_SIZE;
+											indice_2 = 2*(width.position-width.width/2) +2*(height.position-height.width/2)*IMAGE_BUFFER_SIZE+i*(IMAGE_BUFFER_SIZE* (height.width/RESOLUTION)) +j*(width.width/RESOLUTION)+ k*IMAGE_BUFFER_SIZE +2;
+>>>>>>> Stashed changes
 											mean += (((uint8_t)img_buff_ptr[indice_1]&0xf8));
 
 											mean += (((uint8_t)img_buff_ptr[indice_2]&0xf8));

@@ -8,7 +8,6 @@
  *  Authors: Parma Giuliano & Jacquart Sylvain
  *  Created : 14 april 2021
  */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -32,7 +31,7 @@
 #include <sensors/imu.h>
 
 /*
- * Home-made functions
+ * Home-made includes to add
  */
 #include <Drawing_test_function.c>
 #include <Drawing_test_function.h>
@@ -40,89 +39,18 @@
 #include <Drawing_IMU_function.h>
 #include <Mighty_logo_function.c>
 #include <Mighty_logo_function.h>
+//#include <process_image.c>
 //#include <process_image.h>
 
+/*
+ * Definition of functions
+ */
 void SendUint8ToComputer(uint8_t* data, uint16_t size) 
 {
 	chSequentialStreamWrite((BaseSequentialStream *)&SD3, (uint8_t*)"START", 5);
 	chSequentialStreamWrite((BaseSequentialStream *)&SD3, (uint8_t*)&size, sizeof(uint16_t));
 	chSequentialStreamWrite((BaseSequentialStream *)&SD3, (uint8_t*)data, size);
 }
-
-//static THD_WORKING_AREA(waThdFrontLed, 128);
-//static THD_FUNCTION(ThdFrontLed, arg) {
-//
-//    chRegSetThreadName(__FUNCTION__);
-//    (void)arg;
-//
-//    systime_t time;
-//
-//    while(1){
-//        time = chVTGetSystemTime();
-//        palTogglePad(GPIOD, GPIOD_LED_FRONT);
-//        chThdSleepUntilWindowed(time, time + MS2ST(10));
-//    }
-//}
-//
-//chThdCreateStatic(waThdFrontLed, sizeof(waThdFrontLed), NORMALPRIO, ThdFrontLed, NULL);
-
-//static THD_WORKING_AREA(waThdFindTheXOrigin, 128);
-//static THD_FUNCTION(ThdFindTheXOrigin, arg) {
-//
-//    chRegSetThreadName(__FUNCTION__);
-//    (void)arg;
-//
-//    //systime_t time;
-//
-//    /*
-//    * Infinite loop, X axis
-//    * Returns the last value measured by the X sensor ->U106
-//    */
-//    while(1){
-//    	left_motor_set_speed(-MOTOR_OPTIMAL_SPEED); 	//CCW rotation
-//    		if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST)
-//    			{
-//    				left_motor_set_speed(MOTOR_NO_SPEED);
-//    				break;
-//    			}
-//    		}
-//    /*
-//     * Return the Xstage to the other limit for the Yoffset
-//     * Move Xmotor CW, distance 65mm ~=470 steps
-//     */
-//	left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 25*DRAWING_CST);
-//	chThdSleepMilliseconds(250);
-//}
-
-//static THD_WORKING_AREA(waThdFindTheYOrigin, 128);
-//static THD_FUNCTION(ThdFindTheYOrigin, arg) {
-//
-//    chRegSetThreadName(__FUNCTION__);
-//    (void)arg;
-//
-//    //systime_t time;
-//
-//    /*
-//    		 * Infinite loop, Y axis
-//    		 * Returns the last value measured by the Y sensor ->U101
-//    		 */
-//
-//    while(1){
-//    			right_motor_set_speed(MOTOR_OPTIMAL_SPEED); 	//CW rotation
-//    			if(get_prox(SENSOR_Y) > IR_OPTIMAL_DIST)
-//    				{
-//    					right_motor_set_speed(-MOTOR_NO_SPEED);
-//    					break;
-//    				}
-//    		}
-//	/*
-//	 * Return the Xstage to the X offset
-//	 * Move Xmotor CW, distance 55mm
-//	 */
-//	left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -19*DRAWING_CST_TEST);
-//
-//}
-
 
 /* Finding the origin function @In detail
  *
@@ -161,7 +89,6 @@ void SendUint8ToComputer(uint8_t* data, uint16_t size)
 /* Finding the origin function @brief
 * ->Use IR sensors to find X-Y end courses
 * ->Get back to the top right corner and set the position as (0,0)
-*
 */
 
 void FindTheOrigin(void)
@@ -191,7 +118,7 @@ void FindTheOrigin(void)
 		 * Return the Xstage to the other limit for the Yoffset
 		 * Move Xmotor CW, distance 65mm ~=470 steps
 		 */
-		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 48*DRAWING_CST_TEST);	//470
+		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 480);	//470
 		chThdSleepMilliseconds(250);
 
 		//chThdCreateStatic(waThdFindTheYOrigin, sizeof(waThdFindTheYOrigin), NORMALPRIO, ThdFindTheYOrigin, NULL);
@@ -213,9 +140,89 @@ void FindTheOrigin(void)
 		 * Return the Xstage to the X offset
 		 * Move Xmotor CW, distance 55mm
 		 */
-		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -38*DRAWING_CST_TEST);	//-400
+		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -450);	//-400
 		chThdSleepMilliseconds(250);
-	}
+}
+
+/*
+ * Definition of threads
+ */
+static THD_WORKING_AREA(waThdDrawing_IMU, 128);
+static THD_FUNCTION(ThdDrawing_IMU, arg) {
+
+    chRegSetThreadName(__FUNCTION__);
+    (void)arg;
+    /** Inits the Inter Process Communication bus. */
+        	    messagebus_init(&bus, &bus_lock, &bus_condvar);
+        	    imu_start();
+
+        	    messagebus_topic_t *imu_topic = messagebus_find_topic_blocking(&bus, "/imu");
+        	    imu_msg_t imu_values;
+
+        	    //wait 2 sec to be sure the e-puck is in a stable position
+        	    chThdSleepMilliseconds(2000);
+        	    imu_compute_offset(imu_topic, NB_SAMPLES_OFFSET);
+
+    while(1){
+		//wait for new measures to be published
+    		        messagebus_topic_wait(imu_topic, &imu_values, sizeof(imu_values));
+    		        Drawing_IMU(&imu_values);
+    		        chThdSleepMilliseconds(100);
+    }
+}
+
+static THD_WORKING_AREA(waThdSwitch_Selector, 128);
+static THD_FUNCTION(ThdSwitch_Selector, arg) {
+
+    chRegSetThreadName(__FUNCTION__);
+    (void)arg;
+    int8_t last_selector_position = get_selector();
+
+    while(1){
+    	int8_t current_selector_position = get_selector();
+    	if (current_selector_position != last_selector_position){
+
+    	}
+
+    }
+}
+
+static THD_WORKING_AREA(waThdIMU_Pen_Tracker, 128);
+static THD_FUNCTION(ThdIMU_Pen_Tracker, arg) {
+
+    chRegSetThreadName(__FUNCTION__);
+    (void)arg;
+	int16_t pos_motor_limit_min = -10;
+	int16_t pos_motor_limit_max = 500;
+
+	//Set the origin for the drawing_IMU_func
+	left_motor_set_pos(0);
+	right_motor_set_pos(0);
+
+    while(1){
+		int x_pos_motor = left_motor_get_pos();
+		int y_pos_motor = right_motor_get_pos();
+
+		//Size of the border to fit
+		if(x_pos_motor > pos_motor_limit_max ){
+				left_motor_set_speed(MOTOR_NO_SPEED); //X motor -> Stop
+				left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -10);
+
+		}else if(x_pos_motor < pos_motor_limit_min){
+            	left_motor_set_speed(MOTOR_NO_SPEED); //X motor -> Stop
+            	left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 10);
+
+		}else if(y_pos_motor > pos_motor_limit_max){
+				right_motor_set_speed(MOTOR_NO_SPEED); //Y motor -> Stop
+				right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -10);
+
+		}else if(y_pos_motor < pos_motor_limit_min){
+				right_motor_set_speed(MOTOR_NO_SPEED); //Y motor -> Stop
+				right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 10);
+		}
+    }
+}
+
 
 int main(void)
 {
@@ -244,60 +251,20 @@ int main(void)
     /*
      * 	case 0: Off position, nothing to be done
      */
-    	case 1: //Draw a square spiral, starting from the external origin, dimensions 70mm x 70mm
+    	case 1: //Draw a square spiral, starting from the external origin
     		Drawing_test_func();
 			break;
 
-    	case 2: //Free to draw with IMU
-    			//It comes from TP3
-
-    	    /** Inits the Inter Process Communication bus. */
-    	    messagebus_init(&bus, &bus_lock, &bus_condvar);
-    	    imu_start();
-
-//    	    chThdCreateStatic(waThdFrontLed, sizeof(waThdFrontLed), NORMALPRIO, ThdFrontLed, NULL); //JUST ADDED
-//    	    chThdCreateStatic(waThdBodyLed, sizeof(waThdBodyLed), NORMALPRIO, ThdBodyLed, NULL);
-
-
-    	    messagebus_topic_t *imu_topic = messagebus_find_topic_blocking(&bus, "/imu");
-    	    imu_msg_t imu_values;
-
-    	    //wait 2 sec to be sure the e-puck is in a stable position
-    	    chThdSleepMilliseconds(2000);
-    	    imu_compute_offset(imu_topic, NB_SAMPLES_OFFSET);
-    		while(1){
-    		        //wait for new measures to be published
-    		        messagebus_topic_wait(imu_topic, &imu_values, sizeof(imu_values));
-
-//    		        chprintf((BaseSequentialStream *)&SD3, "%Ax=%-7d Ay=%-7d Az=%-7d Gx=%-7d Gy=%-7d Gz=%-7d\r\n",
-//    		                imu_values.acc_raw[X_AXIS], imu_values.acc_raw[Y_AXIS], imu_values.acc_raw[Z_AXIS],
-//    		                imu_values.gyro_raw[X_AXIS], imu_values.gyro_raw[Y_AXIS], imu_values.gyro_raw[Z_AXIS]);
-//
-//    		        //prints raw values with offset correction
-//    		        chprintf((BaseSequentialStream *)&SD3, "%Ax=%-7d Ay=%-7d Az=%-7d Gx=%-7d Gy=%-7d Gz=%-7d\r\n",
-//    		                imu_values.acc_raw[X_AXIS]-imu_values.acc_offset[X_AXIS],
-//    		                imu_values.acc_raw[Y_AXIS]-imu_values.acc_offset[Y_AXIS],
-//    		                imu_values.acc_raw[Z_AXIS]-imu_values.acc_offset[Z_AXIS],
-//    		                imu_values.gyro_raw[X_AXIS]-imu_values.gyro_offset[X_AXIS],
-//    		                imu_values.gyro_raw[Y_AXIS]-imu_values.gyro_offset[Y_AXIS],
-//    		                imu_values.gyro_raw[Z_AXIS]-imu_values.gyro_offset[Z_AXIS]);
-//
-//    		        //prints values in readable units
-//    		        chprintf((BaseSequentialStream *)&SD3, "%Ax=%.2f Ay=%.2f Az=%.2f Gx=%.2f Gy=%.2f Gz=%.2f (%x)\r\n\n",
-//    		                imu_values.acceleration[X_AXIS], imu_values.acceleration[Y_AXIS], imu_values.acceleration[Z_AXIS],
-//    		                imu_values.gyro_rate[X_AXIS], imu_values.gyro_rate[Y_AXIS], imu_values.gyro_rate[Z_AXIS],
-//    		                imu_values.status);
-
-    		        Drawing_IMU(&imu_values);
-    		        chThdSleepMilliseconds(50);	//100
-    		}
-			break;
+    	case 2: //Free to draw with IMU, the code is based on TP3
+    	    chThdCreateStatic(waThdDrawing_IMU, sizeof(waThdDrawing_IMU), NORMALPRIO+1, ThdDrawing_IMU, NULL);
+    	    chThdCreateStatic(waThdIMU_Pen_Tracker, sizeof(waThdIMU_Pen_Tracker), NORMALPRIO, ThdIMU_Pen_Tracker, NULL);
+    	    break;
 
     	case 3: //Registered drawing - Epfl Logo
     		Drawing_Mighty();
 			break;
 
-    	case 4: //Camera, pattern recognition
+    	case 4: //Camera, pattern recognition and drawing
 //    		process_image_start();
     		//get_Process_image
     		//get_PI_regulator
@@ -314,6 +281,8 @@ int main(void)
 
     /* Infinite loop. */
     while (1) 	{
+    	//Check for selector change
+    	chThdCreateStatic(waThdSwitch_Selector, sizeof(waThdSwitch_Selector), NORMALPRIO, ThdSwitch_Selector, NULL);
     	//waits 1 second
         chThdSleepMilliseconds(1000);
     			}

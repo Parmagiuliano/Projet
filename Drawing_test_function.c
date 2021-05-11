@@ -45,38 +45,38 @@
  */
 
 const int Drawing_test_array[32][3] = {
-			{0,	1,	41},
-			{1,	-1,	41},
-			{0,	-1,	39},
-			{1,	1,	39},
-			{0,	1,	36},
-			{1,	-1,	36},
-			{0,	-1,	33},
-			{1,	1,	33},
-			{0,	1,	30},
-			{1,	-1,	30},
-			{0,	-1,	27},
-			{1,	1,	27},
-			{0,	1,	24},
-			{1,	-1,	24},
-			{0,	-1,	21},
-			{1,	1,	21},
-			{0,	1,	18},
-			{1,	-1,	18},
-			{0,	-1,	15},
-			{1,	1,	15},
-			{0,	1,	12},
-			{1,	-1,	12},
-			{0,	-1,	9},
-			{1,	1,	9},
-			{0,	1,	6},
-			{1,	-1,	6},
-			{0,	-1,	3},
-			{1,	1,	3},
+			{0,	1,	410},
+			{1,	-1,	410},
+			{0,	-1,	390},
+			{1,	1,	390},
+			{0,	1,	360},
+			{1,	-1,	360},
+			{0,	-1,	330},
+			{1,	1,	330},
+			{0,	1,	300},
+			{1,	-1,	300},
+			{0,	-1,	270},
+			{1,	1,	270},
+			{0,	1,	240},
+			{1,	-1,	240},
+			{0,	-1,	210},
+			{1,	1,	210},
+			{0,	1,	180},
+			{1,	-1,	180},
+			{0,	-1,	150},
+			{1,	1,	150},
+			{0,	1,	120},
+			{1,	-1,	120},
+			{0,	-1,	90},
+			{1,	1,	90},
+			{0,	1,	60},
+			{1,	-1,	60},
+			{0,	-1,	30},
+			{1,	1,	30},
 };
 
 /** Drawing_test function @brief
-*   Draw a square spiral, starting from the external origin, dimensions 55mm x 5mm.
+*   Draw a square spiral, starting from the external origin, dimensions 55mm x 55mm.
 * 	Every change (X/Y motor, motor direction & lenght of lines) are controlled by the array
 */
 void Drawing_test_func(void){
@@ -95,13 +95,13 @@ void Drawing_test_func(void){
 
 		if(Drawing_test_array[row][0] == 0)
 			   			 	 	 {
-			   			 		 	 left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, motor_speed_sign*counter_value_motor*DRAWING_CST_TEST);
+			   			 		 	 left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, motor_speed_sign*counter_value_motor);
 			   			 		 	 left_motor_get_to_the_pos(MOTOR_NO_SPEED, 50);
 			   			 		     chThdSleepMilliseconds(100);
 			   			 	 	 }
 		else if(Drawing_test_array[row][0] == 1)
 			   			 	 	 {
-			   			 		 	 right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, motor_speed_sign*counter_value_motor*DRAWING_CST_TEST);
+			   			 		 	 right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, motor_speed_sign*counter_value_motor);
 			   			 		 	 right_motor_get_to_the_pos(MOTOR_NO_SPEED, 50);
 			   			 		     chThdSleepMilliseconds(100);
 			   			 	 	 }
