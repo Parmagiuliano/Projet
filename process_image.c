@@ -40,7 +40,7 @@ uint16_t extract_line_width(uint8_t *buffer){
 		{ 
 			//the slope must at least be WIDTH_SLOPE wide and is compared
 		    //to the mean of the image
-		    if(buffer[i] > mean && buffer[i+WIDTH_SLOPE] < mean)
+		    if(buffer[i] > mean && buffer[i+WIDTH_SLOPE] < 5)
 		    {
 		        begin = i;
 		        stop = 1;
@@ -54,7 +54,7 @@ uint16_t extract_line_width(uint8_t *buffer){
 		    
 		    while(stop == 0 && i < IMAGE_BUFFER_SIZE)
 		    {
-		        if(buffer[i] > mean && buffer[i-WIDTH_SLOPE] < mean)
+		        if(buffer[i] > mean && buffer[i-WIDTH_SLOPE] < 5)
 		        {
 		            end = i;
 		            stop = 1;
@@ -111,7 +111,7 @@ line_data get_line_data (uint8_t *buffer){
 				mean += buffer[i];
 			}
 			mean /= IMAGE_BUFFER_SIZE;
-			i = 0;
+
 			do{
 
 				wrong_line = 0;
@@ -123,7 +123,7 @@ line_data get_line_data (uint8_t *buffer){
 					//the slope must at least be WIDTH_SLOPE wide and is compared
 				    //to the mean of the image
 					//sign changed
-					 if(buffer[i] < mean   && buffer[i+WIDTH_SLOPE] > mean  )
+					 if(buffer[i] < mean/2   && buffer[i+WIDTH_SLOPE] > mean  )
 				    {
 				        begin = i;
 				        stop = 1;
@@ -139,7 +139,7 @@ line_data get_line_data (uint8_t *buffer){
 				    //changed signs
 				    while(stop == 0 && i > WIDTH_SLOPE)
 				    {
-				    	if(buffer[i] < mean   && buffer[i-WIDTH_SLOPE] > mean )
+				    	if(buffer[i] < mean/2   && buffer[i-WIDTH_SLOPE] > mean )
 				        {
 				            end = i;
 				            stop = 1;
@@ -202,11 +202,11 @@ bool test_continuity (uint8_t *points){
 				return false;
 			}
 			else{
-				break;
+				continue;
 			}
 		}
 			else{
-				break;
+				continue;
 			}
 		}
 	return true;
@@ -246,6 +246,7 @@ static THD_FUNCTION(ProcessImage, arg) {
 	uint8_t colonne[IMAGE_BUFFER_SIZE] = {0};
 	uint8_t points[MAX_POINTS] = {0};
 	uint16_t mean = 0;
+	uint16_t indice_1 = 0, indice_2 = 0;
 	line_data width , height;
 	width.width = width.position = height.width = height.position = 0;
 	bool send_to_computer = true;
@@ -287,22 +288,22 @@ static THD_FUNCTION(ProcessImage, arg) {
 		palWritePad(GPIOD, GPIOD_LED3, led3 ? 0 : 1);
 		if(height.position & width.position){
 			// lecture points en frequence rouge
-					for(uint16_t i =0; i < (2*RESOLUTION) ; i+= 2){
-						for(uint16_t j =0; j < (2*RESOLUTION) ; j+= 2){
-							mean = 0;
+					for(uint8_t i =0; i < (2*RESOLUTION) ; i+= 2){
+						for(uint8_t j =0; j < (2*RESOLUTION) ; j+= 2){
 										for(uint8_t k = 0; k < (4) ; k+= 2){
 											//lecture de 4 points disposés en carré
-											mean += (((uint8_t)img_buff_ptr[2*(width.position-width.width/2) +2*(height.position-height.width/2)*width.width+
-																			i*(width.width) +j*(width.width/RESOLUTION+1)+ k*width.width]&0xf8));
+											indice_1 = 2*(width.position-width.width/2) +2*(height.position-height.width/2)*IMAGE_BUFFER_SIZE+i*(IMAGE_BUFFER_SIZE * (height.width/RESOLUTION)) +j*(width.width/RESOLUTION)+ k*IMAGE_BUFFER_SIZE;
+											indice_2 = 2*(width.position-width.width/2) +2*(height.position-height.width/2)*IMAGE_BUFFER_SIZE+i*(IMAGE_BUFFER_SIZE* (height.width/RESOLUTION)) +j*(width.width/RESOLUTION))+ k*IMAGE_BUFFER_SIZE +2;
+											mean += (((uint8_t)img_buff_ptr[indice_1]&0xf8));
 
-											mean += (((uint8_t)img_buff_ptr[2*(width.position-width.width/2) +2*(height.position-height.width/2)*width.width+
-																			i*(width.width) +j*(width.width/RESOLUTION+3)+ k*width.width]&0xf8));
+											mean += (((uint8_t)img_buff_ptr[indice_2]&0xf8));
 
 
 										}
 							//moyenne
 							mean /= 4;
-							points[i*j/2] = mean;
+							points[(i*RESOLUTION+j)/2] = mean;
+							mean = 0;
 
 						}
 					}
@@ -317,15 +318,29 @@ static THD_FUNCTION(ProcessImage, arg) {
 					mean /= MAX_POINTS;
 
 					for(uint8_t i =0; i < (MAX_POINTS) ; i++){
-						points [i] = points [i] < mean;
+						points [i] = (points [i] < (mean));
 						points_counter += points [i];
 					}
 
-					led5 = test_continuity(points);
-					led7 = (points_counter == 21);
+
+					if(test_continuity(points)){
+						led5 = 1;
+						;
+					}
+					else{
+						led7 = 0;
+					}
+					if(points_counter == 20){
+						led7 = 1;
+					}
+					else{
+						led7 = 0;
+					}
+
 					palWritePad(GPIOD, GPIOD_LED5, led5 ? 0 : 1);
 					palWritePad(GPIOD, GPIOD_LED7, led7 ? 0 : 1);
-					chThdSleepMilliseconds(1000);
+
+					chThdSleepMilliseconds(200);
 
 			}
 
