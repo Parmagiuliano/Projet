@@ -13,11 +13,7 @@
 
 //semaphore
 static BSEMAPHORE_DECL(image_ready_sem, TRUE);
-
-/*
- *  Returns the line's width extracted from the image buffer given
- *  Returns 0 if line not found
- */
+static uint8_t points[MAX_POINTS] = {0};
 
 
 line_data get_line_data (uint8_t *buffer){
@@ -28,10 +24,10 @@ line_data get_line_data (uint8_t *buffer){
 		current_line.width = current_line.position = 0;
 
 		//mean
-		for(uint16_t i = 0 ; i < IMAGE_BUFFER_SIZE ; i++){
+		for(uint16_t i = 0 ; i < IMAGE_WIDTH ; i++){
 				mean += buffer[i];
 			}
-			mean /= IMAGE_BUFFER_SIZE;
+			mean /= IMAGE_WIDTH;
 
 			do{
 
@@ -39,7 +35,7 @@ line_data get_line_data (uint8_t *buffer){
 
 
 				//search for a begin
-				while(stop == 0 && i < (IMAGE_BUFFER_SIZE-MIN_LINE_WIDTH))
+				while(stop == 0 && i < (IMAGE_WIDTH-MIN_LINE_WIDTH))
 				{
 					//the slope must at least be WIDTH_SLOPE wide and is compared
 				    //to the mean of the image
@@ -53,7 +49,7 @@ line_data get_line_data (uint8_t *buffer){
 				}
 				//if a begin was found, search for an end
 
-				if (i < (IMAGE_BUFFER_SIZE - WIDTH_SLOPE) && begin)
+				if (i < (IMAGE_WIDTH - WIDTH_SLOPE) && begin)
 				{
 				    stop = 0;
 
@@ -68,7 +64,7 @@ line_data get_line_data (uint8_t *buffer){
 				        i++;
 				    }
 				    //if an end was not found
-				    if (i > IMAGE_BUFFER_SIZE || !end)
+				    if (i > IMAGE_WIDTH || !end)
 				    {
 				        line_not_found = 1;
 
@@ -158,9 +154,7 @@ static THD_FUNCTION(ProcessImage, arg) {
     (void)arg;
     uint8_t led1= 0, led3 = 0, led5 = 0, led7 = 0, points_counter = 0, max = 0, min = 0;
 	uint8_t *img_buff_ptr;
-	uint8_t image[IMAGE_BUFFER_SIZE] = {0};
-	uint8_t colonne[IMAGE_BUFFER_SIZE] = {0};
-	uint8_t points[MAX_POINTS] = {0};
+	uint8_t line[IMAGE_WIDTH] = {0};
 	uint16_t mean = 0;
 	uint16_t indice_1 = 0, indice_2 = 0;
 	line_data width , height;
@@ -173,31 +167,31 @@ static THD_FUNCTION(ProcessImage, arg) {
 		img_buff_ptr = dcmi_get_last_image_ptr();
 
 		//Extracts only the blue pixels
-		for(uint16_t i =0; i < (2*IMAGE_BUFFER_SIZE) ; i+= 2){
+		for(uint16_t i =0; i < (2*IMAGE_WIDTH) ; i+= 2){
 			//extracts last 5bits of the second byte
 			//takes nothing from the first byte
-			image[i/2] = (((uint8_t)img_buff_ptr[IMAGE_BUFFER_SIZE*IMAGE_BUFFER_SIZE+i+1]&0x1f));
+			line[i/2] = (((uint8_t)img_buff_ptr[IMAGE_WIDTH*IMAGE_WIDTH+i+1]&0x1f));
 		}
 
 		//search for a line in the image and gets its width in pixels
-		width = get_line_data(image);
+		width = get_line_data(line);
 		led1 = ( width.position || 0);
 		palWritePad(GPIOD, GPIOD_LED1, led1 ? 0 : 1);
 		//remplissage tableau pour lecture colonne
 		//Extracts only the blue pixels
 		if(width.position){
-			for(uint16_t i =0; i < (2*IMAGE_BUFFER_SIZE) ; i+= 2){
+			for(uint16_t i =0; i < (2*IMAGE_WIDTH) ; i+= 2){
 						//extracts last 5bits of the secind byte
 						//takes nothing from the first byte
 						// read the column centered on the width
-						colonne[i/2] = (((uint8_t)img_buff_ptr[IMAGE_BUFFER_SIZE*i+2*width.position+1]&0x1f));
+						line[i/2] = (((uint8_t)img_buff_ptr[IMAGE_WIDTH*i+2*width.position+1]&0x1f));
 			}
 				//height of the square found
-						height = get_line_data(colonne);
+						height = get_line_data(line);
 						led3 = (height.position || 0);
 						}
 		else{
-			//height not found
+			//height not founf
 			led3 = 0;
 		}
 		palWritePad(GPIOD, GPIOD_LED1, led1 ? 0 : 1);
@@ -208,15 +202,10 @@ static THD_FUNCTION(ProcessImage, arg) {
 						for(uint8_t j =0; j < (2*RESOLUTION) ; j+= 2){
 										for(uint8_t k = 0; k < (4) ; k+= 2){
 											//lecture de 4 points disposés en carré
-//<<<<<<< Updated upstream
-											indice_1 = 2*(width.position-width.width/2+SHIFT) +2*(height.position-height.width/2+SHIFT)*IMAGE_BUFFER_SIZE+
-													i*(IMAGE_BUFFER_SIZE * (height.width/RESOLUTION)) +j*(width.width/RESOLUTION)+ k*IMAGE_BUFFER_SIZE;
-											indice_2 = 2*(width.position-width.width/2+SHIFT) +2*(height.position-height.width/2+SHIFT)*IMAGE_BUFFER_SIZE+
-													i*(IMAGE_BUFFER_SIZE* (height.width/RESOLUTION)) +j*(width.width/RESOLUTION)+ k*IMAGE_BUFFER_SIZE +2;
-//=======
-//											indice_1 = 2*(width.position-width.width/2) +2*(height.position-height.width/2)*IMAGE_BUFFER_SIZE+i*(IMAGE_BUFFER_SIZE * (height.width/RESOLUTION)) +j*(width.width/RESOLUTION)+ k*IMAGE_BUFFER_SIZE;
-//											indice_2 = 2*(width.position-width.width/2) +2*(height.position-height.width/2)*IMAGE_BUFFER_SIZE+i*(IMAGE_BUFFER_SIZE* (height.width/RESOLUTION)) +j*(width.width/RESOLUTION)+ k*IMAGE_BUFFER_SIZE +2;
-//>>>>>>> Stashed changes
+											indice_1 = 2*(width.position-width.width/2+SHIFT) +2*(height.position-height.width/2+SHIFT)*IMAGE_WIDTH+
+													i*(IMAGE_WIDTH * (height.width/RESOLUTION)) +j*(width.width/RESOLUTION)+ k*IMAGE_WIDTH;
+											indice_2 = 2*(width.position-width.width/2+SHIFT) +2*(height.position-height.width/2+SHIFT)*IMAGE_WIDTH+
+													i*(IMAGE_WIDTH* (height.width/RESOLUTION)) +j*(width.width/RESOLUTION)+ k*IMAGE_WIDTH+2;
 											mean += (((uint8_t)img_buff_ptr[indice_1]&0xf8));
 
 											mean += (((uint8_t)img_buff_ptr[indice_2]&0xf8));
@@ -292,7 +281,9 @@ static THD_FUNCTION(ProcessImage, arg) {
     }
 }
 
-
+uint8_t* get_points_location(void){
+	return points;
+}
 
 void process_image_start(void){
 	chThdCreateStatic(waProcessImage, sizeof(waProcessImage), NORMALPRIO, ProcessImage, NULL);
