@@ -37,10 +37,11 @@
 #include <Drawing_test_function.h>
 #include <Drawing_IMU_function.c>
 #include <Drawing_IMU_function.h>
-#include <Mighty_logo_function.c>
+#include <Mighty_logo_function.c>		//To remove?
 #include <Mighty_logo_function.h>
-#include <process_image.c>		//JUST ADDED
-#include <process_image.h>		//JUST ADDED
+//#include <process_image.c>			//Just commented
+#include <process_image.h>
+#include <Draw_pattern.h>
 
 /*
  * Definition of functions
@@ -179,10 +180,12 @@ static THD_FUNCTION(ThdSwitch_Selector, arg) {
 
     chRegSetThreadName(__FUNCTION__);
     (void)arg;
-    int8_t last_selector_position = get_selector();
+    uint8_t last_selector_position = get_selector();
+    uint8_t definitive_choice_selector = 0;
 
     while(1){
-    	int8_t current_selector_position = get_selector();
+    	uint8_t current_selector_position = get_selector();
+
     	if (current_selector_position != last_selector_position){
     		/*
     		 * Stop the current drawing
@@ -190,6 +193,19 @@ static THD_FUNCTION(ThdSwitch_Selector, arg) {
     		 * If not, procede to a new iteration of the FindTheOrigin function,
     		 * then start the the function chosen by the selecter.
     		 */
+
+    		chThdSleepMilliseconds(2000);
+    		definitive_choice_selector = get_selector();
+    		while (definitive_choice_selector =! current_selector_position){
+    			definitive_choice_selector = current_selector_position;
+    			chThdSleepMilliseconds(2000);
+    		}
+
+//    		if (uint8_t chosen_selector_position == current_selector_position){	//The new position has been reached
+//
+//    		}else if(chosen_selector_position =! current_selector_position){ //We're still choosing the position
+
+
 
     	}
 
@@ -279,9 +295,8 @@ int main(void)
 			break;
 
     	case 4: //Camera, pattern recognition and drawing
-//    		process_image_start();
-    		//get_Process_image
-    		//get_PI_regulator
+    		process_image_start();
+    		draw_pattern_start();
 			break;
 	/*
 	 * 	case 8: Reserved for the epuck monitor (test mode)

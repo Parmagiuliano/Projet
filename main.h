@@ -17,20 +17,26 @@ extern "C" {
 #include <Mighty_logo_function.h>
 #include <process_image.h>
 
+#include <Draw_pattern.h>
+
 //constants for the differents parts of the project		//TO CHECK
-#define IMAGE_BUFFER_SIZE		640
-#define WIDTH_SLOPE				5
-#define MIN_LINE_WIDTH			40
+#define IMAGE_WIDTH				96
+#define WIDTH_SLOPE				2
+#define MIN_LINE_WIDTH			70
 #define ROTATION_THRESHOLD		10
-#define ROTATION_COEFF			2 
+#define ROTATION_COEFF			2
 #define PXTOCM					1570.0f //experimental value
 #define GOAL_DISTANCE 			10.0f
 #define MAX_DISTANCE 			25.0f
+#define MAX_POINTS				81
+#define RESOLUTION				9
+#define SHIFT					5
 
 #define ERROR_THRESHOLD			0.1f	//[cm] because of the noise of the camera
 #define KP						800.0f
 #define KI 						3.5f	//must not be zero
 #define MAX_SUM_ERROR 			(MOTOR_SPEED_LIMIT/KI)
+#define IMAGE_BUFFER_SIZE		10
 
 #define SENSOR_X				2
 #define SENSOR_Y				0

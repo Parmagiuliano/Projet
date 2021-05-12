@@ -7,6 +7,7 @@
 #include <camera/po8030.h>
 
 #include <process_image.h>
+#include <Draw_pattern.h>
 
 
 
@@ -14,6 +15,8 @@
 //semaphore
 static BSEMAPHORE_DECL(image_ready_sem, TRUE);
 static uint8_t points[MAX_POINTS] = {0};
+
+static bool draw_start = 0;
 
 
 line_data get_line_data (uint8_t *buffer){
@@ -161,6 +164,9 @@ static THD_FUNCTION(ProcessImage, arg) {
 	width.width = width.position = height.width = height.position = 0;
 
     while(1){
+
+    	draw_start = 0;
+
     	//waits until an image has been captured
         chBSemWait(&image_ready_sem);
 		//gets the pointer to the array filled with the last image in RGB565    
@@ -251,6 +257,7 @@ static THD_FUNCTION(ProcessImage, arg) {
 
 					if(test_continuity(points)){
 						led5 = 1;
+						draw_start = 1;
 						;
 					}
 					else{
@@ -283,6 +290,10 @@ static THD_FUNCTION(ProcessImage, arg) {
 
 uint8_t* get_points_location(void){
 	return points;
+}
+
+bool get_draw_start(void){//
+	return draw_start;
 }
 
 void process_image_start(void){
