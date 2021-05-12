@@ -69,7 +69,7 @@ void Drawing_IMU(imu_msg_t *imu_values){
 
     //threshold value to not run the motors when the robot is too horizontal
     float threshold = 0.4;
-    float ThresholdAngle = M_PI/10;//Should be contained between 0 and less than PI/2
+    float ThresholdAngle = PI/10;//Should be contained between 0 and less than PI/2			//M_PI before
     //create a pointer to the array for shorter name
     float *accel = imu_values->acceleration;
     //variable to measure the time some functions take
@@ -127,13 +127,13 @@ void Drawing_IMU(imu_msg_t *imu_values){
         chSysUnlock();
 
         //rotates the angle by 45 degrees (simpler to compare with PI and PI/2 than with 5*PI/4)
-        angle += M_PI/4;
+        angle += PI/4;			//M_PI
 
         //if the angle is greater than PI, then it has shifted on the -PI side of the quadrant
         //so we correct it
         //Note : CW == Clockwise, CCW == Counter Clockwise
-        if(angle > M_PI){
-            angle = -2 * M_PI + angle;
+        if(angle > PI){ //M_PI
+            angle = -2 * PI + angle; //M_PI
         }
 
         //Select the motor(s) to move depending of the angle value
@@ -141,31 +141,31 @@ void Drawing_IMU(imu_msg_t *imu_values){
         	left_motor_set_speed(MOTOR_NO_SPEED); //X motor -> Static
         	right_motor_set_speed(IMU_drawing_speed);//Y motor -> CW direction
 
-        }else if(angle >= ThresholdAngle && angle < (M_PI/2 - ThresholdAngle)){						//@2
+        }else if(angle >= ThresholdAngle && angle < (PI/2 - ThresholdAngle)){		//M_PI				//@2
         	left_motor_set_speed(-IMU_drawing_speed);//X motor -> CCW direction
         	right_motor_set_speed(IMU_drawing_speed);//Y motor -> CW direction
 
-        }else if(angle >= (M_PI/2 - ThresholdAngle) && angle < (M_PI/2 + ThresholdAngle)){			//@3
+        }else if(angle >= (PI/2 - ThresholdAngle) && angle < (PI/2 + ThresholdAngle)){			//@3
         	left_motor_set_speed(-IMU_drawing_speed);//X motor -> CCW direction
         	right_motor_set_speed(MOTOR_NO_SPEED); ////Y motor -> Static
 
-        }else if(angle >= (M_PI/2 + ThresholdAngle) && angle < (M_PI - ThresholdAngle)){			//@4
+        }else if(angle >= (PI/2 + ThresholdAngle) && angle < (PI - ThresholdAngle)){			//@4
         	left_motor_set_speed(-IMU_drawing_speed);//X motor -> CCW direction
         	right_motor_set_speed(-IMU_drawing_speed);//Y motor -> CCW direction
 
-        }else if(angle >= (M_PI - ThresholdAngle) && angle < (-M_PI + ThresholdAngle)){				//@5
+        }else if(angle >= (PI - ThresholdAngle) && angle < (-PI + ThresholdAngle)){				//@5
         	left_motor_set_speed(MOTOR_NO_SPEED); //X motor -> Static
         	right_motor_set_speed(-IMU_drawing_speed);//Y motor -> CCW direction
 
-        }else if(angle >= (-M_PI + ThresholdAngle) && angle < (-M_PI/2 - ThresholdAngle)){			//@6
+        }else if(angle >= (-PI + ThresholdAngle) && angle < (-PI/2 - ThresholdAngle)){			//@6
         	left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
         	right_motor_set_speed(-IMU_drawing_speed);//Y motor -> CCW direction
 
-        }else if(angle >= (-M_PI/2 - ThresholdAngle) && angle < (-M_PI/2 + ThresholdAngle)){		//@7
+        }else if(angle >= (-PI/2 - ThresholdAngle) && angle < (-PI/2 + ThresholdAngle)){		//@7
         	left_motor_set_speed(IMU_drawing_speed);//X motor -> CW direction
         	right_motor_set_speed(MOTOR_NO_SPEED); ////Y motor -> Static
 
-        }else if(angle >= (-M_PI/2 + ThresholdAngle) && angle < -ThresholdAngle){					//@8
+        }else if(angle >= (-PI/2 + ThresholdAngle) && angle < -ThresholdAngle){					//@8
         	left_motor_set_speed(MOTOR_OPTIMAL_SPEED);//X motor -> CW direction
         	right_motor_set_speed(MOTOR_OPTIMAL_SPEED);//Y motor -> CW direction
         }else if(fabs(accel[X_AXIS]) < threshold || fabs(accel[Y_AXIS]) < threshold){				//Stop

@@ -10,7 +10,7 @@
 #include <Draw_pattern.h>
 #include <motors.h>
 
-static THD_WORKING_AREA(waThdDrawPattern, 128);
+static THD_WORKING_AREA(waThdDrawPattern, 4096);
 static THD_FUNCTION(ThdDrawPattern, arg) {
 
     chRegSetThreadName(__FUNCTION__);

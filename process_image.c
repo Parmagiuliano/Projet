@@ -258,6 +258,7 @@ static THD_FUNCTION(ProcessImage, arg) {
 					if(test_continuity(points)){
 						led5 = 1;
 						draw_start = 1;
+						chThdSleepMilliseconds(points_counter*STEP+1000);
 						;
 					}
 					else{

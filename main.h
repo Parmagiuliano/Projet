@@ -42,6 +42,8 @@ extern "C" {
 #define SENSOR_Y				0
 #define IR_OPTIMAL_DIST			400
 
+#define PI						3.14159
+
 #define NB_SAMPLES_OFFSET     200
 
 /** Robot wide IPC bus. */

@@ -12,7 +12,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <stdint.h>
+#include <stdbool.h>
 #include <main.h>
+
 
 #include <ch.h>
 #include <hal.h>
@@ -33,11 +36,11 @@
 /*
  * Home-made includes to add
  */
-#include <Drawing_test_function.c>
+//#include <Drawing_test_function.c>
 #include <Drawing_test_function.h>
-#include <Drawing_IMU_function.c>
+//#include <Drawing_IMU_function.c>
 #include <Drawing_IMU_function.h>
-#include <Mighty_logo_function.c>		//To remove?
+//#include <Mighty_logo_function.c>		//To remove?
 #include <Mighty_logo_function.h>
 //#include <process_image.c>			//Just commented
 #include <process_image.h>
@@ -51,6 +54,18 @@ void SendUint8ToComputer(uint8_t* data, uint16_t size)
 	chSequentialStreamWrite((BaseSequentialStream *)&SD3, (uint8_t*)"START", 5);
 	chSequentialStreamWrite((BaseSequentialStream *)&SD3, (uint8_t*)&size, sizeof(uint16_t));
 	chSequentialStreamWrite((BaseSequentialStream *)&SD3, (uint8_t*)data, size);
+}
+
+static void serial_start(void)
+{
+    static SerialConfig ser_cfg = {
+        115200,
+        0,
+        0,
+        0,
+    };
+
+    sdStart(&SD3, &ser_cfg); // UART3. Connected to the second com port of the programmer
 }
 
 /* Finding the origin function @In detail
@@ -94,6 +109,12 @@ void SendUint8ToComputer(uint8_t* data, uint16_t size)
 
 void FindTheOrigin(void)
 	{
+	//** Drawing_IMU function		//JUST ADDED
+	messagebus_t bus;
+	MUTEX_DECL(bus_lock);
+	CONDVAR_DECL(bus_condvar);
+
+
 		messagebus_init(&bus, &bus_lock, &bus_condvar);
 		//Starts the proximity measurement module
 		proximity_start();
@@ -156,6 +177,11 @@ static THD_FUNCTION(ThdDrawing_IMU, arg) {
     chRegSetThreadName(__FUNCTION__);
     (void)arg;
     /** Inits the Inter Process Communication bus. */
+    			//** Drawing_IMU function		//JUST ADDED
+    			messagebus_t bus;
+    			MUTEX_DECL(bus_lock);
+    			CONDVAR_DECL(bus_condvar);
+
         	    messagebus_init(&bus, &bus_lock, &bus_condvar);
         	    imu_start();
 
