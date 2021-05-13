@@ -16,7 +16,6 @@
 #include <stdbool.h>
 #include <main.h>
 
-
 #include <ch.h>
 #include <hal.h>
 #include <usbcfg.h>
@@ -171,7 +170,7 @@ void FindTheOrigin(void)
  */
 
 //Calling the Drawing_IMU function
-static THD_WORKING_AREA(waThdDrawing_IMU, 128);
+static THD_WORKING_AREA(waThdDrawing_IMU, 1024);
 static THD_FUNCTION(ThdDrawing_IMU, arg) {
 
     chRegSetThreadName(__FUNCTION__);
@@ -201,84 +200,84 @@ static THD_FUNCTION(ThdDrawing_IMU, arg) {
 }
 
 //Looking for a selector change while the plotter is working
-static THD_WORKING_AREA(waThdSwitch_Selector, 128);
-static THD_FUNCTION(ThdSwitch_Selector, arg) {
-
-    chRegSetThreadName(__FUNCTION__);
-    (void)arg;
-    uint8_t last_selector_position = get_selector();
-    uint8_t definitive_choice_selector = 0;
-
-    while(1){
-    	uint8_t current_selector_position = get_selector();
-
-    	if (current_selector_position != last_selector_position){
-    		/*
-    		 * Stop the current drawing
-    		 * Wait for X seconds, recheck if the selector pos changed again.
-    		 * If not, procede to a new iteration of the FindTheOrigin function,
-    		 * then start the the function chosen by the selecter.
-    		 */
-
-    		chThdSleepMilliseconds(2000);
-    		definitive_choice_selector = get_selector();
-    		while (definitive_choice_selector =! current_selector_position){
-    			definitive_choice_selector = current_selector_position;
-    			chThdSleepMilliseconds(2000);
-    		}
-
-//    		if (uint8_t chosen_selector_position == current_selector_position){	//The new position has been reached
+//static THD_WORKING_AREA(waThdSwitch_Selector, 1024);
+//static THD_FUNCTION(ThdSwitch_Selector, arg) {
 //
-//    		}else if(chosen_selector_position =! current_selector_position){ //We're still choosing the position
-
-
-
-    	}
-
-    }
-}
+//    chRegSetThreadName(__FUNCTION__);
+//    (void)arg;
+//    uint8_t last_selector_position = get_selector();
+//    uint8_t definitive_choice_selector = 0;
+//
+//    while(1){
+//    	uint8_t current_selector_position = get_selector();
+//
+//    	if (current_selector_position != last_selector_position){
+//    		/*
+//    		 * Stop the current drawing
+//    		 * Wait for X seconds, recheck if the selector pos changed again.
+//    		 * If not, procede to a new iteration of the FindTheOrigin function,
+//    		 * then start the the function chosen by the selecter.
+//    		 */
+//
+//    		chThdSleepMilliseconds(2000);
+//    		definitive_choice_selector = get_selector();
+//    		while (definitive_choice_selector =! current_selector_position){
+//    			definitive_choice_selector = current_selector_position;
+//    			chThdSleepMilliseconds(2000);
+//    		}
+//
+////    		if (uint8_t chosen_selector_position == current_selector_position){	//The new position has been reached
+////
+////    		}else if(chosen_selector_position =! current_selector_position){ //We're still choosing the position
+//
+//
+//
+//    	}
+//
+//    }
+//}
 
 //Tracking the pen position during the Drawing_IMU func, to avoid hardware damages
-static THD_WORKING_AREA(waThdIMU_Pen_Tracker, 128);
-static THD_FUNCTION(ThdIMU_Pen_Tracker, arg) {
-
-    chRegSetThreadName(__FUNCTION__);
-    (void)arg;
-	int16_t pos_motor_limit_min = -10;
-	int16_t pos_motor_limit_max = 500;
-
-	//Set the origin for the drawing_IMU_func
-	left_motor_set_pos(0);
-	right_motor_set_pos(0);
-
-    while(1){
-    	//track in real time the position of the pen in the board
-		int x_pos_motor = left_motor_get_pos();
-		int y_pos_motor = right_motor_get_pos();
-
-		//Size of the border to fit
-		if(x_pos_motor > pos_motor_limit_max ){
-				left_motor_set_speed(MOTOR_NO_SPEED); //X motor -> Stop
-				chThdSleepMilliseconds(500);
-				left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -10);
-
-		}else if(x_pos_motor < pos_motor_limit_min){
-            	left_motor_set_speed(MOTOR_NO_SPEED); //X motor -> Stop
-            	chThdSleepMilliseconds(500);
-            	left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 10);
-
-		}else if(y_pos_motor > pos_motor_limit_max){
-				right_motor_set_speed(MOTOR_NO_SPEED); //Y motor -> Stop
-				chThdSleepMilliseconds(500);
-				right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -10);
-
-		}else if(y_pos_motor < pos_motor_limit_min){
-				right_motor_set_speed(MOTOR_NO_SPEED); //Y motor -> Stop
-				chThdSleepMilliseconds(500);
-				right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 10);
-		}
-    }
-}
+//static THD_WORKING_AREA(waThdIMU_Pen_Tracker, 1024);
+//static THD_FUNCTION(ThdIMU_Pen_Tracker, arg) {
+//
+//    chRegSetThreadName(__FUNCTION__);
+//    (void)arg;
+//	int16_t pos_motor_limit_min = -10;
+//	int16_t pos_motor_limit_max = 500;
+//
+//	//Set the origin for the drawing_IMU_func
+//	left_motor_set_pos(0);
+//	right_motor_set_pos(0);
+//
+//    while(1){
+//    	//track in real time the position of the pen in the board
+//		int x_pos_motor = left_motor_get_pos();
+//		int y_pos_motor = right_motor_get_pos();
+//
+//		//Size of the border to fit
+//		if(x_pos_motor > pos_motor_limit_max ){
+//				left_motor_set_speed(MOTOR_NO_SPEED); //X motor -> Stop
+//				chThdSleepMilliseconds(500);
+//				left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -10);
+//
+//		}else if(x_pos_motor < pos_motor_limit_min){
+//            	left_motor_set_speed(MOTOR_NO_SPEED); //X motor -> Stop
+//            	chThdSleepMilliseconds(500);
+//            	left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 10);
+//
+//		}else if(y_pos_motor > pos_motor_limit_max){
+//				right_motor_set_speed(MOTOR_NO_SPEED); //Y motor -> Stop
+//				chThdSleepMilliseconds(500);
+//				right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -10);
+//
+//		}else if(y_pos_motor < pos_motor_limit_min){
+//				right_motor_set_speed(MOTOR_NO_SPEED); //Y motor -> Stop
+//				chThdSleepMilliseconds(500);
+//				right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 10);
+//		}
+//    }
+//}
 
 int main(void)
 {
@@ -313,7 +312,7 @@ int main(void)
 
     	case 2: //Free to draw with IMU, the code is based on TP3
     	    chThdCreateStatic(waThdDrawing_IMU, sizeof(waThdDrawing_IMU), NORMALPRIO+1, ThdDrawing_IMU, NULL);
-    	    chThdCreateStatic(waThdIMU_Pen_Tracker, sizeof(waThdIMU_Pen_Tracker), NORMALPRIO, ThdIMU_Pen_Tracker, NULL);
+//    	    chThdCreateStatic(waThdIMU_Pen_Tracker, sizeof(waThdIMU_Pen_Tracker), NORMALPRIO, ThdIMU_Pen_Tracker, NULL);
     	    break;
 
     	case 3: //Registered drawing - Epfl Logo
@@ -337,7 +336,7 @@ int main(void)
     /* Infinite loop. */
     while (1) 	{
     	//Check for selector change
-    	chThdCreateStatic(waThdSwitch_Selector, sizeof(waThdSwitch_Selector), NORMALPRIO, ThdSwitch_Selector, NULL);
+//    	chThdCreateStatic(waThdSwitch_Selector, sizeof(waThdSwitch_Selector), NORMALPRIO, ThdSwitch_Selector, NULL);
     	//waits 1 second
         chThdSleepMilliseconds(1000);
     			}
