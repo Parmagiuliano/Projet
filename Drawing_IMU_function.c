@@ -61,6 +61,36 @@ static imu_msg_t imu_values;
 *
 * @param imu_values -> acceleration (m/s^2)
 */
+static THD_WORKING_AREA(waThdDrawing_IMU, 1024);
+static THD_FUNCTION(ThdDrawing_IMU, arg) {
+
+    chRegSetThreadName(__FUNCTION__);
+    (void)arg;
+    /** Inits the Inter Process Communication bus. */
+    			//** Drawing_IMU function		//JUST ADDED
+    			messagebus_t bus;
+    			MUTEX_DECL(bus_lock);
+    			CONDVAR_DECL(bus_condvar);
+
+        	    messagebus_init(&bus, &bus_lock, &bus_condvar);
+//        	    imu_start();
+
+        	    messagebus_topic_t *imu_topic = messagebus_find_topic_blocking(&bus, "/imu");
+        	    imu_msg_t imu_values;
+
+        	    //wait 2 sec to be sure the e-puck is in a stable position
+        	    chThdSleepMilliseconds(2000);
+        	    imu_compute_offset(imu_topic, NB_SAMPLES_OFFSET);
+
+    while(1){
+    	if(get_selector() == 2){
+		//wait for new measures to be published
+    		        messagebus_topic_wait(imu_topic, &imu_values, sizeof(imu_values));
+    		        Drawing_IMU(&imu_values);
+    		        chThdSleepMilliseconds(100);
+    	}
+    }
+}
 
 void Drawing_IMU(imu_msg_t *imu_values){
 
@@ -173,4 +203,8 @@ void Drawing_IMU(imu_msg_t *imu_values){
         	right_motor_set_speed(MOTOR_NO_SPEED); ////Y motor -> Static
         }
     }
+}
+
+void Drawing_IMU_start(void){
+	chThdCreateStatic(waThdDrawing_IMU, sizeof(waThdDrawing_IMU), NORMALPRIO+1, ThdDrawing_IMU, NULL);
 }

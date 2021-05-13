@@ -17,7 +17,7 @@ extern "C" {
 #include <Mighty_logo_function.h>
 #include <process_image.h>
 
-#include <Draw_pattern.h>
+#include <Restart_Programm.h>
 
 //constants for the differents parts of the project		//TO CHECK
 #define IMAGE_WIDTH				96
@@ -46,6 +46,12 @@ extern "C" {
 
 #define NB_SAMPLES_OFFSET     200
 
+#define MOTOR_SPEED_LIMIT 				1100 	// [step/s]
+#define MOTOR_OPTIMAL_SPEED 			150 	// [step/s]
+#define MOTOR_NO_SPEED 					0 		// [step/s]
+#define DRAWING_CST_MIGHTY				14		//Step multiplier
+#define STEP							168		//Step constant at MOTOR_OPTIMAL_SPEED
+
 /** Robot wide IPC bus. */
 extern messagebus_t bus;
 
@@ -53,9 +59,9 @@ extern parameter_namespace_t parameter_root;
 
 void SendUint8ToComputer(uint8_t* data, uint16_t size);
 static void serial_start(void);
-void FindTheOrigin(void);
-void Drawing_test_func(void);
-void Drawing_IMU(imu_msg_t *imu_values);
+//void FindTheOrigin(void);
+//void Drawing_test_func(void);
+//void Drawing_IMU(imu_msg_t *imu_values);
 //void Drawing_Mighty(void);
 
 
