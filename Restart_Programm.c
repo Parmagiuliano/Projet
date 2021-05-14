@@ -7,7 +7,13 @@
 
 #include <Restart_Programm.h>
 #include <selector.h>
+#include "sensors/proximity.h"
+#include "motors.h"
 #include <main.h>
+
+#include <chbsem.h>
+#include <stdbool.h>
+
 
 static int8_t last_selector = 0;
 
@@ -70,20 +76,18 @@ void FindTheOrigin(void)
 		 * Infinite loop, X axis
 		 * Returns the last value measured by the X sensor ->U106
 		 */
-		while(1){
-					left_motor_set_speed(-MOTOR_OPTIMAL_SPEED); 	//CCW rotation
-					if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST)
-						{
-							left_motor_set_speed(MOTOR_NO_SPEED);
-							break;
-						}
+		left_motor_set_speed(-MOTOR_OPTIMAL_SPEED*2); 	//CCW rotation
+		while(get_prox(SENSOR_X) < IR_OPTIMAL_DIST*0.6){
+			chThdSleepMilliseconds(100);
+			//wait(50);
 				}
 
 		/*
 		 * Return the Xstage to the other limit for the Yoffset
 		 * Move Xmotor CW, distance 65mm ~=470 steps
 		 */
-		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 480);	//470
+		left_motor_set_speed(MOTOR_NO_SPEED);
+		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, 240);	//480	//300
 		chThdSleepMilliseconds(250);
 
 		//chThdCreateStatic(waThdFindTheYOrigin, sizeof(waThdFindTheYOrigin), NORMALPRIO, ThdFindTheYOrigin, NULL);
@@ -92,24 +96,29 @@ void FindTheOrigin(void)
 		 * Infinite loop, Y axis
 		 * Returns the last value measured by the Y sensor ->U101
 		 */
-		while(1){
-					right_motor_set_speed(MOTOR_OPTIMAL_SPEED); 	//CW rotation
-					if(get_prox(SENSOR_Y) > IR_OPTIMAL_DIST)
-						{
-							right_motor_set_speed(-MOTOR_NO_SPEED);
-							break;
+//		while(1){
+					right_motor_set_speed(MOTOR_OPTIMAL_SPEED*2); 	//CW rotation
+					while(get_prox(SENSOR_Y) < IR_OPTIMAL_DIST){
+						chThdSleepMilliseconds(100);
+					//wait(50);
 						}
-				}
+
+//					if(get_prox(SENSOR_Y) > IR_OPTIMAL_DIST)
+//						{
+//							right_motor_set_speed(-MOTOR_NO_SPEED);
+//							break;
+//						}
+//				}
 
 		/*
 		 * Return the Xstage to the X offset
 		 * Move Xmotor CW, distance 55mm
 		 */
-		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -450);	//-400
-		chThdSleepMilliseconds(250);
+		right_motor_set_speed(MOTOR_NO_SPEED);
+		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, -200);	//-450
+		chThdSleepMilliseconds(100);
+		//left_motor_set_speed(MOTOR_NO_SPEED);
 }
-
-
 
 
 static THD_WORKING_AREA(waThdRestart_Programm, 256);
@@ -117,46 +126,109 @@ static THD_FUNCTION(ThdRestart_Programm, arg) {
 
     chRegSetThreadName(__FUNCTION__);
     (void)arg;
-    last_selector = get_selector();
-    uint8_t current_selector_position = 0;
+    static uint8_t last_selector = 0;
 
-    FindTheOrigin();
+
+
+//   static BSEMAPHORE_DECL(process_image_start_sem, TRUE);
+//    //chBSemWait(&process_image_start_sem);
+//    //chBSemSignal(&process_image_start_sem);
+//    chBSemObjectInit(&process_image_start_sem, bool TRUE);
+//
+//    static BSEMAPHORE_DECL(Drawing_functions_start_sem, TRUE);
+//    //chBSemWait(&Drawing_functions_start_sem);
+//    //chBSemSignal(&Drawing_functions_start_sem);
+//    chBSemObjectInit(&Drawing_functions_start_sem, bool TRUE);
+//
+//    static BSEMAPHORE_DECL(Drawing_IMU_start_sem, TRUE);
+//    //chBSemWait(&Drawing_IMU_start_sem);
+//    //chBSemSignal(&Drawing_IMU_start_sem);
+//    static BSEMAPHORE_DECL(End_of_the_current_function_sem, FALSE);
+//    //chBSemWait(&End_of_the_current_function_sem);
+//    //chBSemSignal(&End_of_the_current_function_sem);
+//   //uint8_t current_selector_position = 0;
+//    chBSemObjectInit(&Drawing_IMU_start_sem, bool TRUE);
+
+
+
+//     FindTheOrigin();
 
     while(1){
-    	current_selector_position = get_selector();
-    	if(current_selector_position =! last_selector){
-    	FindTheOrigin();
 
-    	}
+    	//uint8_t current_selector_position = get_selector();
+
+
+    	//FindTheOrigin();
+    	chThdSleepMilliseconds(250);
+
+    	switch(get_selector()){
+
+    	    case 1:
+    	    	if(last_selector != get_selector()){
+    	    	    				last_selector = get_selector();
+    	    	    				right_motor_set_speed(MOTOR_NO_SPEED);
+    	    	    				left_motor_set_speed(MOTOR_NO_SPEED);
+    	    	    				FindTheOrigin();
+
+    	    	    				chBSemSignal(&Drawing_functions_start_sem);
+
+    	    	    				//Drawing_test_func();
+    	    	}
+    	    	    			//	chThdSleepMilliseconds(250);
+//
+
+    	    	break;
+    	    case 2:
+    	    	if(last_selector != get_selector()){
+    	    	    	    		last_selector = get_selector();
+    	    	    	    		right_motor_set_speed(MOTOR_NO_SPEED);
+    	    	    	    		left_motor_set_speed(MOTOR_NO_SPEED);
+    	    	    	    		FindTheOrigin();
+
+
+//    	    	    	    		messagebus_topic_t *imu_topic = messagebus_find_topic_blocking(&bus, "/imu");
+//    	    	    	    		imu_msg_t imu_values;
+//    	    	    	    		messagebus_topic_wait(imu_topic, &imu_values, sizeof(imu_values));
+//    	    	    	    		Drawing_IMU(&imu_values);
+    	    	}
+    	    	    	    	//	chThdSleepMilliseconds(250);
+    	    						chBSemSignal(&Drawing_IMU_start_sem);
+    	        break;
+    	    case 3:
+    	    	if(last_selector != get_selector()){
+    	    	    	    		last_selector = get_selector();
+    	    	    	    		right_motor_set_speed(MOTOR_NO_SPEED);
+    	    	    	    		left_motor_set_speed(MOTOR_NO_SPEED);
+    	    	    	    		//chThdSleepMilliseconds(250);
+    	    	    	    		FindTheOrigin();
+
+    	    	    	    		chBSemSignal(&Drawing_functions_start_sem);
+
+    	    	    	    		//Drawing_Mighty();
+    	    	}
+//
+    	        break;
+    	    case 4:
+    	    	if(last_selector != get_selector()){
+    	    	    	    		last_selector = get_selector();
+    	    	    	    		right_motor_set_speed(MOTOR_NO_SPEED);
+    	    	    	    		left_motor_set_speed(MOTOR_NO_SPEED);
+    	    	    	    		FindTheOrigin();
+    	    	    	    		//chThdSleepMilliseconds(250);
+    	    	}
+    	    	chBSemSignal(&process_image_start_sem);
+    	        break;
+    	    }
+
+//    	}else{
+//    		chThdSleepMilliseconds(500);
+//    	}
 
     }
 }
 
-//chRegSetThreadName(__FUNCTION__);
-//   (void)arg;
-//   uint8_t last_selector_position = get_selector();
-//   uint8_t definitive_choice_selector = 0;
-//
-//   while(1){
-//   	uint8_t current_selector_position = get_selector();
-//
-//   	if (current_selector_position != last_selector_position){
-//   		/*
-//   		 * Stop the current drawing
-//   		 * Wait for X seconds, recheck if the selector pos changed again.
-//   		 * If not, procede to a new iteration of the FindTheOrigin function,
-//   		 * then start the the function chosen by the selecter.
-//   		 */
-//
-//   		chThdSleepMilliseconds(2000);
-//   		definitive_choice_selector = get_selector();
-//   		while (definitive_choice_selector =! current_selector_position){
-//   			definitive_choice_selector = current_selector_position;
-//   			chThdSleepMilliseconds(2000);
-//   		}
-
 void Restart_Programm_start(void){
-	chThdCreateStatic(waThdRestart_Programm, sizeof(waThdRestart_Programm), NORMALPRIO+1, ThdRestart_Programm, NULL);
+	chThdCreateStatic(waThdRestart_Programm, sizeof(waThdRestart_Programm), NORMALPRIO, ThdRestart_Programm, NULL);
 }
 
 

@@ -37,9 +37,13 @@
  */
 #include <Drawing_test_function.h>
 #include <Drawing_IMU_function.h>
-//#include <Mighty_logo_function.h>
 #include <process_image.h>
 #include <Restart_Programm.h>
+
+//Related to IMU, must be defined right after the includes
+messagebus_t bus;
+MUTEX_DECL(bus_lock);
+CONDVAR_DECL(bus_condvar);
 
 void SendUint8ToComputer(uint8_t* data, uint16_t size) 
 {
@@ -76,12 +80,9 @@ int main(void)
 	po8030_start();
     i2c_start();
 
-    //Related to IMU
-	messagebus_t bus;
-	MUTEX_DECL(bus_lock);
-	CONDVAR_DECL(bus_condvar);
-
+	/** Inits the Inter Process Communication bus. */
 	messagebus_init(&bus, &bus_lock, &bus_condvar);
+	/** The IMU must start after the messagebus init. */
 	imu_start();
 
 	//Starts the proximity measurement module
@@ -90,12 +91,13 @@ int main(void)
 	calibrate_ir();
 
    // Finding the origin function
-	FindTheOrigin();
+//	FindTheOrigin();
 
-   // process_image_start();
-  //  Restart_Programm_start();
-   // Drawing_functions_start();
-   // Drawing_IMU_start();
+    process_image_start();
+    Drawing_functions_start();
+    Drawing_IMU_start();
+    Restart_Programm_start();
+
 
     /* Infinite loop. */
     while (1) 	{

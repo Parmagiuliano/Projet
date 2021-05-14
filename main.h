@@ -49,7 +49,7 @@ extern "C" {
 #define MOTOR_SPEED_LIMIT 				1100 	// [step/s]
 #define MOTOR_OPTIMAL_SPEED 			150 	// [step/s]
 #define MOTOR_NO_SPEED 					0 		// [step/s]
-#define DRAWING_CST_MIGHTY				14		//Step multiplier
+#define DRAWING_CST_MIGHTY				7		//Step multiplier		//14
 #define STEP							168		//Step constant at MOTOR_OPTIMAL_SPEED
 
 /** Robot wide IPC bus. */

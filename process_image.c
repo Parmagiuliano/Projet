@@ -7,6 +7,7 @@
 #include <camera/po8030.h>
 
 #include <process_image.h>
+#include <Restart_Programm.h>
 
 
 
@@ -259,6 +260,8 @@ static THD_FUNCTION(CaptureImage, arg) {
 	dcmi_prepare();
 
     while(1){
+    	chBSemWait(&process_image_start_sem);
+
         //starts a capture
 		dcmi_capture_start();
 		//waits for the capture to be done
@@ -285,6 +288,7 @@ static THD_FUNCTION(ProcessImage, arg) {
 	width.width = width.position = height.width = height.position = 0;
 
     while(1){
+
 
     	if(get_selector() == 4){
 
@@ -397,6 +401,8 @@ static THD_FUNCTION(ProcessImage, arg) {
 
 			}
 
+    }else{
+    	chThdSleepMilliseconds(250);
     }
 }
 
@@ -406,5 +412,5 @@ static THD_FUNCTION(ProcessImage, arg) {
 
 void process_image_start(void){
 	chThdCreateStatic(waProcessImage, sizeof(waProcessImage), NORMALPRIO, ProcessImage, NULL);
-	chThdCreateStatic(waCaptureImage, sizeof(waCaptureImage), NORMALPRIO-1, CaptureImage, NULL);
+	chThdCreateStatic(waCaptureImage, sizeof(waCaptureImage), NORMALPRIO, CaptureImage, NULL);
 }

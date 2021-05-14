@@ -23,6 +23,8 @@
 #include <selector.h>
 
 #include <Drawing_test_function.h>
+#include <Restart_Programm.h>
+#include <chbsem.h>
 
 /* Aimed pattern for the square spiral:
  *1 left_motor CW 55mm
@@ -84,18 +86,19 @@ static THD_FUNCTION(ThdDrawing_functions, arg) {
     (void)arg;
 
     while(1){
+    	chBSemWait(&process_image_start_sem);
+    	}
     	if(get_selector()==1){
     		Drawing_test_func();
 
     	}else if(get_selector()==3){
     		Drawing_Mighty();
-//    	}else if(get_selector() != 2 || get_selector() != 4){
-//    		set_body_led(1); // value (0=off 1=on higher=inverse)
-//    		set_front_led(1); //value (0=off 1=on higher=inverse)
+//    	}else{
+//
     	}
-    chThdSleepMilliseconds(250);
+    	chThdSleepMilliseconds(250);
     }
-}
+//}
 
 /** Drawing_test function @brief
 *   Draw a square spiral, starting from the external origin, dimensions 55mm x 55mm.
@@ -103,11 +106,11 @@ static THD_FUNCTION(ThdDrawing_functions, arg) {
 */
 void Drawing_test_func(void){
 
-	chThdSleepMilliseconds(5000);		//Sleep to set the sheet under the pen
+	//chThdSleepMilliseconds(5000);		//Sleep to set the sheet under the pen
 
 	//Variables declaration
-	uint8_t numRows = 32;
-	int8_t motor_speed_sign = 0;
+	uint8_t numRows = sizeof(Drawing_test_array) / sizeof(Drawing_test_array[0]);
+	int8_t motor_speed_sign = 1;
 	uint16_t counter_value_motor = 0;	//Init value for the 3th column
 
 	for (uint8_t row = 0; row < numRows; row++)
@@ -117,13 +120,13 @@ void Drawing_test_func(void){
 
 		if(Drawing_test_array[row][0] == 0)
 			   			 	 	 {
-			   			 		 	 left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, motor_speed_sign*counter_value_motor);
+			   			 		 	 left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, 0.5*(motor_speed_sign*counter_value_motor));
 			   			 		 	 left_motor_get_to_the_pos(MOTOR_NO_SPEED, 50);
 			   			 		     chThdSleepMilliseconds(100);
 			   			 	 	 }
 		else if(Drawing_test_array[row][0] == 1)
 			   			 	 	 {
-			   			 		 	 right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, motor_speed_sign*counter_value_motor);
+			   			 		 	 right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, 0.5*(motor_speed_sign*counter_value_motor));
 			   			 		 	 right_motor_get_to_the_pos(MOTOR_NO_SPEED, 50);
 			   			 		     chThdSleepMilliseconds(100);
 			   			 	 	 }
@@ -135,7 +138,6 @@ void Drawing_test_func(void){
  * As the square spiral has a repetitive pattern of motor/direction/number of step,
  * the function could be defined with a for loop and the modulo of the increment, as shown below.
  */
-
 
 /** Drawing_test function @brief
 *  Draw a square spiral, starting from the external origin, dimensions 70mm x 70mm.
@@ -250,7 +252,7 @@ const int Mighty_sequence_array[39][3] = {
 
 void Drawing_Mighty(void){
 
-	chThdSleepMilliseconds(5000);		//Sleep to set the sheet under the pen
+	//chThdSleepMilliseconds(5000);		//Sleep to set the sheet under the pen
 
 	//Variables declaration
 	uint8_t numRows = sizeof(Mighty_sequence_array) / sizeof(Mighty_sequence_array[0]);
@@ -265,13 +267,13 @@ void Drawing_Mighty(void){
 
 		if(Mighty_sequence_array[row][0] == 0)
 			   			 	 	 {
-			   			 		 	 left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, motor_speed_sign*counter_value_motor*DRAWING_CST_MIGHTY);
+			   			 		 	 left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, motor_speed_sign*counter_value_motor*DRAWING_CST_MIGHTY);
 			   			 		 	 left_motor_get_to_the_pos(MOTOR_NO_SPEED, 50);
 			   			 		 	 chThdSleepMilliseconds(100);
 			   			 	 	 }
 		else if(Mighty_sequence_array[row][0] == 1)
 			   			 	 	 {
-			   			 		 	 right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, motor_speed_sign*counter_value_motor*DRAWING_CST_MIGHTY);
+			   			 		 	 right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, motor_speed_sign*counter_value_motor*DRAWING_CST_MIGHTY);
 			   			 		 	 right_motor_get_to_the_pos(MOTOR_NO_SPEED, 50);
 			   			 		 	 chThdSleepMilliseconds(100);
 			   			 	 	 }
@@ -281,7 +283,7 @@ void Drawing_Mighty(void){
 
 
 void Drawing_functions_start(void){
-	chThdCreateStatic(waThdDrawing_functions, sizeof(waThdDrawing_functions), HIGHPRIO, ThdDrawing_functions, NULL);
+	chThdCreateStatic(waThdDrawing_functions, sizeof(waThdDrawing_functions), NORMALPRIO, ThdDrawing_functions, NULL);
 }
 
 
