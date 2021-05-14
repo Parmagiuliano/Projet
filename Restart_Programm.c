@@ -7,7 +7,10 @@
 
 #include <Restart_Programm.h>
 #include <selector.h>
+#include "sensors/proximity.h"
+#include "motors.h"
 #include <main.h>
+
 
 static int8_t last_selector = 0;
 
@@ -71,7 +74,7 @@ void FindTheOrigin(void)
 		 * Returns the last value measured by the X sensor ->U106
 		 */
 		while(1){
-					left_motor_set_speed(-MOTOR_OPTIMAL_SPEED); 	//CCW rotation
+					left_motor_set_speed(-MOTOR_OPTIMAL_SPEED*2); 	//CCW rotation
 					if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST)
 						{
 							left_motor_set_speed(MOTOR_NO_SPEED);
@@ -83,7 +86,7 @@ void FindTheOrigin(void)
 		 * Return the Xstage to the other limit for the Yoffset
 		 * Move Xmotor CW, distance 65mm ~=470 steps
 		 */
-		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, 480);	//470
+		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, 480);	//480
 		chThdSleepMilliseconds(250);
 
 		//chThdCreateStatic(waThdFindTheYOrigin, sizeof(waThdFindTheYOrigin), NORMALPRIO, ThdFindTheYOrigin, NULL);
@@ -93,7 +96,7 @@ void FindTheOrigin(void)
 		 * Returns the last value measured by the Y sensor ->U101
 		 */
 		while(1){
-					right_motor_set_speed(MOTOR_OPTIMAL_SPEED); 	//CW rotation
+					right_motor_set_speed(MOTOR_OPTIMAL_SPEED*2); 	//CW rotation
 					if(get_prox(SENSOR_Y) > IR_OPTIMAL_DIST)
 						{
 							right_motor_set_speed(-MOTOR_NO_SPEED);
@@ -105,11 +108,9 @@ void FindTheOrigin(void)
 		 * Return the Xstage to the X offset
 		 * Move Xmotor CW, distance 55mm
 		 */
-		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED, -450);	//-400
+		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, -450);	//-450
 		chThdSleepMilliseconds(250);
 }
-
-
 
 
 static THD_WORKING_AREA(waThdRestart_Programm, 256);
@@ -132,31 +133,8 @@ static THD_FUNCTION(ThdRestart_Programm, arg) {
     }
 }
 
-//chRegSetThreadName(__FUNCTION__);
-//   (void)arg;
-//   uint8_t last_selector_position = get_selector();
-//   uint8_t definitive_choice_selector = 0;
-//
-//   while(1){
-//   	uint8_t current_selector_position = get_selector();
-//
-//   	if (current_selector_position != last_selector_position){
-//   		/*
-//   		 * Stop the current drawing
-//   		 * Wait for X seconds, recheck if the selector pos changed again.
-//   		 * If not, procede to a new iteration of the FindTheOrigin function,
-//   		 * then start the the function chosen by the selecter.
-//   		 */
-//
-//   		chThdSleepMilliseconds(2000);
-//   		definitive_choice_selector = get_selector();
-//   		while (definitive_choice_selector =! current_selector_position){
-//   			definitive_choice_selector = current_selector_position;
-//   			chThdSleepMilliseconds(2000);
-//   		}
-
 void Restart_Programm_start(void){
-	chThdCreateStatic(waThdRestart_Programm, sizeof(waThdRestart_Programm), NORMALPRIO+1, ThdRestart_Programm, NULL);
+	chThdCreateStatic(waThdRestart_Programm, sizeof(waThdRestart_Programm), NORMALPRIO, ThdRestart_Programm, NULL);
 }
 
 

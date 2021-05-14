@@ -16,10 +16,10 @@
 #include <sensors/imu.h>
 #include <Drawing_IMU_function.h>
 
-//** Drawing_IMU function
-messagebus_t bus;
-MUTEX_DECL(bus_lock);
-CONDVAR_DECL(bus_condvar);
+//** Drawing_IMU function			//Already define in the main
+//messagebus_t bus;
+//MUTEX_DECL(bus_lock);
+//CONDVAR_DECL(bus_condvar);
 
 static void serial_start(void)
 {
@@ -68,11 +68,11 @@ static THD_FUNCTION(ThdDrawing_IMU, arg) {
     (void)arg;
     /** Inits the Inter Process Communication bus. */
     			//** Drawing_IMU function		//JUST ADDED
-    			messagebus_t bus;
-    			MUTEX_DECL(bus_lock);
-    			CONDVAR_DECL(bus_condvar);
+//    			messagebus_t bus;
+//    			MUTEX_DECL(bus_lock);
+//    			CONDVAR_DECL(bus_condvar);
 
-        	    messagebus_init(&bus, &bus_lock, &bus_condvar);
+//        	    messagebus_init(&bus, &bus_lock, &bus_condvar);
 //        	    imu_start();
 
         	    messagebus_topic_t *imu_topic = messagebus_find_topic_blocking(&bus, "/imu");
@@ -95,7 +95,7 @@ static THD_FUNCTION(ThdDrawing_IMU, arg) {
 void Drawing_IMU(imu_msg_t *imu_values){
 
 	/** Inits the Inter Process Communication bus. */
-	    messagebus_init(&bus, &bus_lock, &bus_condvar);
+	 //   messagebus_init(&bus, &bus_lock, &bus_condvar);
 
     //threshold value to not run the motors when the robot is too horizontal
     float threshold = 0.4;
@@ -107,7 +107,7 @@ void Drawing_IMU(imu_msg_t *imu_values){
     volatile uint16_t time = 0;
 
 //    int IMU_drawing_speed;
-    int IMU_drawing_speed=MOTOR_OPTIMAL_SPEED;
+    int IMU_drawing_speed=MOTOR_OPTIMAL_SPEED*2;
 
     //Variable speed of the motors, depending of the IMU accelerations.
     //The pen draws faster when the inclination increases.
