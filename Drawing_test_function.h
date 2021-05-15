@@ -10,9 +10,10 @@
 
 #include "motors.h"
 
-void Drawing_test_func();
-void Drawing_Mighty();
-void Drawing_functions_start();
+void Drawing_test_func(void);
+void Drawing_Mighty(void);
+void Drawing_functions_start(void);
+
 
 
 

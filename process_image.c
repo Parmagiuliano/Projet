@@ -1,3 +1,10 @@
+/*
+ * process_image.c
+ *
+ *  Created on: Apr 27, 2021
+ *  Authors: Parma Giuliano & Jacquart Sylvain
+ *
+ */
 #include "ch.h"
 #include "hal.h"
 #include <chprintf.h>
@@ -10,14 +17,15 @@
 #include <Restart_Programm.h>
 
 
-
-
 //semaphore
 static BSEMAPHORE_DECL(image_ready_sem, TRUE);
 
-
 static bool draw_start = 0;
 
+/* get_line_data function @brief
+ * Called once to find the width and the center of the line,
+ * then a second time to find the height of the picture and the center of the column.
+ */
 
 line_data get_line_data (uint8_t *buffer){
 	line_data current_line;
@@ -36,12 +44,11 @@ line_data get_line_data (uint8_t *buffer){
 
 				wrong_line = 0;
 
-
 				//search for a begin
 				while(stop == 0 && i < (IMAGE_WIDTH-MIN_LINE_WIDTH))
 				{
-					//the slope must at least be WIDTH_SLOPE wide and is compared
-				    //to the mean of the image
+					//The slope must at least be WIDTH_SLOPE wide and is compared
+				    //to the mean of the image.
 					//sign changed
 					 if(buffer[i] < mean/2   && buffer[i+WIDTH_SLOPE] > mean  )
 				    {
@@ -50,7 +57,7 @@ line_data get_line_data (uint8_t *buffer){
 				    }
 				    i++;
 				}
-				//if a begin was found, search for an end
+				//If a begin was found, search for an end
 
 				if (i < (IMAGE_WIDTH - WIDTH_SLOPE) && begin)
 				{
@@ -66,17 +73,16 @@ line_data get_line_data (uint8_t *buffer){
 				        }
 				        i++;
 				    }
+
 				    //if an end was not found
 				    if (i > IMAGE_WIDTH || !end)
 				    {
 				        line_not_found = 1;
-
 				    }
 				}
 				else//if no begin was found
 				{
 				    line_not_found = 1;
-
 				}
 
 				//if a line too small has been detected, continues the search
@@ -93,23 +99,22 @@ line_data get_line_data (uint8_t *buffer){
 					begin = 0;
 					end = 0;
 
-
 				}else{
 					current_line.width  = (end - begin);
 					current_line.position = (begin + end)/2; //gives the line position.
-
-
-
 				}
-
 					return current_line;
-
 }
+
+
+/* test_continuity function @brief
+ * Test if on the pattern, a square doesn't have more than 4 squares adjoining, 2 on sides and 2 on diagonals
+ */
+
 bool test_continuity (uint8_t *points){
 	uint8_t adjoining = 0, diagonal = 0;
 	for(uint8_t i =0; i < (MAX_POINTS) ; i++){
 		if(points [i]){
-			//on teste la continuité de la trace et qu ça soit fermé
 			adjoining = points [i-1] + points [i+1] + points [i-RESOLUTION] + points [i+RESOLUTION];
 			diagonal = points [i-RESOLUTION + 1] + points [i+RESOLUTION +1] + points [i-RESOLUTION - 1] + points [i+RESOLUTION - 1];
 			if (adjoining > 2 || diagonal > 2 || (adjoining + diagonal) <2 ){
@@ -126,6 +131,12 @@ bool test_continuity (uint8_t *points){
 	return true;
 }
 
+/* draw_pattern function @brief
+ * Start by reaching the 1st square of the pattern,
+ * Then for each point stocked on the string, check for the next square continuing the pattern.
+ * Draw a line linking the center of each square of the pattern.
+ */
+
 void draw_pattern(uint8_t *points){
 	uint8_t points_counter = 0, indice = 0, end = 0;
  uint8_t lower_speed = 0;
@@ -133,33 +144,33 @@ uint16_t sleep_time = 0;
 	for(uint8_t i =0; i < (MAX_POINTS) ; i++){
 	    		    							points_counter += points [i];
 	    		    						}
-	    		    	//loocking for an origin
-	    		    	for(uint8_t i =0; i < (MAX_POINTS) ; i++){
+	    		    	//Looking for the origin
+	    		    	for(uint16_t i =0; i < (MAX_POINTS) ; i++){
 	    		    				if(points[i]){
 	    		    					if(i/RESOLUTION >= i%RESOLUTION){	//Reach for the starting point of the pattern
-	    		    						//set speed diagonale
+	    		    						//set speed diagonal			//i/RESOLUTION == line, i%RESOLUTION == column
 	    		    						//wait
-	    		    						lower_speed = (i%RESOLUTION)/(i/RESOLUTION)*MOTOR_OPTIMAL_SPEED;
+	    		    						lower_speed = ((i*MOTOR_OPTIMAL_SPEED)%RESOLUTION)/((i*MOTOR_OPTIMAL_SPEED)/RESOLUTION);
 	    		    						sleep_time = STEP*i/RESOLUTION;
 	    		    						left_motor_set_speed(lower_speed); //X
-	    		    						right_motor_set_speed(MOTOR_OPTIMAL_SPEED);	//Y
+	    		    						right_motor_set_speed(-MOTOR_OPTIMAL_SPEED);	//Y
 	    		    						chThdSleepMilliseconds(sleep_time);	//Move of Y pas
 
 	    		    					}
 	    		    					else{
-	    		    						//set speed diagonale
+	    		    						//set speed diagonal
 	    		    						//wait
-	    		    						lower_speed = (i/RESOLUTION)/(i%RESOLUTION)*(MOTOR_OPTIMAL_SPEED);
+	    		    						lower_speed = ((i*MOTOR_OPTIMAL_SPEED)/RESOLUTION)/((i*MOTOR_OPTIMAL_SPEED)%RESOLUTION);
 	    		    						sleep_time = STEP*(i%RESOLUTION);
 	    		    						left_motor_set_speed(MOTOR_OPTIMAL_SPEED); //X
-	    		    						right_motor_set_speed(lower_speed);	//Y
+	    		    						right_motor_set_speed(-lower_speed);	//Y
 	    		    						chThdSleepMilliseconds(sleep_time);	//Move of Y pas
 
 	    		    					}
 
 	    		    					indice = end = i;
 	    		    	    							break;
-	    		    							}
+	    		    						}
 	    		    				else{
 	    		    					continue;
 	    		    					}
@@ -174,48 +185,48 @@ uint16_t sleep_time = 0;
 	    		    			indice = indice + 1;
 
 
-	    		    		}else if(points[indice+RESOLUTION]){		//down
+	    		    		}else if(points[indice+RESOLUTION]){										//Down
 	    		    			left_motor_set_speed(MOTOR_NO_SPEED);
 	    		    			right_motor_set_speed(-MOTOR_OPTIMAL_SPEED);
 
 	    		    			points[indice] = 0;
 	    		    			indice = indice + RESOLUTION;
 
-	    		    		}else if(points[indice-1]){		//left
+	    		    		}else if(points[indice-1]){													//Left
 	    		    			left_motor_set_speed(-MOTOR_OPTIMAL_SPEED);
 	    		    			right_motor_set_speed(-MOTOR_NO_SPEED);
 
 	    		    			points[indice] = 0;
 	    		    			indice = indice - 1;
-	    		    		}else if(points[indice-RESOLUTION]){		//up
+	    		    		}else if(points[indice-RESOLUTION]){										//Up
 	    		    			left_motor_set_speed(MOTOR_NO_SPEED);
 	    		    			right_motor_set_speed(MOTOR_OPTIMAL_SPEED);
 
 	    		    			points[indice] = 0;
 	    		    			indice = indice-RESOLUTION;
 
-	    		    		}else if(points[indice-RESOLUTION+1]){		//up right
+	    		    		}else if(points[indice-RESOLUTION+1]){										//Up right
 	    		    			left_motor_set_speed(MOTOR_OPTIMAL_SPEED);
 	    		    			right_motor_set_speed(MOTOR_OPTIMAL_SPEED);
 
 	    		    			points[indice] = 0;
 	    		    			indice = indice-RESOLUTION+1;
 
-	    		    		}else if(points[indice+RESOLUTION+1]){		//down right
+	    		    		}else if(points[indice+RESOLUTION+1]){										//Down right
 	    		    			left_motor_set_speed(MOTOR_OPTIMAL_SPEED);
 	    		    			right_motor_set_speed(-MOTOR_OPTIMAL_SPEED);
 
 	    		    			points[indice] = 0;
 	    		    			indice = indice+RESOLUTION+1;
 
-	    		    		}else if(points[indice+RESOLUTION-1]){		//down left
+	    		    		}else if(points[indice+RESOLUTION-1]){										//Down left
 	    		    			left_motor_set_speed(-MOTOR_OPTIMAL_SPEED);
 	    		    			right_motor_set_speed(-MOTOR_OPTIMAL_SPEED);
 
 	    		    			points[indice] = 0;
 	    		    			indice = indice+RESOLUTION-1;
 
-	    		    		}else if(points[indice-RESOLUTION-1]){			//up left
+	    		    		}else if(points[indice-RESOLUTION-1]){										//Up left
 	    		    			left_motor_set_speed(-MOTOR_OPTIMAL_SPEED);
 	    		    			right_motor_set_speed(MOTOR_OPTIMAL_SPEED);
 
@@ -242,15 +253,11 @@ uint16_t sleep_time = 0;
 
 }
 
-
-
-
-
-
 static THD_WORKING_AREA(waCaptureImage, 256);
 static THD_FUNCTION(CaptureImage, arg) {
 
     chRegSetThreadName(__FUNCTION__);
+    //unsigned int i = 0;
     (void)arg;
 
 	//Take 97 x 97 pixels from a square of 388x388 on the sensor with a SUBSAMPLING factor of 4 (9409 pixels in total)
@@ -260,15 +267,21 @@ static THD_FUNCTION(CaptureImage, arg) {
 	dcmi_prepare();
 
     while(1){
-    	chBSemWait(&process_image_start_sem);
+    	if(get_selector() == 4){
+    		//    	chBSemWait(&process_image_start_sem);
 
-        //starts a capture
-		dcmi_capture_start();
-		//waits for the capture to be done
-		wait_image_ready();
-		//signals an image has been captured
-		chBSemSignal(&image_ready_sem);
+    		        //starts a capture
+    				dcmi_capture_start();
+    				//waits for the capture to be done
+    				wait_image_ready();
+    				//signals an image has been captured
+    				chBSemSignal(&image_ready_sem);
+    	}else{
+    		chThdSleepMilliseconds(200);
+    	}
+
     }
+
 }
 
 
@@ -343,17 +356,15 @@ static THD_FUNCTION(ProcessImage, arg) {
 											mean += (((uint8_t)img_buff_ptr[indice_1]&0xf8));
 
 											mean += (((uint8_t)img_buff_ptr[indice_2]&0xf8));
-
-
 										}
-							//moyenne
+							//Calculate the mean of the 4 squares
 							mean /= 4;
 							points_buff[(i*RESOLUTION+j)/2] = mean;
 							mean = 0;
 
 						}
 					}
-					//trouver maximal et minimal
+					//Find a minimum and a maximum
 					min = max = points_buff[0];
 					for(uint8_t i =0; i < (MAX_POINTS) ; i++){
 						if (points_buff[i] == 0 || points_buff[i] < min){
@@ -364,27 +375,23 @@ static THD_FUNCTION(ProcessImage, arg) {
 						}
 
 					}
-					//mediane des valeurs
+					//Do the mediane of values.
 					mean = min +(max-min)/2;
 
-			//attributions valeurs buoleens
+			//Attributions of booleans values
 					points_counter = 0;
 					for(uint8_t i =0; i < (MAX_POINTS) ; i++){
 						points_buff [i] = (points_buff [i] < mean);
 					}
 
-
-
 					if(test_continuity(points_buff)){
 						led5 = 1;
                          draw_pattern(points_buff);
-                        chThdSleepMilliseconds(10000);
-
+                         FindTheOrigin();
 					}
 					else{
 						led7 = 0;
 					}
-
 
 					palWritePad(GPIOD, GPIOD_LED5, led5 ? 0 : 1);
 					palWritePad(GPIOD, GPIOD_LED7, led7 ? 0 : 1);
@@ -397,18 +404,14 @@ static THD_FUNCTION(ProcessImage, arg) {
 						led5 = 0;
 						//led7 = 0;
 						palWritePad(GPIOD, GPIOD_LED5, led5 ? 0 : 1);
-						//palWritePad(GPIOD, GPIOD_LED7, led7 ? 0 : 1);
-
 			}
-
     }else{
     	chThdSleepMilliseconds(250);
     }
-}
+
+  }
 
 }
-
-
 
 void process_image_start(void){
 	chThdCreateStatic(waProcessImage, sizeof(waProcessImage), NORMALPRIO, ProcessImage, NULL);

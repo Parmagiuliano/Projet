@@ -7,10 +7,6 @@ typedef struct {
 	uint16_t width;
 } line_data;
 
-//bool test_continuity (uint8_t *points);
-bool get_draw_start(void);
-uint8_t* get_points_location(void);
-uint16_t get_line_position(void);
-
+void process_image_start(void);
 
 #endif /* PROCESS_IMAGE_H */
