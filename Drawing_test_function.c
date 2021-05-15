@@ -93,8 +93,11 @@ static THD_FUNCTION(ThdDrawing_functions, arg) {
 
     	}else if(get_selector()==3){
     		Drawing_Mighty();
+<<<<<<< HEAD
 //    	}else{
 //
+=======
+>>>>>>> 3d8efd6edb00e5030cfa0b50fca0e98bdac326fb
     	}
     	chThdSleepMilliseconds(250);
     }
@@ -120,13 +123,21 @@ void Drawing_test_func(void){
 
 		if(Drawing_test_array[row][0] == 0)
 			   			 	 	 {
+<<<<<<< HEAD
 			   			 		 	 left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, 0.5*(motor_speed_sign*counter_value_motor));
+=======
+			   			 		 	 left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, motor_speed_sign*counter_value_motor);
+>>>>>>> 3d8efd6edb00e5030cfa0b50fca0e98bdac326fb
 			   			 		 	 left_motor_get_to_the_pos(MOTOR_NO_SPEED, 50);
 			   			 		     chThdSleepMilliseconds(100);
 			   			 	 	 }
 		else if(Drawing_test_array[row][0] == 1)
 			   			 	 	 {
+<<<<<<< HEAD
 			   			 		 	 right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, 0.5*(motor_speed_sign*counter_value_motor));
+=======
+			   			 		 	 right_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, motor_speed_sign*counter_value_motor);
+>>>>>>> 3d8efd6edb00e5030cfa0b50fca0e98bdac326fb
 			   			 		 	 right_motor_get_to_the_pos(MOTOR_NO_SPEED, 50);
 			   			 		     chThdSleepMilliseconds(100);
 			   			 	 	 }

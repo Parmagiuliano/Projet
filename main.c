@@ -91,7 +91,11 @@ int main(void)
 	calibrate_ir();
 
    // Finding the origin function
+<<<<<<< HEAD
 //	FindTheOrigin();
+=======
+	//FindTheOrigin();
+>>>>>>> 3d8efd6edb00e5030cfa0b50fca0e98bdac326fb
 
     process_image_start();
     Drawing_functions_start();

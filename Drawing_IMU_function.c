@@ -17,7 +17,10 @@
 #include <Drawing_IMU_function.h>
 #include <Restart_Programm.h>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3d8efd6edb00e5030cfa0b50fca0e98bdac326fb
 //** Drawing_IMU function			//Already define in the main
 //messagebus_t bus;
 //MUTEX_DECL(bus_lock);

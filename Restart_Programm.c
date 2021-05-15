@@ -11,9 +11,12 @@
 #include "motors.h"
 #include <main.h>
 
+<<<<<<< HEAD
 #include <chbsem.h>
 #include <stdbool.h>
 
+=======
+>>>>>>> 3d8efd6edb00e5030cfa0b50fca0e98bdac326fb
 
 static int8_t last_selector = 0;
 
@@ -76,18 +79,32 @@ void FindTheOrigin(void)
 		 * Infinite loop, X axis
 		 * Returns the last value measured by the X sensor ->U106
 		 */
+<<<<<<< HEAD
 		left_motor_set_speed(-MOTOR_OPTIMAL_SPEED*2); 	//CCW rotation
 		while(get_prox(SENSOR_X) < IR_OPTIMAL_DIST*0.6){
 			chThdSleepMilliseconds(100);
 			//wait(50);
+=======
+		while(1){
+					left_motor_set_speed(-MOTOR_OPTIMAL_SPEED*2); 	//CCW rotation
+					if(get_prox(SENSOR_X) > IR_OPTIMAL_DIST)
+						{
+							left_motor_set_speed(MOTOR_NO_SPEED);
+							break;
+						}
+>>>>>>> 3d8efd6edb00e5030cfa0b50fca0e98bdac326fb
 				}
 
 		/*
 		 * Return the Xstage to the other limit for the Yoffset
 		 * Move Xmotor CW, distance 65mm ~=470 steps
 		 */
+<<<<<<< HEAD
 		left_motor_set_speed(MOTOR_NO_SPEED);
 		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, 240);	//480	//300
+=======
+		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, 480);	//480
+>>>>>>> 3d8efd6edb00e5030cfa0b50fca0e98bdac326fb
 		chThdSleepMilliseconds(250);
 
 		//chThdCreateStatic(waThdFindTheYOrigin, sizeof(waThdFindTheYOrigin), NORMALPRIO, ThdFindTheYOrigin, NULL);
@@ -96,11 +113,20 @@ void FindTheOrigin(void)
 		 * Infinite loop, Y axis
 		 * Returns the last value measured by the Y sensor ->U101
 		 */
+<<<<<<< HEAD
 //		while(1){
 					right_motor_set_speed(MOTOR_OPTIMAL_SPEED*2); 	//CW rotation
 					while(get_prox(SENSOR_Y) < IR_OPTIMAL_DIST){
 						chThdSleepMilliseconds(100);
 					//wait(50);
+=======
+		while(1){
+					right_motor_set_speed(MOTOR_OPTIMAL_SPEED*2); 	//CW rotation
+					if(get_prox(SENSOR_Y) > IR_OPTIMAL_DIST)
+						{
+							right_motor_set_speed(-MOTOR_NO_SPEED);
+							break;
+>>>>>>> 3d8efd6edb00e5030cfa0b50fca0e98bdac326fb
 						}
 
 //					if(get_prox(SENSOR_Y) > IR_OPTIMAL_DIST)
@@ -114,10 +140,15 @@ void FindTheOrigin(void)
 		 * Return the Xstage to the X offset
 		 * Move Xmotor CW, distance 55mm
 		 */
+<<<<<<< HEAD
 		right_motor_set_speed(MOTOR_NO_SPEED);
 		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, -200);	//-450
 		chThdSleepMilliseconds(100);
 		//left_motor_set_speed(MOTOR_NO_SPEED);
+=======
+		left_motor_get_to_the_pos(MOTOR_OPTIMAL_SPEED*2, -450);	//-450
+		chThdSleepMilliseconds(250);
+>>>>>>> 3d8efd6edb00e5030cfa0b50fca0e98bdac326fb
 }
 
 
@@ -158,6 +189,7 @@ static THD_FUNCTION(ThdRestart_Programm, arg) {
     	//uint8_t current_selector_position = get_selector();
 
 
+<<<<<<< HEAD
     	//FindTheOrigin();
     	chThdSleepMilliseconds(250);
 
@@ -227,6 +259,8 @@ static THD_FUNCTION(ThdRestart_Programm, arg) {
     }
 }
 
+=======
+>>>>>>> 3d8efd6edb00e5030cfa0b50fca0e98bdac326fb
 void Restart_Programm_start(void){
 	chThdCreateStatic(waThdRestart_Programm, sizeof(waThdRestart_Programm), NORMALPRIO, ThdRestart_Programm, NULL);
 }
